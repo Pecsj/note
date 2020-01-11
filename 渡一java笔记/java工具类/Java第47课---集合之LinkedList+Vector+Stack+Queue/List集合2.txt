@@ -50,7 +50,7 @@
 		E = pop()将某一个元素从栈顶取出并删掉(E = remove())
 		E = peek()查看栈顶的一个元素 不删除(get())
 		boolean = empty()判断栈内元素是否为空(isEmpty())
-		int = search()查找给定的元素在占中的位置(indexOf())
+		int = search()查找给定的元素在占中的位置(indexOf())  不是索引，是第几个
 	4.中国象棋   悔棋
 		栈中存储每一次操作的步骤
 		撤销功能
