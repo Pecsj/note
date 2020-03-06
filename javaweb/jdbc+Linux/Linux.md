@@ -134,10 +134,11 @@
 		pwd
 
 	2. 搜索命令
-		命令：grep 要搜索的字符串 要搜索的文件
-		示例：搜索/usr/sudu.conf文件中包含字符串to的行
-			grep to sudo.conf
-		示例：搜索/usr/sudu.conf文件中包含字符串to的行 to要高亮显示
+		* 命令：grep 要搜索的字符串 要搜索的文件
+			示例：搜索/usr/sudu.conf文件中包含字符串to的行
+				grep to sudo.conf
+			示例：搜索/usr/sudu.conf文件中包含字符串to的行 to要高亮显示
+		* locate 文件名		（在文件资料库中查询）
 
 	3. 管道命令
 		命令：|   将前一个命令的输出作为本次目录的输入

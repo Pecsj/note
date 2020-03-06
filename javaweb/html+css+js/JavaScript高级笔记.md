@@ -204,8 +204,7 @@
 		* XML DOM - 针对 XML 文档的标准模型
 		* HTML DOM - 针对 HTML 文档的标准模型
 
-
-
+![](https://ftp.bmp.ovh/imgs/2020/03/8f02d3605b664934.bmp)
 
 
 	* 核心DOM模型：
