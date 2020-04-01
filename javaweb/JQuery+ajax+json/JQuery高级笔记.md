@@ -20,7 +20,7 @@
 							* swing：动画执行时效果是 先慢，中间快，最后又慢
 							* linear：动画执行时速度是匀速的
 						3. fn：在动画完成时执行的函数，每个元素执行一次。
-
+	
 				2. hide([speed,[easing],[fn]])
 				3. toggle([speed],[easing],[fn])
 			
@@ -28,7 +28,7 @@
 				1. slideDown([speed],[easing],[fn])
 				2. slideUp([speed,[easing],[fn]])
 				3. slideToggle([speed],[easing],[fn])
-
+	
 			3. 淡入淡出显示和隐藏方式
 				1. fadeIn([speed],[easing],[fn])
 				2. fadeOut([speed],[easing],[fn])
@@ -44,7 +44,7 @@
 					jquery对象.each(function(index,element){});
 						* index:就是元素在集合中的索引
 						* element：就是集合中的每一个元素对象
-
+	
 						* this：集合中的每一个元素对象
 				2. 回调函数返回值：
 					* true:如果当前function返回为false，则结束循环(break)。
@@ -52,7 +52,7 @@
 			2. $.each(object, [callback])
 			3. for..of: jquery 3.0 版本之后提供的方式
 				for(元素对象 of 容器对象)
-		
+
 ###	3. 事件绑定
 		1. jquery标准的绑定方式
 			* jq对象.事件方法(回调函数)；
@@ -112,10 +112,8 @@
 			            //获取广告div，调用隐藏方法
 			            $("#ad").hide("slow");
 			        }
-			
-			
-			
 			    </script>
+			    
 			</head>
 			<body>
 			<!-- 整体的DIV -->
@@ -132,7 +130,7 @@
 			</div>
 			</body>
 			</html>
-	
+
 
 
 		2. 抽奖
@@ -152,8 +150,7 @@
 			                    1.2 切换小相框的src属性
 			                        * 定义数组，存放图片资源路径
 			                        * 生成随机数。数组索引
-			
-			
+
 			                2. 给结束按钮绑定单击事件
 			                    1.1 停止定时器
 			                    1.2 给大相框设置src属性
@@ -173,8 +170,8 @@
 			            //处理按钮是否可以使用的效果
 			            $("#startID").prop("disabled",false);
 			            $("#stopID").prop("disabled",true);
-			
-			
+
+
 			           //1. 给开始按钮绑定单击事件
 			            $("#startID").click(function () {
 			                // 1.1 定义循环定时器 20毫秒执行一次
@@ -182,8 +179,8 @@
 			                    //处理按钮是否可以使用的效果
 			                    $("#startID").prop("disabled",true);
 			                    $("#stopID").prop("disabled",false);
-			
-			
+
+
 			                    //1.2生成随机角标 0-6
 			                    index = Math.floor(Math.random() * 7);//0.000--0.999 --> * 7 --> 0.0-----6.9999
 			                    //1.3设置小相框的src属性
@@ -191,15 +188,14 @@
 			
 			                },20);
 			            });
-			
-			
+
+
 			            //2. 给结束按钮绑定单击事件
 			            $("#stopID").click(function () {
 			                //处理按钮是否可以使用的效果
 			                $("#startID").prop("disabled",false);
 			                $("#stopID").prop("disabled",true);
-			
-			
+
 			               // 1.1 停止定时器
 			                clearInterval(startId);
 			               // 1.2 给大相框设置src属性
@@ -208,10 +204,7 @@
 			                $("#img2ID").show(1000);
 			            });
 			        });
-			
-			
-			
-			
+
 			    </script>
 			
 			</head>
@@ -241,8 +234,9 @@
 			        type="button"
 			        value="点击停止"
 			        style="width:150px;height:150px;font-size:22px">
-			
-			
+
+
+​			
 			</body>
 			</html>
 
