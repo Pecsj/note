@@ -1,0 +1,130 @@
+
+	知识回顾
+	Servlet对象的管理机制
+	1.Servlet对象是单例的
+	2.才用生命周期托管的方式实现的单例模式
+	3.Servlet对象是延迟加载的方式
+	4.Servlet对象是有一个生命周期	有三个方法可以看出生命周期
+		对象创建时		init()	init(ServletConfig config)
+		对象每次使用	service(HttpServletRequest,HttpServletResponse)
+		对象被回收		destroy()		重新部署项目   关闭Tomcat
+	5.可以通过修改web.xml配置文件  改变Servlet对象的加载方式   
+		从默认延迟加载----->立即加载
+		<servlet>
+			<load-on-startup>0</load-on-startup>   0开始的整数  整数越小加载越早
+		</servlet>
+	6.在Servlet对象创建时，可以通过配置携带一些信息，就可以让Servlet对象读取到
+		<servlet>
+			<init-param>
+				<param-name>key</param-name>
+				<param-value>value</param-value>
+			</init-param>
+		</servlet>
+		在Servlet对象的init方法中进行读取   通常利用带ServletConfig参数的方法
+		String value = config.getInitParameter("key");
+		Enumeration = config.getInitParameterNames();
+		String = config.getServletName();
+		ServletContext application = config.getServletContext();//获取全局上下文对象
+	7.Servlet继承的关系????
+		自己写一个类--->继承抽象类HttpServlet
+		HttpServlet--->继承抽象类GenricServlet
+		GenricServlet-->实现了三个接口  Servlet    ServletConfig   Serializable
+
+		Servlet接口含有5个方法
+			init(ServletConfig config);
+			service(ServletRequest,ServletResponse);
+			destroy();
+			ServletConfig = getServletConfig();
+			String = getServletInfo();
+		ServletConfig接口含有4个方法
+			String value = config.getInitParameter("key");
+			Enumeration = config.getInitParameterNames();
+			String = config.getServletName();
+			ServletContext application = config.getServletContext();
+		GenricServlet抽象类体现出了缺省适配器模式
+			将上述两个接口中的8个方法全部添加了实现
+			只留下一个service抽象方法    需要用户自己填写逻辑
+			还添加了两个独有的方法   init(){} 无参数  log(){}
+		HttpServlet体现了对于协议的具体化
+			将父类service方法实现了
+				目的是将两个跨协议的参数强制转化成HTTP协议
+			自己添加了一个protected修饰的service方法(参数HttpServletRequest)
+				独有service方法的目的是通过请求发送的方式get/post
+				找寻对应具体的执行方法doGet   doPost
+	8.从今以后如何使用???
+		1.自己写一个类	类名字通常XXXController
+		2.继承HttpServlet	当然我们也可以继承GenricServlet  当然也可以直接实现Servlet接口
+		3.重写方法doPost/doGet/service	请求的方式更加的清晰
+		4.方法参数HttpServletRequest    HttpServletResponse
+		5.方法修饰符和返回值	   protected/public	返回值void
+		6.方法异常ServletException	IOException
+		7.工程内web文件夹中WEB-INF文件夹
+			web.xml配置文件	目的   	请求---真实Controller类全名对应关系
+		8.浏览器发送请求	访问操作资源
+			404	没有找到资源	检查xml文件   检查Controller类
+			405	没有找到执行方法	检查Controller类中的方法重写
+
+=========================================================================
+	
+	V	视图层	静态响应信息(HTML)	  动态响应信息(Servlet类的   out.write("<>");)
+	C	控制层	Servlet类(负责接收请求的参数信息   负责找寻对应的业务层处理   负责响应--麻烦)
+	M	模型层	Service业务层(负责数据的业务处理)
+			Dao     持久层(负责数据的读写)
+			domain持久化对象(负责数据的存储)
+	DB	数据层	MySQL数据库
+
+	-----------------------------------------------------------------------------------------------
+	之前的控制层负责很多事情
+		接收    1.接收请求信息
+		调用    2.找寻对应的业务层处理逻辑
+		找人    3.负责拼接响应信息---->拼接的过程太过麻烦
+			Java代码中通过String拼接<>形式
+			能否将这个麻烦的拼接过程交个一个小弟来单独处理
+
+	JSP-----JS区别
+	JS	JavaScript    基于对象和事件驱动的页面脚本语言
+	JSP	Java  Server  Page	------>Java服务器页面    Java服务页
+		原来我们是在Java代码中拼接<>形式的字符串	"<>"
+		JSP相当于换了一个主场   在<>形式中拼接Java代码	<><%java%><>
+		融合了HTML    JavaScript   CSS    Java    JSP自己的标签
+	看起来像是一个文件	xxx.jsp	内容可以写上述这些
+
+	1.先来简单学习一下JSP如何使用
+		看起来像是个文件	.html   直接用浏览器打开就可以	.java   编译-->.class执行
+		xxx.jsp	(HTML+Java)   需要一个第三方人来帮忙   Tomcat  编译  最后还是浏览器展示
+	2.如何创建xxx.jsp文件
+		文件中该如何写内容	<html>正常写     
+		文件的内容与HTML文件的内容多了一些信息
+		<%@page %>	说明  包含java程序
+		<html>
+			<body>
+				<%
+					String s = "abc";
+				%>
+				<a>点我呀</a>
+			</body>
+		</html>
+		-----------------------------------------------------
+		<%@page %>	用这个头信息标签来说明当前JSP的一些内容
+			contentType="text/html;charset=UTF-8"
+			用来说明当前JSP里面拼接好的相应信息浏览器该如何解析
+			
+			language="java"用来说明当前JSP中可以包含的语言
+
+			pageEncoding="UTF-8"告知Tomcat以这种字符集进行编译
+
+	小任务
+		之前银行系统小项目	所有展示的部分交给JSP来进行拼接
+
+
+
+
+
+
+
+
+
+
+
+
+		

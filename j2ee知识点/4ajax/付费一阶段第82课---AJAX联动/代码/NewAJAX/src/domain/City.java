@@ -1,0 +1,51 @@
+package domain;
+
+public class City {
+
+    private Integer cityid;
+    private String cityname;
+    private Float citysize;
+    private Area area;
+
+    public City() {
+    }
+
+    public City(Integer cityid, String cityname, Float citysize, Area area) {
+        this.cityid = cityid;
+        this.cityname = cityname;
+        this.citysize = citysize;
+        this.area = area;
+    }
+
+    public Integer getCityid() {
+        return cityid;
+    }
+
+    public void setCityid(Integer cityid) {
+        this.cityid = cityid;
+    }
+
+    public String getCityname() {
+        return cityname;
+    }
+
+    public void setCityname(String cityname) {
+        this.cityname = cityname;
+    }
+
+    public Float getCitysize() {
+        return citysize;
+    }
+
+    public void setCitysize(Float citysize) {
+        this.citysize = citysize;
+    }
+
+    public Area getArea() {
+        return area;
+    }
+
+    public void setArea(Area area) {
+        this.area = area;
+    }
+}

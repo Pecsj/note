@@ -1,0 +1,30 @@
+
+#查询emp表格的数据
+
+#按照员工的工资降序排列
+
+#做一个分页 每页显示5行记录
+
+#a表示起始行索引(0开始) b表示需要查找的行数
+
+#a不能确定  b可以确定
+
+select * from emp order by sal desc limit 15,5
+
+
+
+select * from emp e , dept d where e.deptno = d.deptno
+
+
+
+update emp set deptno = 40 where empno = 9999;
+
+
+
+#emp表格的记录 每个部门的人数
+
+#emp对象与表格中的列对应---增强可读性
+
+#emp就是一个小容器 map集合
+
+select deptno,count(empno) as ct from emp group by deptno

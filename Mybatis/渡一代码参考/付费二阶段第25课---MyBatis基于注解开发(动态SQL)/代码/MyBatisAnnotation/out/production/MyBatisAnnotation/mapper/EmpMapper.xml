@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.EmpDao">
+
+    <!--自定义规则-->
+    <resultMap id="selectEmp" type="domain.Emp">
+        <id property="empno" column="empno"></id>
+        <result property="ename" column="ename"></result>
+        <result property="job" column="job"></result>
+        <result property="mgr" column="mgr"></result>
+        <result property="hiredate" column="hiredate"></result>
+        <result property="sal" column="sal"></result>
+        <result property="comm" column="comm"></result>
+        <association property="dept" javaType="domain.Dept" column="deptno" select="selectDept"></association>
+    </resultMap>
+    <!--辅助标签-->
+    <select id="selectDept" resultType="domain.Dept">
+        select * from dept where deptno = #{deptno}
+    </select>
+
+    <!--跟dao中的方法配合的标签-->
+    <select id="selectOne" resultMap="selectEmp">
+        select * from emp where empno = #{empno}
+    </select>
+
+    <!--===================================================================-->
+    <!--动态SQL-->
+
+
+    <!--根据给定的job和deptno动态查询-->
+    <select id="selectEmpsByJobAndDeptno" resultType="domain.Emp">
+        select * from emp
+        <where>
+            <if test=" job!=null and job!='' ">
+                and job = #{job}
+            </if>
+            <if test="deptno!=null">
+                and deptno = #{deptno}
+            </if>
+        </where>
+    </select>
+
+
+    <!--根据给定的empno动态查询-->
+    <select id="selectEmpsByEmpno" resultType="domain.Emp">
+        select * from emp where empno in
+        <foreach collection="array" item="empno" index="i" open="(" close=")" separator=",">
+            #{empno}
+        </foreach>
+    </select>
+
+</mapper>

@@ -1,0 +1,89 @@
+
+	知识回顾
+	ThreadLocal
+	1.java.lang包中的一个类	支持泛型
+	2.使用起来更像是session特点
+	3.对比session机制
+		通过String JSESSIONID找到session对象
+		通过String key找到session中存储的Object value
+
+		通过Thread t找到ThreadLocalMap对象
+		通过ThreadLocal key打开Thread LocalMap找到里面存储的Object value
+	4.利用自己封装的管理类  来管理ThreadLocal对象
+		ThreadLocal    set(value)  get()  remove()
+
+	==========================================
+
+	WEB3.0以后的给予注解访问web组件
+
+	WEB容器给我们提供了很多组件
+	Servlet   Filter   JSP   Listener
+	JSP使用特殊  我们自己不需要做配置   WEB容器内部给我们做了配置   *.jsp
+	Servlet  Filter Listener 使用的时候必须遵循规则(继承 实现 方法重写)  我们自己需要做配置web.xml
+	自己做web.xml文件配置的时候比较麻烦
+
+	一个请求(一个功能点)-----对应-----一个Servlet类(只有一个方法)
+	每多写一个Servlet类 需要多做一个配置(8行)
+
+	都觉得配置过于麻烦---->web.xml配置优化(WEB框架)	
+		SpringMVC	Struts2
+	Tomcat也更新了相关的版本3.0以后就支持注解的方式
+		注解为了替代web.xml文件的配置
+
+	
+	Servlet  Filter  Listener  JSP(不用我们自己配置)
+		为什么有web.xml文件？？？？
+		web.xml文件中配置的目的
+			请求名字-----真实类全名	对应关系
+		发送请求--->String	   ip:port/工程/资源.xxx?key=value&key=value
+		请求到达服务器   解析请求  根据请求的资源名  找真实的执行类(反射)
+			Class.forName("包名.类名")
+
+		WEB3.0版本之后出现了注解	为了替代web.xml配置
+		@WebServlet
+		@WebFilter
+		@WebListener
+
+		1.使用注解的方式访问Servlet
+			自己写一个类Servlet
+			类继承HttpServlet
+			类重写方法
+			方法参数    抛出异常
+			配置 在类上 添加一个注解
+			@WebServlet()
+				urlPatterns={"/test","/test2"}
+				如果请求url只有一个的话  大括号是可以省略的
+				value信息   等价于urlPatterns  
+				建议用value如果只有value是可以生路的		
+				loadOnStartUp信息    控制servlet对象的加载的(立即)
+				initParams   为了携带信息
+					里面需要{@WebInitParam(name="",value="")}
+		2.使用注解的方式访问Filter
+			自己写一个类
+			类继承HttpFilter
+			重写方法doFilter
+			方法参数 request respons chain  抛异常
+			配置   类上添加注解
+			@WebFilter
+				urlPatterns
+				value
+				initParams   为了携带信息
+					里面需要{@WebInitParam(name="",value="")}
+		3.使用注解的方式让Listener执行
+			自己写一个类
+			实现接口
+			方法必须重写
+			配置	类上添加注解
+			@WebListener
+
+
+
+
+
+
+
+
+
+
+
+

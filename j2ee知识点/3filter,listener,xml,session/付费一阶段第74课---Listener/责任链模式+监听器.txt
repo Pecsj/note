@@ -1,0 +1,44 @@
+
+	责任链设计模式
+	Chain of Responsibility Pattern
+
+	链表结构
+		Node类   好多node对象
+		每一个node对象负责存储当前的信息   负责处理事情
+		每一个node对象都知道下一个责任人是谁  存储一个next属性
+	责任链模式
+		Filter类   每一个Filter类有一个对象    类有好多   对象好多
+		每一个filter对象只负责当前自己的事情处理   doFilter方法
+		不知道下一个责任人是谁  只能调用chain的方法(放行---目的是让chain找下一个责任人)
+		还需要一个FilterChain类(管理)
+
+
+	---------------------------------------------------------------
+	Tomcat提供的一个组件
+	Servlet    JSP    Filter
+	Listener
+
+	Listener监听器	(观察者设计模式)
+	1.监听域对象产生和销毁的
+	2.监听域对象存值  修改  删除
+		request   session   application
+		setAttribute();   removeAttribute();
+
+		ServletRequestListener
+		ServletRequestAttributeListener
+		HttpSessionListener
+		HttpSessionAttributeListener
+		ServletContextListener
+		ServletContextAttributeListener
+
+	3.什么场景用
+		在线人数  监听session对象产生 销毁
+
+
+
+
+
+
+
+
+

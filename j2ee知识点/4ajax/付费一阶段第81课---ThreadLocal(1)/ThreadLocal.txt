@@ -1,0 +1,68 @@
+
+	知识回顾
+	
+	session
+	是一个服务端的对象
+	每一个人(一个浏览器，一个线程)有一个的
+	SessionManager{
+		//String--->标识JSESSIONID	HttpSession--->session对象
+		Map<String,HttpSession> sessionMap;//存储session对象
+	}
+	HttpSession{
+		//String--->key	Object--->value数据
+		Map<String,Object> attributeMap;//存储真实数据
+		setAttribute(String key,Object value);
+		getAttribute(String key);
+	}
+
+	JSESSIONID是服务端第一次给予响应信息的时候  回写给浏览器的
+	浏览器解析到以后  将JSESSIONID存起来     cookie
+
+	cookie
+	1993年网景公司Lou Montulli工程师提出的
+	翻译成小甜品	在这里翻译成小量数据(小量信息)
+	cookie存储在浏览器端
+		临时性	String	key=value,key=value        cookie
+		永久性	文件	cookies文件
+	我们也可以在服务端给予响应信息的时候主动的存入cookie
+		服务端存储cookie
+		Cookie c = new Cookie("name","value");
+		c.setMaxAge(int 秒);
+		response.addCookie(c);
+	浏览器接收到响应信息的时候就可以读取cookie啦
+		浏览器读取cookie通过js
+		var value = document.cookie;	   String类型
+		key=value,key=vakue,key=value
+	浏览器下一次发送请求的时候  携带着所有的cookie信息
+		服务端读取cookie
+		Cookie[] cookies = request.getCookies();
+		for(Cookie c : cookies){
+			String name = c.getName();
+			String value = c.getValue();
+		}
+
+
+	ThreadLocal
+		有点儿像session	某一个位置存值	隔着好几个请求之后取值
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

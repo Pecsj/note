@@ -1,0 +1,115 @@
+
+#创建一个新的数据库
+
+create database shopping;
+
+use shopping;
+
+#----------------------------------------------
+
+#创建用户表格
+
+create table user(
+
+	uname varchar(20),
+
+	upassword varchar(20)
+
+)character set utf8;
+
+#设置主键约束
+
+alter table user add primary key(uname);
+
+#添加数据
+
+insert into user values('zhangsan','333');
+
+insert into user values('lisi','444');
+
+#-----------------------------------------------
+
+#创建种类表格
+
+create table kind(
+
+	kid int(4),
+
+	kname varchar(20)
+
+)character set utf8;
+
+#设置主键约束
+
+alter table kind add primary key(kid);
+
+#添加数据
+
+insert into kind values(1,'食品');
+
+insert into kind values(2,'书籍');
+
+insert into kind values(3,'服饰');
+
+#------------------------------------------------
+
+#创建商品表格
+
+create table commodity(
+
+	cid int(6),
+
+	cname varchar(20),
+
+	cprice float(10,2),
+
+	kid int(4)
+
+)character set utf8;
+
+#添加主键约束
+
+alter table commodity add primary key(cid);
+
+#添加外键约束
+
+alter table commodity add constraint fk_commodity_kind 
+
+foreign key (kid) references kind(kid);
+
+#添加商品数据
+
+insert into commodity values(1,'费列罗巧克力',10,1);
+
+insert into commodity values(2,'安慕希酸奶',8,1);
+
+insert into commodity values(3,'百草味草莓干',20,1);
+
+insert into commodity values(4,'Head First Java',78,2);
+
+insert into commodity values(5,'Java核心技术',87,2);
+
+insert into commodity values(6,'算法导论',96,2);
+
+insert into commodity values(7,'程序员格子衫',200,3);
+
+insert into commodity values(8,'程序员双肩包',150,3);
+
+insert into commodity values(9,'程序员假发',300,3);
+
+#-----------------------------------------------------------
+
+select * from user;
+
+select * from kind;
+
+select * from commodity;
+
+
+
+
+
+
+
+
+

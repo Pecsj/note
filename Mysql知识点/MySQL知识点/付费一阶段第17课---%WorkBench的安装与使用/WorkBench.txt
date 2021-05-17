@@ -1,0 +1,17 @@
+
+	开发MySQL数据库的编辑器
+	   WorkBench   官方提供
+	   SQLYog
+	   Navicat
+
+	1.下载安装程序
+		https://www.mysql.com
+	2.按照向导一步一步进行操作就可以啦
+		选择安装路径
+		选择安装方式(Complete)
+	3.注意:
+		可能会在安装过程中缺失一个环境
+		Microsoft  .NET  Framework  4.x
+	4.创建一个connect连接
+		ip  port   账号   密码
+	5.使用

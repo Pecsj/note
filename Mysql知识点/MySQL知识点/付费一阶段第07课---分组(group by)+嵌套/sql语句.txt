@@ -1,0 +1,430 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.25-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| person         |
+| student        |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,ssex from student;
++----------+------+
+| sname    | ssex |
++----------+------+
+| zhangsan | nan  |
+| lisi     | nv   |
+| zhaoliu  | nv   |
+| qianqi   | nv   |
+| wangjiu  | nv   |
+| zzt      | nan  |
++----------+------+
+6 rows in set (0.00 sec)
+
+mysql> select now() from student;
++---------------------+
+| now()               |
++---------------------+
+| 2019-03-12 10:12:51 |
+| 2019-03-12 10:12:51 |
+| 2019-03-12 10:12:51 |
+| 2019-03-12 10:12:51 |
+| 2019-03-12 10:12:51 |
+| 2019-03-12 10:12:51 |
++---------------------+
+6 rows in set (0.00 sec)
+
+mysql> select distinct now() from student;
++---------------------+
+| now()               |
++---------------------+
+| 2019-03-12 10:14:12 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select now();
++---------------------+
+| now()               |
++---------------------+
+| 2019-03-12 10:14:31 |
++---------------------+
+1 row in set (0.00 sec)
+
+mysql> select sname,ssex from student;
++----------+------+
+| sname    | ssex |
++----------+------+
+| zhangsan | nan  |
+| lisi     | nv   |
+| zhaoliu  | nv   |
+| qianqi   | nv   |
+| wangjiu  | nv   |
+| zzt      | nan  |
++----------+------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,distinct ssex from student;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'distinct ssex from student' at line 1
+mysql> select distinct ssex,sname from student;
++------+----------+
+| ssex | sname    |
++------+----------+
+| nan  | zhangsan |
+| nv   | lisi     |
+| nv   | zhaoliu  |
+| nv   | qianqi   |
+| nv   | wangjiu  |
+| nan  | zzt      |
++------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select count(sid) from student;
++------------+
+| count(sid) |
++------------+
+|          6 |
++------------+
+1 row in set (0.00 sec)
+
+mysql> select count(physical) from student;
++-----------------+
+| count(physical) |
++-----------------+
+|               5 |
++-----------------+
+1 row in set (0.00 sec)
+
+mysql> select count(*) from student;
++----------+
+| count(*) |
++----------+
+|        6 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select max(chinese) from student;
++--------------+
+| max(chinese) |
++--------------+
+|        99.00 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select min(chinese) from student;
++--------------+
+| min(chinese) |
++--------------+
+|        76.00 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select avg(english) from student;
++--------------+
+| avg(english) |
++--------------+
+|    90.000000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select sum(english) from student;
++--------------+
+| sum(english) |
++--------------+
+|       540.00 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select classid,count(sid) from student group by classid;
++---------+------------+
+| classid | count(sid) |
++---------+------------+
+|       1 |          2 |
+|       2 |          1 |
+|       3 |          3 |
++---------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select ssex,count(sid) from student group by ssex;
++------+------------+
+| ssex | count(sid) |
++------+------------+
+| nan  |          2 |
+| nv   |          4 |
++------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select sage,count(sid) from student group by sage;
++------+------------+
+| sage | count(sid) |
++------+------------+
+|   17 |          3 |
+|   18 |          3 |
++------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select classid,avg(chinese) from student group by classid;
++---------+--------------+
+| classid | avg(chinese) |
++---------+--------------+
+|       1 |    95.000000 |
+|       2 |    99.000000 |
+|       3 |    85.000000 |
++---------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select classid,avg(chinese) from student group by classid order by avg(chinese);
++---------+--------------+
+| classid | avg(chinese) |
++---------+--------------+
+|       3 |    85.000000 |
+|       1 |    95.000000 |
+|       2 |    99.000000 |
++---------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select classid,avg(chinese) from student group by classid order by avg(chinese) desc;
++---------+--------------+
+| classid | avg(chinese) |
++---------+--------------+
+|       2 |    99.000000 |
+|       1 |    95.000000 |
+|       3 |    85.000000 |
++---------+--------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select classid from student where ssex = 'nan' group by classid;
++---------+
+| classid |
++---------+
+|       1 |
+|       3 |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select classid,count(sid) from student where ssex = 'nan' group by classid;
++---------+------------+
+| classid | count(sid) |
++---------+------------+
+|       1 |          1 |
+|       3 |          1 |
++---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select classid,count(sid) from student where sage = 18 group by classid;
++---------+------------+
+| classid | count(sid) |
++---------+------------+
+|       1 |          2 |
+|       3 |          1 |
++---------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select clsssid from student group by classid where avg(chinese)>90;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where avg(chinese)>90' at line 1
+mysql> select clsssid from student group by classid having avg(chinese)>90;
+ERROR 1054 (42S22): Unknown column 'clsssid' in 'field list'
+mysql> select classid from student group by classid having avg(chinese)>90;
++---------+
+| classid |
++---------+
+|       1 |
+|       2 |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select max(chinese) from student;
++--------------+
+| max(chinese) |
++--------------+
+|        99.00 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select * from student chinese = (select max(chinese) from student);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '= (select max(chinese) from student)' at line 1
+mysql> select * from student where chinese = (select max(chinese) from student);
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname   | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+|    4 | zhaoliu | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    7 | zzt     | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,ssex,sage,classid from student;
++----------+------+------+---------+
+| sname    | ssex | sage | classid |
++----------+------+------+---------+
+| zhangsan | nan  |   18 |       1 |
+| lisi     | nv   |   18 |       1 |
+| zhaoliu  | nv   |   17 |       2 |
+| qianqi   | nv   |   17 |       3 |
+| wangjiu  | nv   |   17 |       3 |
+| zzt      | nan  |   18 |       3 |
++----------+------+------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from (select sname,ssex,sage,classid from student);
+ERROR 1248 (42000): Every derived table must have its own alias
+mysql> select * from (select sname,ssex,sage,classid from student) newtable;
++----------+------+------+---------+
+| sname    | ssex | sage | classid |
++----------+------+------+---------+
+| zhangsan | nan  |   18 |       1 |
+| lisi     | nv   |   18 |       1 |
+| zhaoliu  | nv   |   17 |       2 |
+| qianqi   | nv   |   17 |       3 |
+| wangjiu  | nv   |   17 |       3 |
+| zzt      | nan  |   18 |       3 |
++----------+------+------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from (select sname,ssex,sage,classid from student) newtable where sage>18;
+Empty set (0.00 sec)
+
+mysql> select * from (select sname,ssex,sage,classid from student) newtable where sage>=18;
++----------+------+------+---------+
+| sname    | ssex | sage | classid |
++----------+------+------+---------+
+| zhangsan | nan  |   18 |       1 |
+| lisi     | nv   |   18 |       1 |
+| zzt      | nan  |   18 |       3 |
++----------+------+------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> create table myclass(
+    ->   classid int(4),
+    ->   classname varchar(10),
+    ->   classloc varchar(15)
+    -> );
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into myclass values(1,'classone','beijing');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into myclass values(2,'classtwo','shenzhen');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into myclass values(3,'classthree','hangzhou');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+------------+----------+
+| classid | classname  | classloc |
++---------+------------+----------+
+|       1 | classone   | beijing  |
+|       2 | classtwo   | shenzhen |
+|       3 | classthree | hangzhou |
++---------+------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where classid = (select classid from myclass where classloc = 'shenzhen');
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname   | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+|    4 | zhaoliu | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+1 row in set (0.00 sec)
+
+mysql> select * from student where classid = (select classid from myclass where classloc = 'hangzhou');
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname   | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+|    5 | qianqi  | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt     | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql>

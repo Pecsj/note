@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StudentDao">
+
+    <!-- 方式一规则 两次查询 第二次查询学生的时候 需要两张表格联合 -->
+    <resultMap id="selectTeacher" type="domain.Teacher">
+        <id property="tid" column="tid"></id>
+        <result property="tname" column="tname"></result>
+        <result property="tsex" column="tsex"></result>
+        <result property="tage" column="tage"></result>
+        <collection property="studentList" javaType="list" ofType="domain.Student" select="selectStudentForTeacher" column="tid"></collection>
+    </resultMap>
+    <select id="selectStudentForTeacher" resultType="domain.Student">
+        select s.* from tea_stu ts inner join student s on ts.sid = s.sid where ts.tid = #{tid}
+    </select>
+
+    <!-- 方式二规则 一次三表联合查询 将老师和学生信息都获取到了 可以直接赋值 不需要再次查询 -->
+    <!--<resultMap id="selectTeacher" type="domain.Teacher">-->
+        <!--<id property="tid" column="tid"></id>-->
+        <!--<result property="tname" column="tname"></result>-->
+        <!--<result property="tsex" column="tsex"></result>-->
+        <!--<result property="tage" column="tage"></result>-->
+        <!--<collection property="studentList" javaType="list" ofType="domain.Student">-->
+            <!--<id property="sid" column="sid"></id>-->
+            <!--<result property="sname" column="sname"></result>-->
+            <!--<result property="ssex" column="ssex"></result>-->
+            <!--<result property="sage" column="sage"></result>-->
+        <!--</collection>-->
+    <!--</resultMap>-->
+
+    <!--=============================================================-->
+    <select id="selectOne" resultMap="selectTeacher">
+        <!-- 方式一 先查询老师信息 再查询学生信息-->
+        <!--select tid,tname,tsex,tage from teacher where tid = #{tid}-->
+
+        <!-- 方式二 一次性将一个老师和学生的所有信息都查出来 -->
+        select t.*,s.* from teacher t inner join tea_stu ts on t.tid = ts.tid inner join student s on ts.sid = s.sid where t.tid = #{tid}
+    </select>
+
+    <select id="selectAll" resultMap="selectTeacher">
+        <!-- 方式一 先查询老师信息 再查询学生信息-->
+        select tid,tname,tsex,tage from teacher
+
+        <!-- 方式二 一次性将一个老师和学生的所有信息都查出来 -->
+        <!--select t.*,s.* from teacher t inner join tea_stu ts on t.tid = ts.tid inner join student s on ts.sid = s.sid-->
+    </select>
+
+</mapper>

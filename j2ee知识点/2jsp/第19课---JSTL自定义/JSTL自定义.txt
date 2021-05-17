@@ -1,0 +1,82 @@
+
+	知识回顾
+	JSTL	JSP   Standard   Tag   Library
+	1.引入外部jar包
+		jstl.jar    standard.jar	1.2
+	2.创建web项目    创建JSP
+		<%@ taglib uri="http://java.sun.com/jsp/jstl/xxxx" prefix=""%>
+		声明使用的标签库
+		核心标签库core              c	<c:xxx>
+		函数标签库functions     fn	${fn:xxx()}
+		格式化标签fmt               fmt	<fmt:xxx>
+	3.以后我们处理View视图层     
+		JSP(HTML+CSS+JS)+EL+JSTL
+		注意:使用JSTL的<c:forEach>遍历展示的时候
+			只能遍历   数组  List集合  Set集合  Iterator  Enumeration
+			<c:forEach var="xxx" items="${requestScope.Name}">
+				${xxx}
+			如果遍历map集合
+			<c:forEach var="key" items="${requestScope.map.keySet()}">
+				${requestScope.map.key}
+
+	4.深入研究一下JSTL底层实现
+		txt    properties
+		html   css   js
+		xml   tld--->xml	注解(元注解  使用)
+
+		函数	${fn:xxx()}
+		标签	<x:xxx>
+		
+	5.JSP可以使用标签  自定义函数
+		1.自己描述一个类
+		2.类中描述自己的方法
+			方法必须是静态的
+			方法通常有返回值
+		3.配置一个"说明书"----->xxx.tld
+			当前工程下web文件夹中的WEB-INF文件夹下创建一个新的xx.tld文件
+			1.先描述两个重要的东西  uri   short-name
+			<short-name>myFn</short-name>
+			<uri>http://www.duyiedu.com</uri>
+			<function>
+				<name>add</name>
+				<function-class>myfn.MyFunctions</function-class>
+				<function-signature>int add(int,int)</function-signature>
+			</function>
+		4.在JSP中声明头信息
+			<%@ taglib uri="" prefix=""%>
+				${myFn:add()}
+	6.JSP可以使用标签  自定义标签
+		每一个标签都是一个单独的类
+		1.创建一个类(用来描述一个标签)
+			实现一个Tag接口	重写里面的方法
+			
+		2.细致的看一下这些方法
+			两组对应的get/set	自己补全   并添加响应的私有属性
+			还有一个单独的release方法   回收对象
+			doStartTag
+			doEndTag
+		3.在两个方法内添加自己的逻辑
+		4.描述一个"说明书"	tld
+			先描述uri和short-name
+			<short-name>myTag</short-name>
+			<uri>http://www.duyiedu.com/myTag</uri>
+			再描述标签及标签内部的属性
+			<tag>
+				<name>out</name>
+				<tag-class>mytag.MyOut</tag-class>
+				<body-content>JSP</body-content>
+				<attribute>
+					<name>value</name>
+					<required>true</required>
+					<rtexprvalue>true</rtexprvalue>
+				</attribute>
+			</tag>
+		5.创建JSP  声明头信息
+
+
+
+
+
+
+
+

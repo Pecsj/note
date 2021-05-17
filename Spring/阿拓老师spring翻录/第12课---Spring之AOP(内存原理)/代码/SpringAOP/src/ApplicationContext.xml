@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        https://www.springframework.org/schema/aop/spring-aop.xsd
+        ">
+
+    <!--<bean id="controller" class="controller.TestController"></bean>-->
+    <!--<bean id="aspect1" class="aspect.Aspect1"></bean>-->
+    <!--<bean id="aspect2" class="aspect.Aspect2"></bean>-->
+
+
+    <!--&lt;!&ndash;给切面对象做一个说明&ndash;&gt;-->
+    <!--<aop:config>-->
+        <!--&lt;!&ndash;需要说明哪一个 哪一些对象是切面对象&ndash;&gt;-->
+        <!--<aop:pointcut id="mycut" expression="execution(* controller.TestController.test())"></aop:pointcut>-->
+        <!--<aop:aspect id="as1" ref="aspect1">-->
+            <!--&lt;!&ndash;说明切点 目标对象中的方法&ndash;&gt;-->
+            <!--&lt;!&ndash;expression 包 类 方法&ndash;&gt;-->
+            <!--&lt;!&ndash;切面对象做的建议方式(连接点的执行 连接点是切面中的方法)&ndash;&gt;-->
+            <!--<aop:before method="beforeMethod" pointcut-ref="mycut"></aop:before>-->
+            <!--<aop:after-returning method="afterReturningMethod" pointcut-ref="mycut"></aop:after-returning>-->
+            <!--<aop:after-throwing method="afterThrowingMethod" pointcut-ref="mycut"></aop:after-throwing>-->
+            <!--<aop:after method="afterMethod" pointcut-ref="mycut"></aop:after>-->
+            <!--<aop:around method="aroundMethod" pointcut-ref="mycut"></aop:around>-->
+        <!--</aop:aspect>-->
+        <!--&lt;!&ndash;第二个切面对象&ndash;&gt;-->
+        <!--<aop:aspect id="as2" ref="aspect2">-->
+            <!--<aop:pointcut id="mycut" expression="execution(* controller.TestController.test())"></aop:pointcut>-->
+            <!--<aop:before method="beforeMethod" pointcut-ref="mycut"></aop:before>-->
+            <!--<aop:after-returning method="afterReturningMethod" pointcut-ref="mycut"></aop:after-returning>-->
+        <!--</aop:aspect>-->
+    <!--</aop:config>-->
+
+    <!--========================================================================-->
+
+    <bean id="controller" class="controller.TestController"></bean>
+    <bean id="aspect1" class="aspect.Aspect1"></bean>
+    <bean id="aspect2" class="aspect.Aspect2"></bean>
+
+    <aop:config>
+        <aop:pointcut id="myCut" expression="execution(* controller.TestController.test())"></aop:pointcut>
+        <aop:aspect id="a1" ref="aspect1">
+            <aop:around method="aroundMethod" pointcut-ref="myCut"></aop:around>
+            <aop:before method="beforeMethod" pointcut-ref="myCut"></aop:before>
+            <aop:after-returning method="afterReturningMethod" pointcut-ref="myCut"></aop:after-returning>
+        </aop:aspect>
+        <!--<aop:aspect id="a2" ref="aspect2">-->
+            <!--<aop:before method="beforeMethod" pointcut-ref="myCut"></aop:before>-->
+            <!--<aop:after-returning method="afterReturningMethod" pointcut-ref="myCut"></aop:after-returning>-->
+        <!--</aop:aspect>-->
+    </aop:config>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</beans>

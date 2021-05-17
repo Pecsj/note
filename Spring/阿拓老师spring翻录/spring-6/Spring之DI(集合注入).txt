@@ -1,0 +1,17 @@
+
+	知识回顾
+	IOC DI
+
+	利用构造方式  constructor-arg    name    value ref
+	利用set方法   property           name    value ref
+
+	对象的自动注入
+		autowire
+		1.constructor
+		2.byName  byType
+
+	=====================================================
+
+	数组
+	集合
+	形式的注入

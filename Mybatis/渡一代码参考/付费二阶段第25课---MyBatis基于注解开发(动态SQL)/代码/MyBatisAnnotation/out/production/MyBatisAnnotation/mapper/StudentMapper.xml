@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.StudentDao">
+
+    <!--自定义规则-->
+    <resultMap id="selectStudent" type="domain.Student">
+        <id property="sid" column="sid"></id>
+        <result property="sname" column="sname"></result>
+        <result property="ssex" column="ssex"></result>
+        <result property="sage" column="sage"></result>
+        <collection property="teacherList" javaType="list" ofType="Teacher" column="sid" select="selectTeacher"></collection>
+    </resultMap>
+    <!--辅助方法 根据给定的sid 查询对应的老师-->
+    <select id="selectTeacher" resultType="domain.Teacher">
+        select t.* from tea_stu ts inner join teacher t on ts.tid = t.tid where ts.sid = #{sid}
+    </select>
+
+
+    <!--与dao方法对应的(one)-->
+    <select id="selectOne" resultMap="selectStudent">
+        select * from student where sid = #{sid}
+    </select>
+
+    <!--与dao方法对应的(all)-->
+    <select id="selectAll" resultMap="selectStudent">
+        select * from student
+    </select>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!--之前的单表操作的查询-->
+    <!--<select id="selectOne" resultType="domain.Student">-->
+        <!--select * from student where sid = #{sid}-->
+    <!--</select>-->
+</mapper>

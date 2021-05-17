@@ -1,0 +1,73 @@
+
+	
+	知识回顾
+	DI依赖注入---属性
+	1.基础类型  int Integer String 
+		<bean id="" class="">
+			<property name="" value="">
+			<constructor-arg name="" value="">
+	2.对象类型  dao  service  controller
+		<bean id="" class="">
+			<property name="" ref="">
+			<constructor-arg name="" ref="">
+				<bean>内部
+	3.数组集合
+		<bean id="" class="">
+			<property name="">
+				<array>
+				<list>	<bean></bean>
+				<set>	<value></value>
+				<map>	<entry key="">
+				<props>	<prop key="">value</prop>
+
+	命名空间问题
+	写法的简便方式
+		<property name="name" value="">		p:name="value"
+		<constructor-arg name="" ref="">	c:name-ref="beanId"
+		<util:list id="">
+			<bean></bean>
+		<util:map id="">
+			<entry key="">
+
+	==========================================================================
+
+	补充两个小细节
+		1.两个不同的bean
+		他们两个引用了同样的对象
+		配置的过程中写起来就比较复杂   命名空间  autowire
+		将被引用的同样的对象装在一个模板里
+		两个不同的bean引用这个模板(继承的感觉)
+		<bean id="模板" class="自己定义一个类 抽象也行" abstract="true">
+		以上这个bean不能创建对象 只当做模板来用
+		<bean id="正常" class="" parent="模板">
+
+
+		2.Spring管理bean对象的机制
+			对象默认是单例形式  singleton
+			对象是立即加载方式
+			对象的注入方式	    默认是手动  property   constructor-arg
+			<beans>最大的标签中
+			default-lazy-init="true"
+			default-autowire="byName"
+			
+		3.在Spring的核心文件中引入外部文件
+			引入外部文件通常是.properties
+			通过一个命名空间的标签
+			<context:property-placeholder location="classpath:xxx.properties"></context:property-placeholder>
+			可以在某一个bean中给value属性赋值  ${key}
+
+	================================================================================
+
+	SpEL  ${}
+
+
+
+
+
+
+
+
+
+
+
+

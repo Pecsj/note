@@ -1,0 +1,20 @@
+select * from emp;
+
+
+select * from emp where ename like '%A%';
+
+
+
+select * from emp where ename like % 'A' %;
+
+
+底层的状态参数
+拿过来一条不完整的sql
+
+根据我们调用的setString方法判断当前问号的类型
+
+如果是String 拼接一个''
+
+
+
+select * from emp where ename like '%R%'

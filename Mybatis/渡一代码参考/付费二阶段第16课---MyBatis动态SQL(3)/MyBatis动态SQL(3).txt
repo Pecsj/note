@@ -1,0 +1,16 @@
+
+	
+	小任务(思考)
+
+	按照不同的条件查询----动态if判断   拼接
+
+	批量修改 删除
+		update emp set job = 'xxx' where empno in (a,b,c);
+
+	任务
+	展示所有的emp对象
+	每一行前面添加一个checkbox
+	一次勾选多个人
+	进行批量修改
+	1.用原生的JDBC和手动拼接SQL   ?
+	2.利用Mybatis提供的标签拼接	foreach

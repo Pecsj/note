@@ -1,0 +1,73 @@
+
+	LevelTwo
+	框架
+
+	SSM	Spring  SpringMVC  MyBatis
+		Maven  Redis  Nginx  Linux
+	基于SSM实现B/S大项目
+
+	SpringBoot
+	项目
+
+	SSH	Spring  Struts  Hibernate
+	项目
+
+	JPA
+
+==========================================================================
+
+	实现一个B/S项目			项目过程中有很多的对象产生-----对象的管理者MySpring
+	V:	视图层	给用户展示的信息	HTML   JSP   JSON	JS(JQ VUE)
+					(封装了一个总控制器 所有的.do请求 统一到这里来 负责分发给不同的类)
+	C:	控制层	控制视图响应信息	Servlet
+					(需要配置文件 继承 重写 两个参数 每一个类只有一个方法 具体的取值 调用业务 转发)
+	M:	模型层	数据处理		Service(Java业务逻辑)
+			数据读写		Dao(Java读写---JDBC、I/O)	数据存储(Domain)
+					(Dao层有很多代码重复  连接创建的性能不好)----封装ORM
+	DB:	数据层	数据库(文件)	
+
+
+	MyBatis
+	0.框架的发展历史
+	1.框架的作用(应用于哪一个层面)
+	2.框架基本应用
+	3.底层原理
+
+
+	1.MyBatis框架最早的名字叫iBatis
+		ibatis
+		2001年   Clinton Begin发起一个开源项目	iBatis1.0
+		2005年   iBatis2.0      2010年   iBatis3.0
+		iBatis在这之前都是由Apache组织管理
+		2010年6月份	iBatis项目交由谷歌公司托管	MyBatis
+		2013年11月	整个项目迁移至GitHub
+		2019年10月	MyBatis3.5.3
+	2.MyBatis是一个持久层的框架(DAO---数据库交互)
+		半自动的ORM框架	Object  Relational  Mapping(数据库的表---Java对象domain之间的映射关系)
+	3.基本使用
+		写好的代码  导包.jar
+		在项目中配置一个文件    dbconfig.properties
+			driver    url    user     password
+		获取jar包中的一个对象   SqlSession
+		执行数据库操作     insert   update   delete   selectOne   selectList
+		调用如上的方法  提供sql  提供sql上面的问号信息   如果是查询  提供查询以后返回的对象类型
+
+	4.依据我们之前对于自己小框架的使用     学习MyBatis的使用
+		1.导包
+			原来的官网   www.mybatis.org
+			现在去百度搜索     MyBatis官网	https://mybatis.org/mybatis-3/
+			mybatis-3.5.3.jar
+		2.参读一下mybatis-3.5.3.pdf英文手册
+
+	搭建mybatis
+		基本的新增  修改  删除		不带参数   携带参数
+		基本的查询  结果处理
+
+
+
+
+
+
+
+
+

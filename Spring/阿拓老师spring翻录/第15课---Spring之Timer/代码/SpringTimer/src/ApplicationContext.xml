@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 刚才我们自己定义的那个任务类 交给Spring来管理 -->
+    <bean id="springTask" class="springtimer.SpringTask"></bean>
+
+    <!-- 创建一个spring提供好的计时器对象 用来做倒计时管控(可以理解为刚才的Timer对象) detail细节 详述 -->
+    <!-- quartz-2.3.2.jar spring-context-support.jar -->
+    <bean id="jobDetail" class="org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean">
+        <property name="targetObject" ref="springTask"/>
+        <property name="targetMethod" value="doSomething"/>
+    </bean>
+
+    <!-- 创建一个spring提供的触发器对象 一旦上面的目标对象及方法确定 触发器就开始进行实践的计算及循环 -->
+    <bean id="cronTrigger" class="org.springframework.scheduling.quartz.CronTriggerFactoryBean">
+        <property name="jobDetail" ref="jobDetail"/>
+        <property name="cronExpression" value="30/5 17 16 * * ?"/>
+    </bean>
+
+    <!-- 将我们设置好的触发器对象 放置在一个Spring管理的集合对象中 SchedulerFactoryBean -->
+    <bean class="org.springframework.scheduling.quartz.SchedulerFactoryBean">
+        <property name="triggers">
+            <list>
+                <ref bean="cronTrigger"/>
+            </list>
+        </property>
+    </bean>
+
+</beans>

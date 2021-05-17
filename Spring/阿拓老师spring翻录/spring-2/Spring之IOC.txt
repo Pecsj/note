@@ -1,0 +1,71 @@
+
+	Spring
+	回顾
+	1.下载jar  5.2.5
+	2.导包
+		core beans context expression
+		commons-logging(apache提供1.2)
+	3.工程搭建
+		工程根目录
+		强烈建议ApplicationContext.xml
+			参考帮助文档---规则
+			<bean name class>
+		BeanFactory---->xml文件
+		getBean();
+	4.以上这个过程中
+		通过Spring的BeanFactory帮我们创建对象
+		将对象的控制权从自己new改为跟Spring要---->IOC
+
+		小细节
+		1.Spring管理的bean对象多少个?
+			每一个数据库的表格会对应一套Controller Service Dao
+			如果10个表格  10个C 10个S 10个D
+			多个bean对象  分属在不同的层次中
+			我们可以将配置拆分  看起来更好一点
+			
+			将XML文件拆分
+			方式一(String...)
+			ClassPathXmlApplicationContext("ApplicationContext.xml","","","");		
+			方式二(String[])
+			ClassPathXmlApplicationContext(new String[]{"ApplicationContext.xml","","",""});
+			方式三(通配符写法*)
+			ClassPathXmlApplicationContext("ApplicationContext*.xml")
+			方式四(主配置文件引入其他文件的方式)
+			ClassPathXmlApplicationContext("ApplicationContext.xml")
+			主配置文件中通过<import resource="ApplicationContext_Dao.xml"></import>
+
+		2.Spring管理的这些对象是每次new一个新的 还是单例ok
+
+			Spring管理的bean对象默认的效果是单例模式
+			单例模式底层---生命周期托管的方式(Servlet)
+			单例模式能否修改---可以修改
+			<bean scope="singleton只要name一致就是单例/prototype原型每次new新的"></bean>
+
+		3.如果是单例对象 立即加载 延迟加载
+			如果采用的是默认单例模式  对象的创建是立即加载(SpringBean工厂创建时 读取文件 加载对象了)
+			如果采用的是原型模式 对象在加载SpringBean工厂时候不会创建对象
+			平时我们在开发的时候可能更多的使用延迟加载的机制
+			我们可以通过修改Spring配置的方式来改变
+			<bean lazy-init="default/false表示立即加载 true表示延迟加载">
+
+
+		4.如果对象中有属性 自动将属性值赋上------->DI(Dependency Injection)
+			属性好多个  int String
+			属性如果是个对象
+			属性万一是个抽象/接口
+			属性是集合???
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		

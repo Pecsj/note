@@ -1,0 +1,89 @@
+
+	郑中拓
+
+	数据库相关
+	   MySQL     JDBC
+	JavaEE相关(web部分)
+	   HTML   CSS   JavaScript
+	   Tomcat    Servlet     JSP     EL+JSTL
+	   Fileter      Listener   XML   Cookie     AJAX
+
+================================================================
+
+	JavaSE
+	MVC分层架构思想(模型)
+	I/O	模拟一个小的银行系统
+	登录  查询  存款  取款  转账  开户  销户
+	容器(变量 数组 集合 对象) 内存中开辟空间
+	数据存储在文件里---->  数据永久的保存
+	I/O	File	文件输入输出流BufferedReader/BufferedWriter
+
+	V:View		视图层
+	C:Controller	控制层
+	M:Model		模型层(数据模型--->数据存储  数据读写  数据处理)
+			       数据处理(Service)
+			       数据读写(Dao)--->I/O
+			       数据存储(domain实体)   一个对象 仅仅是为了存储数据
+	D:Database	数据层
+			       文件    .txt      .properties
+	------------------------------------------------------------
+	数据库-----本质就是文件	数据永久的保存
+	       有很多写好的流程    可以帮我们操作文件
+	       如果我们想要读取保存的数据    给数据库发送指令   让他帮我们操作文件读写
+	
+	关系型数据库	SQL
+	非关系型数据库	NOSQL
+
+	1970年     IBM公司   研究室   存储数据  数据之间的关系
+		发表一种方式
+		将数据存储在表格里   表格之间的联系记录某种关系
+	1974年	IBM公司   研究室   研制出一套规范语言
+		SEQUEL    Structured  English  QUEry  Language
+	1976年     SEQUEL/2   发布新版本
+	1980年	SQL	Structured  Query  Language
+	1989年
+		由国际标准化组织(ISO)颁布SQL正式国际标准    SQL89标准
+		现在很多的数据库厂商还在遵循沿用着这套规范
+
+	IBM公司		DB2数据库
+	微软公司		SQLServer数据库   Accesss数据库(Office办公软件)
+	Oralce公司	Oracle数据库
+			MySQL数据库(最早是一家瑞典的公司MySQL)
+			SUN并购了(Java语言  收购MySQL)
+--------------------------------------------------------------------------------------------------
+	MySQL
+
+	SQL语言(关键字是不区分大小写  建议大家写大写的  风格统一)
+	操作数据库的语言规范
+
+	SQL结构化查询语言	Structured  Query  Language
+		**DDL(Data  Definition  Language)数据定义语言
+		     用来创建,删除,修改数据库中的对象(表格,用户,索引,视图,存储过程,触发器)
+		     create创建   drop删除   alter修改
+		**DML(Data Manipulation Language)数据操作语言
+		     用来操作数据库表格中的具体数据
+		     写数据    insert新增   delete删除   update修改
+		     读数据    select查询
+			  ***DQL(Data Query Language)数据查询语言
+			  select       where条件  group by分组  having条件  order by排序
+		DCL(Data Control Language)数据控制语言
+		     用来控制用户权限		SYSDBA数据库管理员
+		     (赋予)grant 权限,权限 to 用户
+		     (回收)revoke 权限,权限 from 用户
+		**TPL(Transcation Process Language)事务处理语言
+		     (可以理解为多线程并发访问同一个文件资源 带来的安全问题)
+		     begin Transcation
+		     commit提交
+		     rollback回滚
+		     save point A 保存还原点
+	-----------------------------------------------------------------------
+	在电脑上搭建一个环境
+	安装MySQL
+	www.mysql.com
+	下载安装程序   5.7.25
+
+
+
+
+
+

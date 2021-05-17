@@ -1,0 +1,51 @@
+
+	
+	知识回顾
+	1.自己定义一个异常类MyException
+	2.自己定义一个异常处理类ExceptionResolver(核心)
+		实现接口HandlerExceptionResolver
+		重写方法public ModelAndView resolveException(request,response,object,exception){
+				判断一下exception对象是否是我们自己抛出
+				创建ModelAndView对象  存储信息  转发路径  error.jsp
+				return mv;
+			}
+	3.告知Spring将我们自己定义的处理类管理起来(配置文件  xml 注解)
+		自己定义的处理类上面添加@Component注解(别忘了扫描包)
+
+	
+	SpringMVC的拦截器(Interceptor)
+	原生Tomcat时候
+		Servlet----资源类
+			1.请求 2.找业务 3.响应处理(拼接响应信息String<><>)
+		JSP(Java Server Page)----本质就是Servlet
+			帮助Servlet服务的 响应拼接   静态资源+动态数据
+			静态动态分离  HTML+AJAX+JSON
+		Filter-----过滤器 特殊的Servlet
+			责任链设计模式
+			动态代理机制----AOP设计思想
+
+
+	SpringMVC的拦截器可以理解为是以前的Filter
+	在真正到达资源(Controller---Servlet)之前做事情的
+	SpringAOP----自己定义类和方法---交给Spring帮我们管理
+
+	拦截器使用流程
+	1.自己定义一个拦截器的类(规则)
+		继承HandlerInterceptorAdapter
+		实现HandlerInterceptor(接口中三个方法都是default修饰)
+	2.自定义类的方法需要重写
+		preHandle	预先处理(controller之前执行)	SpringAOP前置
+		postHandle	请求后处理(controller之后执行)	SpringAOP后置
+		afterCompletion	完成后处理(controller执行完毕后)
+	3.配置ApplicationContext.xml文件
+		过滤器Filter		拦截器Interceptor
+		Tomcat容器提供的		SpringMVC框架提供
+		没有框架的时候可以	必须有框架支持
+		配置web.xml		Spring核心文件ApplicationContext.xml  "小总管"  /*  *.do
+		处理所有请求		处理Servlet请求
+
+
+
+
+
+

@@ -1,0 +1,71 @@
+
+	
+	基于Socket实现的QQ聊天小系统
+
+	1.socket(TCP/IP)
+		服务端	ServerSocket server = new ServerSocket(9999);
+			Socket socket = server.accept();
+
+		客户端	Socket socket = new Socket("服务端的IP",服务端开启的端口);
+	2.I/O技术
+		socket.getInputStream();
+		socket.getOutputStream();
+		流的包装
+		PrintWriter	println()
+		InputStreamReader
+		BufferedReader	readLine()
+	3.服务端存储客户端socket对象
+		User(uid,socket)
+		Map<uid,user>
+	4.发送和接收的时候，按照顺序
+		添加多线程的效果
+		让发送数据  接收数据并行
+
+		1.写一个自己的类
+		2.继承Thread    或实现Rannable
+		3.重写一个方法run
+		4.调用start方法 让线程进入就绪状态
+
+		为何需要线程?
+		解决的问题是一个人的发送 和 接收 并行的
+		一个人  客户端  几个线程对象  2 负责读 负责写
+		从昨天的情况来看
+		同时 服务端也需要2个线程对象 负责读和写
+
+		发送时候没有
+			uid:你好么?
+
+			某一个客户端发送  你好么?
+			客户端自己知道id		客户端的写线程需要进行修改
+
+
+	=====================================================================
+
+		客户端可以发送消息给服务器
+		客户端可以读取服务器写过来的消息
+
+
+		服务器不能主动说话
+		服务器的读和写就有顺序了
+		服务器一定是先读取某一个客户端发送来的消息
+		并且将这个消息转发给其他的一个、一堆客户端
+		服务器应该是充当一个中间媒介
+
+		将服务器的两个线程小弟干掉
+		重新写一个新的小弟  也是一个线程对象
+		线程对象中只有一个方法  先读 后转发
+			
+
+
+
+
+
+
+
+
+
+
+
+
+
+

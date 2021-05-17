@@ -1,0 +1,89 @@
+
+	1.在电脑上搭建一个环境
+		安装MySQL数据库
+		下载安装程序
+		官方网站    https://www.mysql.com
+		进入官网  点击downloads选项卡   拉至页面尾部 MySQL Community Edition
+		选择第一个下载链接MySQL Community Server
+			MySQL Community Server 5.7
+	2.如何安装MySQL数据库
+		我们在安装MySQL数据库的时候
+		我们的身份SYSDBA身份
+		提供一个默认操作数据库的超级账号
+		
+		*端口号       数据库相当于是一个服务器
+			我们把自己写的表格资源存放在数据库小服务器里
+			通过发送指令(SQL)   让数据库小服务器帮我们找寻需要的表格资源
+			TCP/IP协议连接
+			MySQL服务默认开放的端口号3306
+		*需要给root账号设置一个密码
+			root第一个
+			root确认密码
+		*数据库名字MySQL
+		
+		有可能会出现这个  按照如下提示进行操作
+		connect to server    连接到服务器
+		输入账号和密码    root   root   点击check   next
+		==============================
+		电脑中找寻MySQL命令行  command  line  client 工具  打开
+		输入root账号的密码  (root)
+		显示welcome证明连接数据库成功啦
+
+		一个服务中可以存在多个小工程(database)	
+		可以利用show databases;指令显示  当前root账号能看到的所有数据库
+		以后选择某一个小的database   里面创建表格  
+		use database名字;
+		可以利用show tables;指令显示当前的database中所有的表格
+
+	3.使用数据库时候需要注意的小问题
+		MySQL数据库相当于是一个小的服务器
+			先启动服务器localhost    开放一个端口3306
+		如果打开命令行黑框的时候 输入密码 之后没有反应
+			1.密码输入错误
+			2.有可能MySQL的服务忘记开启
+		删除数据库的时候  经常会忘记数据库服务的事情
+	
+	=================================================
+
+	4.卸载数据库的服务
+		*1.停止服务   千万不要忘记
+		2.卸载产品   控制面板    应用和功能
+		*3.删除注册表信息
+			窗口键+R    输入指令regedit
+			进入到注册表编辑器小页面
+			    HKEY_LOCAL_MACHINE
+			          SYSTEM
+				ControlSet字样的
+				      Services
+					先找有没有MySQL字样的信息   有就删掉
+					再找EventLog  里面的 Application
+		4.手动去访问当前电脑安装的目录
+			还有一些文件的残留
+			手动删除
+			安装目录C:\Program Files   C:\Program Files (x86)
+				找寻MySQL字样文件夹   有就删掉
+			找到系统盘中的隐藏文件夹C:\ProgramData
+				找到MySQL字样文件夹   有就删掉
+		5.重启电脑
+			重启电脑之后有可能还会再弹出MySQL的卸载向导
+			选中  remove   execute执行
+			
+			有一些配置和注册信息才生效
+			如果在安装过程中出现MySQL服务名字冲突的问题
+			一定是没有卸载干净
+				通常会出现
+				1.卸载的时候没有停止服务
+				2.注册表信息还有残留
+				3.系统盘中的隐藏文件夹有残留
+
+		SQL
+		  DDL   创建  删除  修改   表格结构
+		  DML  新增  删除  修改  (DQL)查询   where
+		
+
+
+
+
+
+
+	

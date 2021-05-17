@@ -1,0 +1,74 @@
+
+	知识回顾
+	1.Tomcat  使用    下载   搭建到IDEA   配置信息
+		Tomcat自己的结构了解
+	2.需要创建一个WEB项目     部署在Tomcat中    Tomcat运行
+	3.浏览器发送请求     请求Tomcat帮我们找寻需要的资源
+		文件资源(里面的信息)
+		    .html文件     的内容String   按照某种规律排布<><>
+		    文件中内容写好之后是固定      静态信息
+		操作资源(一个Java类对象  执行方法  执行完毕的结果)
+		    Servlet类对象    里面的方法执行完毕最终的结果    结果String   某种规律<><>
+		    方法执行可能根据不同的参数    执行的逻辑不一样    动态信息
+		*如何访问一个Servlet类对象
+		1.自己写一个类   通常叫XXXController          (Servlet  Action)
+		2.继承一个父类HttpServlet
+		3.重写一个方法service		   (doPost  doGet)
+		4.方法里有两个参数HttpServletRequest    HttpServletResponse
+		5.方法还有两个异常ServletException         IOException
+		6.方法是没有返回值    void类型
+		7.需要告知Tomcat有一个自己定义类需要帮忙管理  web文件夹  WEB-INF文件夹
+			需要配置web.xml	请求名字----真实类全名   映射关系
+			<servlet>
+				<servlet-name>用来配对的名字</servlet-name>
+				<servlet-class>真实类全名</servlet-class>
+			</servlet>
+			<servlet-mapping>
+				<servlet-name>用来配对的名字</servlet-name>
+				<url-pattern>/请求名字</url-pattern>
+			</servlet-mapping>
+		8.浏览器发送请求
+	=========================================================
+
+		小任务
+		利用Tomcat   利用HTML  利用Servlet
+		实现一个银行系统	B/S
+		V	HTML    JSP
+		C	Servlet
+		M	Java    Service
+			            Dao
+			            JDBC
+		DB	MySQL
+
+
+		1.浏览器发送请求      展示一个登录信息    每个人都一样   静态资源HTML
+		2.浏览器点击登录按钮发送请求      填写账号和密码        每个人不一定一样    欢迎   重新输入
+
+		一个小知识点的补充
+		发送请求的时候如果只写工程名   不写资源名????
+		Tomcat需要参考web.xml配置文件
+			有两个web.xml文件
+			一个在当前工程的web文件夹内的WEB-INF文件夹内
+			另一个在Tomcat自己的conf文件夹内
+			<welcome-file-list>
+				<welcome-file>index.html</welcome-file>
+				<welcome-file>index.htm</welcome-file>
+				<welcome-file>index.jsp</welcome-file>
+			</welcome-file-list>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

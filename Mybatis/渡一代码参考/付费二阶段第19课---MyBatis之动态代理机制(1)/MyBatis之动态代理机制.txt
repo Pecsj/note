@@ -1,0 +1,63 @@
+
+	知识回顾
+	MyBatis基于Mapper的执行方式
+	1.基本使用
+		Service		dao对象作为属性  dao执行方法 数据操作
+		Dao		sqlSession对象作为属性  sqlSession执行方法
+	2.基于Mapper使用
+		Service		dao对象的一个代理对象	看似调用dao方法执行
+			sqlSession.getMapper(class);
+		Dao接口(规则)	没有sqlSession对象属性	
+				dao接口类名字   mapper文件的namespace一致
+				dao类中方法名字 mapper文件的标签id一致
+
+	静态代理
+	动态代理
+
+	==========================================================================
+
+	静态代理
+	JDBC封装----连接池
+
+	dao--JDBC--database
+	JDBC
+	1.导包
+	2.加载驱动
+	3.获取连接
+	4.创建状态参数
+	5.执行操作	SQL
+	6.关闭
+
+	问题	
+		获取连接(3步) 性能很慢 连接不能重复利用----连接池
+		JDBC创建流程过于重复-----------------------ORM
+
+
+		连接池封装
+		1.创建好多个可用连接----统一管理起来
+			ArrayList<MyConnection> connectionPool;
+		2.自定义一个类型
+			每一个连接  绑定  状态boolean
+			创建一个新的类MyConnection 两个属性Connection 属性used
+		3.提供一个方法给用户
+			MyConnection mc = 连接池.getConnection();
+		4.想在改变底层连接管理的方式 同时 让用户没有察觉
+			Connection conn = 连接池.getConnection();
+
+					Connection接口
+			JDBC4Connection(真实)		MyConnection(自己)
+							存在一个属性真实对象
+
+			Connection conn = DriverManager.getConnection();//父类--真实子类
+			Connection conn = 连接池.getConnection();//父类--自己类的对象
+
+			PrepareStatement pstat = conn.preparedStatement();
+
+
+
+
+
+
+
+
+

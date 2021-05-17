@@ -1,0 +1,59 @@
+	
+	列的约束
+	1.主键约束(Primary  Key)
+		每一个表格内  只能有一个列被设置为主键约束
+		主键约束通常是用来标记表格中数据的唯一存在
+		主键约束要求当前的列   不能为null值
+		主键约束要求当前的列   值是唯一存在的  不能重复
+		alter table 表名 add constraint 约束名字 约束类型 (列);
+		alter table myclass add constraint pk_myclass primary key (classid);
+		添加好主键约束后 可以通过如下语句查看
+		desc 表名;------>description描述
+		show keys from 表名；
+		发现自己定义的主键名字没有用上 可以简写为
+		alter table 表名 add primary key (classid);
+		添加主键之后若想要让主键自增 可以做相应的设计
+		alter table myclass modify classid int(4) auto_increment;
+		alter table myclass change classid classid int(4) auto_increment;
+		没有做起始值的说明   主键列的值会从1开始
+		alter table myclass auto_increment = 10;
+		删除主键约束
+		alter table myclass drop primary key;
+		注意:删除主键约束以后   不重复的特性取消了   非空特性还在
+		alter table myclass modify classid int (4) null;
+	2.唯一约束(Unique [Key])
+		可以为表格中的某一个列添加唯一约束    约束与主键类似
+		唯一约束表示的是列的值    不能重复     可以为空
+		唯一约束在表格中可以存在多个列  
+		alter table 表名 add constraint 约束名 约束类型 (列); 
+		alter table myclass add constraint uk_myclass unique [key] (loc);
+		可以简写为如下效果
+		alter table myclass add unique key(loc);   约束名默认的列名
+		删除唯一约束
+		alter table myclass drop index 约束名;
+	3.非空约束
+		在表格中的某一个列上添加非空约束   
+		当前列的值不能为null
+		alter table 表名 modify 原列名 原类型 原长度 [not] null default xxx;
+		alter table 表名 change 原列名 原列名 原类型 原长度 [not] null default xxx;
+	*4.外键约束
+		约束自己表格内的信息不能随意填写
+		受到另外一个表格某一个列的影响---->
+
+		
+	小任务
+	1.设计一张表格myclass  用来记录班级的信息
+	2.表格中存储三个列   
+		classid(班级编号--主键)  再尝试一下主键自增
+		cname(班级名字--非空)  再尝试一下默认值
+		loc(班级位置城市--唯一)
+	3.将三个约束再全部删除
+		将表格还原到最初创建时的样子
+		desc 表名;
+		show keys from 表名;
+
+
+
+
+
+

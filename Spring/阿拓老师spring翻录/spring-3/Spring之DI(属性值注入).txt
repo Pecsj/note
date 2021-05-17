@@ -1,0 +1,70 @@
+
+	知识回顾
+	Spring----管理 bean
+	IOC	Inversion Of Control
+	对象的控制权翻转---交给"别人"来管
+
+	需要一个Spring提供的BeanFactory
+
+	基本流程
+	1.下载jar
+	2.导包	core beans context expression	commons-logging
+	3.搭建
+		当前工程内需要一个核心配置文件
+		名字建议ApplicationContext.xml
+		创建BeanFactory
+			BeanFactory factory = new ClassPathXmlApplicationContext("");
+			Object obj = factory.getBean("id/name");
+
+		加载BeanFactory一个小扩展
+			BeanFactory factory = new ClassPathXmlApplicationContext("");
+			BeanFactory factory = new FileSystemXmlApplicationContext("");
+
+			SystemPath(系统路径 当前电脑的硬盘路径 C D)
+			ProjectPath(工程路径 当前写源代码的地方 并不是最终字节码的位置)
+			ClassPath(真实类路径 字节码所在的地方 字节码文件信息加载入内存)
+	4.bean对象管理机制问题
+		bean对象是由factory创建----必然需要读取xml文件(bean name class)
+		bean如果很多  xml中的配置很多 文件拆分
+		几种不同加载xml文件的形式
+			new ClassPathXmlApplicationContext("","","",""....);
+			new ClassPathXmlApplicationContext(new String[]{"","","",""});
+			new ClassPathXmlApplicationContext("ApplicationContext*.xml");
+			new ClassPathXmlApplicationContext("ApplicationContext.xml"); 主文件里面 <import resource="其他文件">
+			
+		bean对象交给Spring进行管理----IOC
+		bean对象是单例的 还是多例
+		默认情况是采用单例形式管理
+		单例形式可以进行修改   <bean scope="single/prototype">
+		默认单例情况下 对象是立即加载的方式
+		立即加载的形式可以修改 <bean lazy-init="default/false立即  true延迟加载">
+
+	======================================================================================
+
+	5.对象交给Spring来管理----IOC
+	  对象中可能会有一些属性---自动帮我们将属性值赋上
+	  对象创建的同时能自动的将对象中的属性值注入进去-----DI(Dependency Injection)
+	  控制翻转IOC 依赖注入DI
+	  面向切面编程AOP
+
+		通过bean创建的同时给属性赋值
+		1.set方法赋值
+			<bean>
+				<property name="属性名" value="属性值">
+			</bean>
+			注意 无参数构造方法必须存在 属性对应的set方法也必须存在
+		2.构造方法赋值
+			<bean>
+				<constructor-arg name="" value="" type="">
+			</bean>
+		目前为止这个bean对象中的属性 基本类型都可以管控
+			int Integer String
+		问题:	这些属性值是自己管理  value值------->我们以后管理的bean应该不是domain这种
+			我们管理的对象可能都是dao service controller
+			对象中还有其他的对象(对象嵌套 聚合关系)
+		下节课	bean对象中包含有对象的形式
+
+
+
+
+

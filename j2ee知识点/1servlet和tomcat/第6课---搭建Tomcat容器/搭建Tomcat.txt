@@ -1,0 +1,57 @@
+
+	web容器-----服务器(硬件 软件)
+
+	Tomcat	Apache组织开源免费容器
+	Jetty	
+	Resin	Caucho公司一个产品
+	JBoss    WebLogic    WebSphere
+
+	Tomcat是Apache组织的一个开源免费的容器
+	用来管理web项目     Servlet   JSP   HTML+CSS+JavaScript
+	了解一下历史及各种版本
+	Tomcat6  JDK5     Servlet2.x  JSP2.x   EL2.x
+	Tomcat7  JDK6     Servlet3.x  JSP2.x   EL2.x
+	Tomcat8  JDK7     Servlet3.x  JSP2.x   EL3.x
+	Tomcat9  JDK8     Servlet4.0  JSP2.3   EL3.0
+
+
+	1.下载一个Tomcat容器
+		www.apache.org
+		下载之后直接解压缩就可以使用啦
+	2.了解一下Tomcat容器的所有文件夹结构
+		bin文件夹		服务器启动相关
+		*conf文件夹	配置文件	web.xml(请求相关)    server.xml(容器自身的信息 比如端口)
+		lib文件夹		jar形式的包
+		logs文件夹	日志信息
+		temp文件夹	临时文件
+		*webapps文件夹	用来存放部署在容器内的项目资源的
+		*work文件夹	用来存放解析JSP后形成的java文件
+	3.将Tomcat和IDEA集成在一起   便于开发调试
+		Run---> Edit  Configurations
+		左上角+号   Tomcat Server  Local
+		若没有 证明IDEA中缺少相关的插件(File--Settings--Plugins--Installed)
+		搭建一个集成环境完毕
+		如果运行Tomcat后  IDEA控制台出现乱码的问题 解决一下
+			1.修改一下IDEA安装目录bin文件夹中的配置文件
+				D:\JetBrains\IntelliJ IDEA 2018.3\bin
+					idea.exe.vmoptions
+					idea64.exe.vmoptions
+				记事本形式打开   添加一行    -Dfile.encoding=UTF-8
+				如果不好用   另外再添加一行   -Dconsole.encoding=UTF-8
+			2.在配置Tomcat容器的时候做参数处理
+				server选项卡
+				VM options处添加   -Dfile.encoding=UTF-8
+				如果还不好用
+				Startup/Connection选项卡
+				勾选 Pass  environment  variables
+				手动添加
+				JAVA_OPTS		-Dfile.encoding=UTF-8
+				JAVA_TOOL_OPTIONS	-Dfile.encoding=UTF-8
+	4.创建web项目
+	5.访问web项目
+
+
+
+
+
+

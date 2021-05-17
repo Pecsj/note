@@ -1,0 +1,66 @@
+	
+	Tomcat
+	Servlet(控制器)
+	JSP(本质是一个Servlet)
+	EL+JSTL
+
+	Filter(过滤器)
+	   1.Tomcat提供的一个组件  类似Servlet机制 使用方式
+	   2.是一个特殊的Servlet
+	   3.过滤什么?  什么时候使用?
+	
+
+	学习步骤
+	1.基本使用
+		可以参照着Servlet
+		自己定义一个类
+		继承HttpServlet
+		重写方法  service    doPost   doGet
+		两个参数  HttpServletRequest   HttpServletResponse
+		可以抛出两个异常     ServletException     IOException
+		告知tomcat（配置web.xml文件）
+			<servlet>
+				servlet-name
+				servlet-class	目标
+			<servlet-mapping>
+				servlet-name
+				url-pattern
+		----------------------------------------------------------------------------
+		自己定义一个类
+		继承HttpFilter	Tomcat9
+			如果使用是Tomcat9之前的版本	直接实现Filter接口
+		重写方法	doFilter方法   init  destroy
+		三个参数	HttpServletRequest    HttpServletResponse   FilterChain
+		异常	ServletException     IOException
+		配置
+			<filter>
+				filter-name
+				filter-class	某一个Filter
+			<filter-mapping>
+				filter-name
+				url-pattern
+
+		执行filter是在到达真正目标之前的一个环节
+		filter先执行	目标后执行		目标(Servlet  JSP)
+		filter执行之后   后续目标没有啦？？？？
+
+		从代码和流程图来看
+		似乎Filter可以替代Servlet	功能上完全可以提到
+		从使用上貌似不行
+			1.现实生活中    目标是真正做事的    过滤器负责拦截的
+			2.目标是做一件事情的    过滤器好多请求都会经过
+			3.过滤器   目标之前做点事情    目标之后还会做点事情
+	2.管理机制
+	3.继承关系
+	4.特殊在哪里
+		可以放行  Servlet不能
+		请求  好多人都经过  怎么拦截
+		请求  浏览器发出   内部转发  重定向
+		过滤器是否可以有多个
+	5.什么场景下用
+
+
+
+
+
+

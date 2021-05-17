@@ -1,0 +1,82 @@
+
+	知识回顾
+	
+	1.MyBatis是一个持久层的框架
+	2.MyBatis底层封装的是JDBC
+	3.MyBatis是一个半自动的ORM	Object  Relational  Mapping(Java的domain对象----数据库表)
+
+	4.简单的历程
+		2001年   Clinton Begin 发起一个开源项目	Apache组织的开源项目中
+			iBatis
+		2010年   被谷歌公司托管    MyBatis
+		2013年   整体迁移至GitHub管理	3.5.3
+
+	--------------------------------------------------------------------------------------------------
+
+	V	html   jsp   json
+	C	Controller		Servlet
+	M	Service
+		Dao(持久层)	domain
+		JDBC+SQL
+		1.导包--->加载驱动类
+		2.创建链接
+		3.创建状态参数(相当于一个流对象  可读/可写)
+		4.执行操作
+			int =       executeUpdate增删改DML(写 更新)
+			Result =  executeQuery  查询    DQL(读 数据库内容不变  需要结果)
+		5.关闭所有对象
+	DB	MySQL	文件
+
+	
+	当时遇到的问题
+		1.JDBC创建连接的时候  每一次用完就销毁了  (性能)
+		2.DAO层中的好多JDBC流程都一样(冗余  流程一样  相差一些SQL  相差参数)
+
+		SqlSession类	帮我们执行所有一样流程
+			insert  update  delete	只需要提供sql 和 sql上的问号信息
+			selectOne   selectList	只需要提供sql  sql上面的问号信息   告知查询结果如何存储
+
+	之前自己的ORM使用流程
+		1.导包
+		2.配置文件  dbconfig.properties (连接信息   driver  url   user   pass)
+		3.创建SqlSession对象   去做事    
+		4.传递一些信息   sql   sql上面的问号信息    如果是查询  还需要告知结果如何存储
+
+	MyBatis基本配置
+		1.导包
+		2.核心配置文件     configuration.xml  (目的 存储与数据库相关联的那些信息  driver  url  username  password)
+			文件的内容可以参考MyBatis.pdf官方文档	英文版   页码7页左右地方 提供了dtd规则		
+			文档中的跟标记   configuration
+				两个字标记    environments
+						environment   id
+					   mappers
+						mapper	resourct="另一个文件"
+		3.写mapper文件(dao类的个数一致)
+			存储某一个dao类中执行时需要的所有sql语句
+			文件名任意
+			文件的内容参考MyBatis.pdf官方文档        英文版   页码8页偏下部分
+			跟标记mapper
+				mapper标记中有一个属性    namespace    目前为止随意  强烈建议dao类全名
+				mapper中有好多子标签
+					<insert id="">  <delete>  <update>  <select>
+					子标签的id理论上可以随意   强烈建议 id---dao中的方法名一致
+		4.给我们提供了一个SqlSession对象	去做事
+		5.传递一些信息    sql   问号信息    如果是查询  还需要告诉结果类型
+		6.SqlSession对象默认是手动提交事务	如果想要自动   openSession(true);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

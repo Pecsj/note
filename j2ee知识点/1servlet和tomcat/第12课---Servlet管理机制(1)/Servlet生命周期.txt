@@ -1,0 +1,84 @@
+	
+	银行系统
+	1.深入理解MVC分层架构思想
+		V   C   M	     controller   service   dao    domain	(MySpring)
+	2.深入理解请求和响应之间的原理
+		两张图
+	3.涉及到的技术需要非常熟练的掌握
+		Tomcat容器
+		文件资源	HTML
+		操作资源	Servlet	web.xml
+		JDBC知识
+		数据库SQL	    集合Map   List    类和对象
+=======================================================
+
+	*4.深入研究一下Servlet的机制问题
+
+	不同的浏览器同时访问我的Tomcat(里面的资源)
+	每一次点击"点我呀"的按钮   发送一个新的请求
+	自己写的Servlet类中添加了一个属性 count
+	每一次发送一个新的请求  count都会自增
+	通过上述的演示   说明count属性没有创建新的----->属性是唯一的
+	惊奇的发现了一个问题   属性是属于TestController对象的
+	属性是唯一的----->对象是唯一的(单例模式)
+
+
+	Servlet管理机制问题
+	1.Servlet类的对象是单例设计模式(对象是唯一的)
+	   采用生命周期托管的方式实现的
+	   Tomcat底层有一个类似ServletController的类管理着我们的对象
+	2.单例对象的产生
+	   立即加载(Tomcat启动的时候 底层集合内就存在对象啦)
+	   延迟加载(Tomcat启动的时候没有对象产生 什么时候发送请求需要用到这个对象 才会创建)
+		Tomcat启动的时候   web.xml文件如果写错了   服务器启动会报错
+		证明Tomcat在启动的时候  就读取了我的web.xml配置文件
+		web.xml文件配置的目的  存储请求名字---真实资源类名的对应关系
+	   Servlet对象的创建和销毁---->Servlet对象的生命周期问题
+		Tomcat为了更好的管理对象的产生和销毁
+		提供了三个方法---->标识Servlet对象的生命周期
+		init();  service();  destroy();    重新部署项目
+	3.默认效果是一个延迟加载的机制
+		是否可以改变成立即加载的方式呢?
+		加载Servlet对象的时候是否能携带一些信息?
+
+
+
+
+
+		浏览器发送请求---->服务器
+			                1.接收请求String     请求名?参数
+			                2.解析    请求名String    参数HashMap
+			                3.包装    Request对象(请求携带的所有)    Response对象
+			                4.通过Requst对象中包含的请求名字--->找资源
+
+				ServletController(这个人负责找资源)
+
+		public class ServletController{
+
+			//请求名字和真实类名字对应关系
+			private static HashMap<String,String> controllerNameMap = new HashMap<>();			
+			//请求名字和类对象的关系
+			private static HashMap<String,HttpServlet> objMap = new HashMap<>();
+
+			public void findController(request,response){
+				String content = request.getContent();//请求的名字
+				HttpServlet obj = objMap.get(content);//通过请求名字去第二个集合找真实对象
+				if(obj==null){
+					String realControllerName = 读取配置文件获取类全名(缓存)
+					Class clazz = Class.forName(realControllerName);//找类
+					HttpServlet obj = clazz.newInstance();
+					objMap.put(content,obj);//
+				}
+				Class ControllerClazz = obj.getClass();
+				Method method = clazz.getMethod("service",request,response);
+				method.invoke(obj,request,response);
+			}
+		}
+
+
+
+
+
+
+
+

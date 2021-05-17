@@ -1,0 +1,61 @@
+
+	知识回顾
+
+	关联查询之		一对一问题
+	人----身份证
+	数据库中两张表格
+		人表格Person     pid(主键)   pname   cardid(外键 唯一)
+		身份证IDCard     cardid(主键)   address
+	Java中domain对象
+		Person类	   pid属性   pname属性   IDCard对象属性
+		IDCard类     cardid属性   address属性    Person对象属性
+	
+	SQL----Mapper.xml文件
+		给pid作为条件	人信息+身份证信息
+		<resultMap id="xxx" type="domain.Person">
+			<id property="属性" column="列">
+			<result property="属性" column="列">
+			<association property="属性" javaType="" select="yyy" column="条件">
+		</result>
+		<select id="yyy" resultType="">
+			select * from idcard where cardid = #{条件}
+		</select>
+
+		<select id="selectOne" resultMap="xxx">
+			select pid,pname,cardid from person where pid = #{pid}
+		</select>
+
+	一对一关系的单条记录查询
+	一对一关系的多条记录查询
+
+
+	需要一个小工具	执行底层数据库查询的时候  希望打印SQL语句
+	log4j.jar	还需要自己手写一个配置文件	log4j.properties
+
+
+	一对一对应关系
+		采用两次查询的配置方案
+		查询的时候产生一个N+1问题
+		如果查询的数据 只有主表(Person)的数据  从表(IDCard)暂时没用到
+		如果可以做一个延迟机制  提升性能
+		可以通过配置setting来解决
+			<setting name="lazyLoadingEnabled" value="true"/>
+			<setting name="aggressiveLazyLoading" value="false"/>
+		
+		也可以采用联合查询的配置方案
+		方案见mapper.xml
+		
+
+
+	需求	给pid  	查询person+idcard信息
+	需求	给cardid	查询person+idcard信息
+
+
+
+
+
+
+	
+
+
+

@@ -1,0 +1,65 @@
+
+	
+	知识回顾
+	1.导包
+	2.核心入口  DispatcherServlet   *.do
+	3.配置MVC文件   ApplicationContext.xml
+	4.发送请求
+		请求----方法
+		@RequestMapping()
+	5.接收请求参数
+		传递的key和方法中的变量名  对应即可   String int
+		@RequestParam注解
+		传递的好多key值刚好能组合成一个对象  直接用对象来接收
+		将传递过来的好多值存入map集合  参数可以用map 参数前必须加注解@RequestParam
+		#如果想要在方法中获取原生的Request，Response直接写参数即可
+
+	=============================================================
+
+	接收请求参数的时候
+	产生的中文乱码问题
+	可以利用SpringMVC给我们提供的一个小过滤器处理
+
+	
+	如何自定义类型转换器
+	Converter
+	1.自定义一个类
+	2.实现上面这个接口
+		接口是支持泛型  Converter<String,Type>
+	3.重写接口中的转换方法
+		方法内部该做具体转化的事情
+		方法会返回一个转化后的对象
+	4.告知Spring这里有一个自定义的类型转换器
+		需要让Spring帮我们加载并管理起来
+		配置<bean>
+
+
+	-----------------------------------------------------------
+
+	接收请求参数的时候
+	@RequestParam注解   变量  Map
+	@RequestHeader注解  接收协议头数据
+	@CookieValue
+
+	@RequestBody注解(JSON)	接收 key=value;key=value 放在参数前面
+		注解只能接收post请求方式  post请求是存在协议体(参数)
+		get请求只有协议头没有协议体
+
+	@ResponseBody注解(JSON) 响应
+
+	@ModelAttribute注解
+		放在某一个方法上面
+		方法在请求的方法执行之前先执行的(块 init)
+	
+
+
+
+
+
+
+
+
+
+
+	
+	

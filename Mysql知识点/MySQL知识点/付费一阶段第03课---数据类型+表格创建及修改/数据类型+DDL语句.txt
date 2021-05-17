@@ -1,0 +1,115 @@
+
+	环境搭建
+	1.下载一个安装程序   MySQL(5.7)
+	2.按照向导进行安装
+		设置数据库名--->MySQL
+		给root账号设置密码--->root
+		设置开放端口号--->3306
+	3.启动MySQL服务
+	   通过命令行客户端连接数据库
+		输入   show databases;
+			为了显示当前MySQL数据库中有多少个小的database;
+	   	选择一个database来使用
+			use database名字;
+		输入   show tables;
+			为了显示当前的database中有多少个table
+		输入   exit;
+	4.卸载数据库
+		停止服务
+		卸载产品		去控制面板--->应用和功能--->产品卸载
+		删除注册表信息	窗口键+R	输入regedit命令   进入注册表编辑器
+		手动清除残留	所有安装程序带有MySQL字样的文件夹
+		重新启动计算机	
+		
+	=====================================================
+
+	通过(小黑框)    客户端命令行窗口    发送指令(SQL)
+
+	SQL结构化查询语言(Structured  Query  Language)
+	       DDL数据定义语言(Data Definition Language)
+		用来定义数据库中的对象(database table)
+		create创建  drop删除  alter修改
+	       DML数据操作语言(Data Manipulation Language)
+		用来操作数据库表格中的数据(信息)
+		写入信息	新增insert    删除delete   修改update
+		读取信息    查询select			CURD
+		DQL(Data Query Language)
+			select	where   group by   having   order by
+	       DCL数据控制语言(Data Control Language)
+		用来控制数据库中用户的权限
+		grant   revoke
+	       TPL事务处理语言(Transaction Process Language)
+		可以理解为   多线程并发操作同一个文件
+		begin transaction
+		操作
+		commit;提交    rollback回滚     save point 保存还原点
+
+	-----------------------------------------------------------------------
+
+	DDL数据定义语言
+		create  *alter  drop
+		1.先在MySQL数据库中创建一个database
+			create database 数据库名;
+			建议大家起名字最好遵循之前的规范----英文   见名知义
+			注意:  Java英文字母区分大小写
+			          MySQL英文字母  不区分大小写(关键字  表格名字  列名字)
+		2.在我们自己的database里创建table
+			create table 表格名字(	public class 类的名字{----domain
+			     列名  数据类型(长度),	      数据类型  名字;
+			     列名  数据类型(长度),	      数据类型  名字;
+			     列名  数据类型(长度)	      数据类型  名字;
+			)			}
+		3.数据库中的数据类型
+			存储数据的方式来分类
+			分为三类
+
+			数值型
+			    整数	tinyint    smallint   mediumint   *int4字节32bit    bigint
+			    小数       *float 4    *double 8     decimal   numeric
+			字符串
+			    char字符串    *varchar可变长字符串	variable可变的
+			    char(4)	         varchar(4)	数据库里面所有的字符串类型
+			    a    4字节         a    1字节	使用'a'  'abc'
+			    ab  4字节         ab  2字节
+			    binary二进制	varbinary可变二进制
+			    blob二进制大文本	text正常字符大文本
+			日期/时间
+			    *date日期    time时间    *datetime日期&时间    timestamp时间戳
+			
+		4.在自己的database中创建一个表格
+			用来记录学生的信息----Student
+			   学号   姓名   性别
+		5.通过DDL语句修改表格的结构
+			1.表格名字错啦
+				alter table 原表名 rename [to] 新表名;
+			2.修改原有的列(列名错啦  列类型不对  列长度不够)
+				alter table 原表名 change 原列名 新列名 新类型 新长度;
+			3.新增一个列
+				alter table 原表名 add 新列名 新类型 新长度;
+			4.删除一个原有的列
+				alter table 原表名 drop 原列名;
+		6.删除table   删除database
+			drop table 表格名字;
+			drop database 数据库名字;
+
+		小任务:
+		1.在自己的计算机上搭建MySQL环境
+		2.通过小黑框(命令行窗口)  发送指令
+		3.创建一个自己的database
+		4.在里面创建一个自己的表格---->Student记录学生的信息
+		5.先添加几个列(字段)    学号  姓名  性别--->类型自己选
+		6.修改表格的结构   
+			修改表名  列名  列类型  列的长度  新增列  删除列
+		7.删除表格
+		8.删除数据库database
+
+
+
+
+			
+
+
+
+
+
+

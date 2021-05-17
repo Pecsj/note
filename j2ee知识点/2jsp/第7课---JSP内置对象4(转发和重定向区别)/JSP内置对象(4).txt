@@ -1,0 +1,50 @@
+
+	1.request
+	response
+	session
+	application
+	out
+	page
+	pageContext
+	config
+	exception
+
+==============================================================
+
+	JSPWriter	   out内置对象
+	out.write();
+
+	HttpServletResponse	response	客户端响应信息
+	1.response.setCharacterEncoding("UTF-8");
+	2.PrintWriter pw = response.getWriter();	pw.write("");
+		200  404  405  500  
+		HTTP Status XXX	状态响应码	   服务器-->浏览器
+	3.int statusNumber = response.getStatus();//获取状态响应码
+	4.response.setStatus(int statusNumber);//设置响应码
+	5.response.addCookie();	Cookie是在客户端(浏览器端)存储的一个记录
+		new Cookie("key","value");	key不可以为null   且字符串长度不能为零
+	#6.response.sendRedirect("path");	用来做请求重定向
+
+-----------------------------------------------------------------------------------------------------------
+	转发和重定向的区别
+	forward		sendRedirect
+1.RequestDispatcher类	HttpServletResponse类
+2.rd.forward(req,resp);	response.sendRedirect("path");
+3.转发是在服务器内部完成	重定向是服务器告知浏览器
+   浏览器不知道		让浏览器重新再发一个请求
+   服务器内部传递req resp	服务器需要解析新的请求   获得新的req resp
+   最终的展示可以获取请求的信息		刚才的req没有了  刚才的参数获取不到
+   (一次请求)			(两次请求)
+4.转发的时候浏览器URL不会改变		重定向的时候浏览器的URL会发生改变
+
+
+
+
+
+
+
+
+
+
+
+

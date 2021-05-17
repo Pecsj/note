@@ -1,0 +1,23 @@
+
+
+	基于注解开发	实现动态SQL
+		dao接口(底层代理)
+		mapper.xml   Annotation
+
+
+
+	将原有的mapper.xml形式文件---->替换成基于注解开发
+	原有的configuration.xml中告知扫描注解
+		<mapper resource>-->基于mapper.xml
+		<mapper class>----->基于注解
+
+		<select id="" resultType="" | resultMap="">
+		<delete id=""> <insert id=""> <update id="">
+		<where> <if> <foreach>
+
+
+		@Param("key")
+		@Results(id="",value={@Result(one=@One()),@Result(many=@Many(select=""))})
+		@Select("sql")
+		@Insert("sql") @Delete("sql") @Update("sql")
+		@SelectProvider(type=XXX.class,method="")

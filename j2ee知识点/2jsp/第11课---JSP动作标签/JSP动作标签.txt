@@ -1,0 +1,75 @@
+
+	知识回顾
+	JSP标签
+	指令<%@ xxx%>
+		page	contentType  language  pageEncoding  import  isErrorPage  errorPage
+		taglib	uri  prefix
+		include	file
+			注意在JSP中引入HTML形式的资源 会产生中文乱码
+			需要在web.xml中配置信息
+				jsp-config
+					jsp-property-group
+						url-pattern   *.html
+						page-encoding  UTF-8
+	代码<%%>
+		<%!	%>
+		<%	%>
+		<%=	%>
+
+	动作标签
+		<jsp:xxx>
+		替代之前Java程序 创建对象 对象赋值取值  请求转发 携带参数
+		<jsp:include page="">
+		<jsp:useBean id="" class="" scope=""></jsp:useBean>
+		<jsp:setProperty name="" property="" param=""></jsp:setProperty>
+		<jsp:getProperty name="" property=""></jsp:getProperty>
+		<jsp:forward page="">
+			<jsp:param name="" value=""></jsp:param>
+		</jsp:forward>
+
+		1.技术最早是ModelOne模式
+			只有Servlet	VC+M
+			VC在一起的	拼接响应信息V  很麻烦
+		2.技术稍微革新了一下ModelTwo模式
+			JSP+Servlet	V+C
+			V  C分开   M
+		3.JSP技术出现以后   写法比较简单   更像是一个文件资源
+			而且这个文件中还能直接写Java程序
+			JSP--->V	     JSP--->Servlet
+			运行性能就有问题   不安全   管理起来也不方便
+			JSP2.0	动作标签    替代对象创建  赋值  请求转发
+		4.JSP展示时候会出现一些逻辑的问题
+			所有JSP的标签风格不统一
+			EL+JSTL
+			Expression  Language
+			Jsp  Standard  Tag  Library
+		5.新的模板语言产生
+
+	=======================================================
+	JSP三个指令标签	<%@page%>  <%@taglib%>  <%@include%>
+	JSP六个动作标签	<jsp:>   useBean  setProperty  getProperty  forward  param  include
+	JSP四个作用域	page(pageContext)   request    session     application
+	JSP九个内置对象	request  response  session  application  out  page  pageContext  config  exception
+
+	小任务
+		JSP	<%%>
+		Servlet
+		Service+Dao+domain
+		JDBC
+		MySQL
+		用上述所有学过的技术实现一个购物系统
+		登录系统(注册)
+		欢迎用户进入系统    选择商品的种类   下拉列表
+		选中某一个种类后    展示当前种类下的所有商品    复选框
+		继续购物	重新选择商品种类
+		结算	展示所有购买的商品清单    名称  价格   总钱数    暂时忽略个数()
+
+		用户表格
+		种类表格
+		商品表格
+
+
+
+
+
+

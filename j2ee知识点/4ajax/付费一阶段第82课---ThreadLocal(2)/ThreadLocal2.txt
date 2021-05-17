@@ -1,0 +1,106 @@
+
+	登录效果
+		---->index.jsp
+		index.jsp资源
+		输入账号
+		输入密码
+		点击登录---->login
+
+		LoginController
+		获取请求传递的账号和密码
+		找寻业务层处理
+		根据登录结果String给予响应
+
+		welcome.jsp
+		欢迎xx进入系统	xx---昵称
+			1.在service层中添加一个新的方法   专门获取昵称
+				登录(查询)     昵称(查询)	影响性能问题
+			2.在service层原有的登录方法上进行修改
+				返回值改为user对象(保证业务的判断放在service里)
+				返回值修改之后   之前的使用习惯有影响
+
+	ThreadLocal
+
+			1.将所有的资源部署在tomcat上  war包
+			2.启动tomcat	带着这些资源一起运行
+3.浏览器发送请求
+	请求(资源)---->	tomcat解析请求    寻找资源(参考配置文件)    html   jsp   servlet
+		带着参数		找到一个servlet	request.getParameter
+				将参数传递给service
+				service将参数传递给dao
+				dao传递参数给JDBC 负责拼接 SQL
+				将SQL发送给数据库   执行sql	update  query
+
+				数据库查询的结果ResultSet
+				交给JDBC(ORM)	将ResultSet拆开  变成对象domain
+				dao接收JDBC的返回值   交给Service
+				Service调用dao的方法  获取方法返回值(对象 集合)
+				Service将返回值拆开  做业务判断  将结果返回给Controller
+				controller做转发(带着service的返回值)
+	浏览器解析响应
+	最终展示
+
+		参数浏览器触发通常通过方法传递参数的形式进去的
+		数据得到的查询结果通常通过方法返回值形式出来的
+
+	V:	View视图层	HTML(静态信息)+JSP(动态信息)   信息(String)
+			JSP(HTML标签+EL+JSTL+JS+CSS)		EL取值拼接----响应
+	C:	Controller控制层	控制的是信息	Servlet		setAttribute(结果);
+			Servlet(获取请求参数+调用业务+给予响应 转发 重定向 自己给)
+			通过request接收参数  传递给业务		返回值(业务判断结果)
+	M:	Model模型层	数据模型(数据处理+数据读写+数据存储)
+			Service数据处理	业务逻辑			domain对象(不通过返回值)
+			接收方法参数的传递  传递给dao
+			Dao     数据读写         存储CURD			ResultSet拆成对象
+			接收方法参数的传递  传递给JDBC(ORM) 拼串儿SQL	ResultSet返回值
+			Domain数据存储       一行记录--一个对象
+	DB:	DataBase数据层
+			MySQL
+
+
+session对象的管理类
+SessionManager{//Tomcat内部的 看不见  sessionMap是单例
+	private Map<JSESSIONID,HttpSession> sessionMap;	
+	public HttpSession getSession(String JSESSIONID){	
+		return sessionMap.get(JSESSIONID);		
+	}
+}
+使用的session类	好多个session对象	每一个对象一个人使用
+HttpSession{
+	private Map<String key,Object value> attributeMap;
+	public Object getAttribute(String key){
+		return attributeMap.get(key);
+	}
+	public void setAttribute(String key,Object value){
+		attributeMap.put(key,value);
+	}
+}
+
+
+JSESSIONID(String 标识)-------------> t 当前线程(Thread类型 标识)
+通过标识找session(一个箱子)---------->通过t找ThreadLocalMap(一个箱子)
+通过session.setAttribute(key,value);	ThreadLocalMap.set(this,value);
+	key自己定义		key已经固定了	this当前对象(ThreadLocal)
+
+				我是一个线程t   t本身是找箱子的密码
+				t负责找到我的箱子ThreadLocalMap
+				这个箱子只有一个格子
+				找到箱子打开才能获取里面的value  
+				打开箱子需要另一个密码(ThreadLocal对象)
+				当前t线程配着一个Threadlocal对象	map就是唯一的
+				value只能存储一个信息 想要存储多个  将多个信息包装起来
+
+				Thread
+				ThreadLocal
+				ThreadLocalMap(ThreadLocal的内部类)
+
+
+
+
+
+
+
+
+
+
+

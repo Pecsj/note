@@ -1,0 +1,82 @@
+
+	Tomcat
+	1.Servlet
+	2.JSP	EL+JSTL
+	3.Filter	责任链设计模式   AOP思想
+	4.Listener
+		1 2 4 使用方式类似
+		第一步写一个类
+		继承/实现一个规则
+		配置web.xml
+		3 使用方式类似文件
+		第一步写一个.jsp
+		默认配置  tomcat容器中自己的配置  *.jsp
+		编译成一个java类
+
+	-----------------------------------------------------
+	文本文档  .txt
+	配置文件  .properties
+	想要解析文件   读取文件中的内容  Input
+
+	HTML
+		Hyper  Text  Markup  Language
+		超级文本标记(标签)语言
+		出现这个语言的目的    服务器给浏览器发送响应信息
+		浏览器懂这个规则  解析语言---->进行展示
+	XML
+		EXtensible  Markup  Language
+		可扩展标记(标签)语言
+		创建这个XML的宗旨不是为了HTML进行扩展  关注的非展示
+		更多的是关注数据的存储和传输---->关注的是数据存储和传输
+
+		1.写法
+			创建一个文件   .xml
+			建议在文件的第一行   头信息
+			<?xml  version="1.0" encoding="UTF-8" >
+		2.规则
+			结构良好的	   有规则  标签对应 <xxx></xxx>
+			结构有效的	   在结构良好的基础上遵循很多规则(写什么标签 名字叫什么 属性叫什么 几个 顺序)
+				如果想要让写完的xml遵循结构有效的
+				需要单独再写一个xml文件--->用来描述规则(类似元注解的作用)
+				.tld   Tag  Library  Definition  用来描述标签的
+				.dtd  Document  Type  Difinition 文档类型描述
+				.xsd  Xml  Schema  Definition   用来描述xml文档内容
+				.xml  eXtensible  Markup  Language   用来存储数据的文档
+		3.基本xml文件写法
+			为了让xml文件中的内容遵循某些规则
+			自定义dtd
+				第一可以写在当前的xml文件中
+				第二可以写在一个外部的文件中  引入
+			描述根标记
+			<!DOCTYPE school [规则]>
+			描述根标记中的其他标记<标签>
+			<!ELEMENT 元素名 类别|(元素里面的内容) >
+				类别  通常是EMPTY
+				元素内容  (其他标签,其他标签)
+				标签内部没有标签  是普通的文字    PCDATA
+				PCDATA    Parsed  Character  DATA(通常用来描述标签中间的文字<>xxx<>)
+				可以被解析的字符数据   支持实体  &xxx;  
+					&gt;大于   &lt;小于   &amp;与符号   &quot;双引号   &apos;单引号
+				正常情况下 描述标签内部的子标签时候  默认认为是一个
+				还需要在子标签基础上增加一个  对于个数的说明
+				*符号    0-n个    ?符号  0-1个   +符号  1-n个
+				,符号  都有    |符号  a或b其中的一个
+			每一个标记中还需要有属性
+			<!ATTLIST>	attribute list
+			<!ATTLIST 标签名 属性名 什么类型 值>
+				通常类型的描述
+					CDATA	Character DATA 原封不动 (通常用来描述属性名)
+					(t1|t2|t3) 来描述
+				通常值的描述
+					默认值  "xxx"
+					值的说明  (是否是必须 固定的。。)
+					#REQUIRED必须   #IMPLIED非必需   #FIXED value固定的
+			如果想要描述实体
+			<!ENTITY 实体名字 "实体的值">
+			<!ENTITY spring "this is spring">
+
+			<div>&spring;</div>
+
+
+
+

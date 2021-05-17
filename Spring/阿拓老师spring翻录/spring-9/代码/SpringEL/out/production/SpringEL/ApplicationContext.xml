@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:c="http://www.springframework.org/schema/c"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd"
+
+>
+
+    <!--<bean id="c1" class="domain.Computer" scope="singleton" lazy-init="true"></bean>-->
+    <!--<bean id="c2" class="domain.Computer"></bean>-->
+    <!--<bean id="c3" class="domain.Computer"></bean>-->
+
+    <!--<bean id="base" class="domain.Base" p:computer1-ref="c1" p:computer2-ref="c2" p:computer3-ref="c3" abstract="true"></bean>-->
+
+    <!--<bean id="room" class="domain.Room" parent="base"></bean>-->
+    <!--<bean id="person" class="domain.Person" parent="base"></bean>-->
+
+    <!--&lt;!&ndash;==================================================================&ndash;&gt;-->
+    <!--&lt;!&ndash;通过如下这一行引入了一个外部的properties文件&ndash;&gt;-->
+    <!--<context:property-placeholder location="classpath:test.properties"></context:property-placeholder>-->
+
+    <!--<bean id="computer" class="domain.Computer">-->
+        <!--<property name="name" value="${name}"></property>-->
+        <!--<property name="price" value="${price}"></property>-->
+    <!--</bean>-->
+
+    <!--===================================================================-->
+
+    <bean id="logo" class="domain.Logo" c:name="ThinkPad" c:color="White"></bean>
+
+    <bean id="computer" class="domain.Computer">
+        <constructor-arg name="name" value='#{logo.test()}'></constructor-arg>
+        <constructor-arg name="size" value="#{10}"></constructor-arg>
+        <constructor-arg name="price" value="#{2 * T(java.lang.Math).PI}"></constructor-arg>
+        <constructor-arg name="status" value="#{not (1>2)}"></constructor-arg>
+        <!--<constructor-arg name="logo" ref="logo"></constructor-arg>-->
+        <constructor-arg name="logo" value="#{logo}"></constructor-arg>
+    </bean>
+
+</beans>

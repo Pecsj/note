@@ -1,0 +1,81 @@
+
+	Tomcat----容器----管理资源(文件内容  操作资源结果)
+
+	1.下载	官网  Tomcat9
+	2.非常熟悉Tomcat结构
+		bin文件夹		启动项
+		conf文件夹	存储配置文件   server.xml    web.xml
+		lib文件夹		存储真实.jar
+		logs文件夹	存储是运行日志信息
+		temp文件夹	临时执行的文件
+		webapps文件夹	用来存储部署在Tomcat中的项目
+		work文件夹	用来存储JSP编译后形成的java文件
+	3.搭建到IDEA编辑器中
+	4.我们写好的web项目部署在Tomcat中
+	5.处理IDEA输出乱码问题
+		IDEA安装路径中进行文件的修改
+		项目执行参数配置----以后访问Servlet时候输出可能乱码
+
+---------------------------------------------------------------------------------------------------------
+
+	1.可以通过访问Tomcat来找到文件资源
+		.html文件
+	2.可以通过访问Tomcat来找到操作资源
+		java类-----控制层Servlet
+
+		V:View		视图层		HTML+CSS+JS
+		C:Controller	控制层		HttpServlet
+		M:Model		模型层
+				数据处理Service
+				数据读写Dao
+				数据存储domain
+		DB:DataBase	数据库MySQL
+
+	3.如何在Tomcat中自己编写一个Java类(控制层Servlet)
+		1.自己定义一个类
+		2.继承Tomcat提供的一个规则HttpServlet
+		3.重写一个方法service  有参数 没有返回值
+		4.方法内部有两个参数HttpServletRequest  HttpServletResponse
+		5.抛出两个异常   ServletException  IOException
+		6.填写web.xml配置文件  目的  请求名字--真实类名对应关系
+
+				Tomcat先启动
+				等待浏览器进行访问
+	浏览器发送请求---->
+		localhost:8080/Servlet1/test
+				----->Tomcat启动一个线程Handler
+				1.读取请求协议URL
+				2.解析	test请求名字    ?参数
+					包装成一个对象request
+					为了让控制层类执行后的结果能获取回来  创建一个空的对象 response
+				3.找类对象(控制层类对象)
+					参考web.xml配置文件
+					有没有一个请求名字----真实类名字对应关系
+				4.用真实类名  
+					反射 获取类对象 找到里面的service方法  执行
+				5.将响应信息交给response
+	浏览器接受响应信息
+	浏览器解析响应信息HTML
+	浏览器展示响应信息
+
+
+		小任务
+		银行系统
+		用Tomcat	 HTML   Servlet来实现
+		
+		登录
+		让用户选择不同的操作选项
+		查询  存款  取款  转账
+
+
+
+
+
+
+
+
+
+
+
+
+		

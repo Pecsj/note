@@ -1,0 +1,36 @@
+
+	知识回顾
+		#{}  ${}
+		@Insert("sql")  @Delete("sql")  @Update("sql")
+		@Param("key")
+		@Select("sql")
+		@Results()
+		@Result()
+		@One()
+		@Many()
+		@ResultMap("")
+
+		@Results(id="",value={@Result(),@Result})
+		@Result(property="",column="",id=true)
+		@Result(property="",column="")
+		@Result(property="",column="",one=@One(select=""))
+		@Result(property="",column="",many=@Many(select=""))
+		
+	========================================================================
+
+		多对多关联查询
+		dao接口+注解方式
+		dao接口+mapper.xml形式
+
+		基于注解的方式实现"动态SQL" 自己做了判断 拼接SQL
+
+
+
+
+
+
+
+
+
+
+

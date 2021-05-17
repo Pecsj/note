@@ -1,0 +1,36 @@
+
+	知识回顾
+	Cookie
+	1.浏览器端存储的一个对象	Cookie("key","value")
+	2.cookie是服务器在响应的时候回写回来的数据
+		JSESSIONID=
+	3.响应信息的时候携带cookie
+	   服务端解析cookie 获取里面的信息
+		Cookie c = new Cookie("","");
+		response.addCookie(c);
+		下一次发送请求会自动携带着cookie的信息
+		服务端 Cookie[] = request.getCookies();
+			cookie.getName();   cookie.getValue();
+			cookie.setMaxAge(int);设置cookie的失效时间
+			Cookie是一个类   很多属性   maxAge属性 默认值是-1
+			-1默认指的是当前会话结束时就消失了(临时)
+			如果想要让cookie永久性的保存起来(浏览器文件中cookies)  
+				自己设置setMaxAge(int 秒)
+		C:\Users\Administrator\AppData\Local\Google\Chrome\User Data\Default
+			cookies文件
+	4.浏览器端如何解析cookie的信息
+		通过JavaScript
+		(String)var cookieObject = document.cookie;
+			k1=v1;k2=v2;k3=v3
+			split()
+	5.实现一个小demo用户免登录
+		
+
+
+
+
+
+
+
+
+

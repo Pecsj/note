@@ -1,0 +1,45 @@
+
+	
+	知识回顾
+	1.浏览器发送请求    xxx.do
+		参考web.xml配置文件 找到核心的"小总管"
+		DispatcherServlet
+		"小总管"去参考自己的ApplicationContext.xml配置文件(xml 扫描注解)
+	2.找到某一个Controller类中的某个方法
+		Controller类中方法上面@RequestMapping("xxx.do")
+	3.方法做的事情通常有以下几个部分
+		处理字符集----web.xml中配置的Filter处理了
+		接收请求发来的参数信息----方法上面直接写参数列表即可
+		找到业务层的对象帮我们处理核心业务逻辑(业务层对象@Service注解 @Autowire)
+	4.业务方法处理完毕后得到结果
+		Model  ModelMap  ModelAndView进行存储
+		ModelAndView自己在方法内部new---可以携带转发路径
+			mv.addObject("key",object);
+			mv.setViewName("路径");
+		如果涉及到Session的存储  类上面添加@SessionAttributes({"",""})
+	5.处理响应信息
+		void返回值
+		String返回值----转发/重定向路径    forward:   redirect:
+		对象返回值(JSON)---方法上面 返回值前面 @ResponseBody  需要到jar
+		ModelAndView返回值---直接返回
+
+
+	JSP  <%%>  EL+JSTL   异常页
+	异常的处理
+	1.自定义一个异常类MyException   将所有的异常都统一捕获 变成一个唯一的异常 交给总管
+	2.自定义一个异常处理类(处理异常 做转发 响应) 实现规则
+	3.需要做一个配置 告知Spring帮我们将自定义的异常处理类管理起来
+
+
+
+	SpringAOP(前置 后置 最终 异常 环绕)
+	拦截器Intercept(可以理解为是以前的Filter)
+
+
+
+
+
+
+
+
+

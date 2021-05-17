@@ -1,0 +1,125 @@
+
+	SQL
+	*DDL数据定义语言
+	*DML数据操作语言(insert delete update)
+	**DQL数据查询语言(select where group-by having order-by)
+		函数的使用
+		嵌套的使用
+	*列的约束    表格关系    **联合查询
+
+	行列互换
+	分页查询	查询 limit a,b;	注意:与函数使用区分    instr(ename,'A');  1第一个出现   0没有
+		a想要显示的起始行索引  包括此行  (偏移量)  从0开始
+		b想要显示的行数
+		(Oracle数据库分页使用伪列level rowid rownum)
+	DCL数据操作语言	用户权限
+	*TPL事务处理语言
+
+	============================================
+
+	一个表格   统计仓库中每个月存储的库存量
+	--------------------------------------------
+	仓库---->warehouse
+	库存---->inventory
+	wname   winventory  wmonth
+	仓库名称   仓库库存    月份
+	      A            100        一月份
+	      B            1000      一月份
+	      C            10          一月份
+	      A            200         二月份
+	      B            2000      二月份
+	      C            20          二月份
+	      A            300        三月份
+	      B            3000      三月份
+	      C            30          三月份
+				
+	仓库名称   一月份  二月份  三月份 。。。。
+	      A           100      200      300		A组   三个值   每一个月份对应一个库存
+	      B          1000    2000    3000	B组   三个值   每一个月份对应一个库存
+	      C            10         20        30		C组   三个值   每一个月份对应一个库存
+
+	一旦使用group by分组条件
+	可以select显示的列 只有两种    (分组条件  分组函数)
+	select 
+		仓库名称,
+		max(判断 月份=1 显示库存),	if(表达式,v1,v2)
+		max(判断 月份=2 显示库存),
+		max(判断 月份=3 显示库存) 
+	from warehouse 
+	group by 仓库名称;
+	
+	========================================
+	
+	MySQL配置环境变量
+	可以利用window自带的cmd命令行窗口输入mysql指令
+		mysql -u xxx -p
+	输入密码   xxxx
+	welcome mysql.......
+		开始与之前所有在mysql中操作的一致
+	exit;
+
+	DCL数据控制语言   Data  Control  Language
+		控制用户的权限
+		grant赋予
+		remove回收
+	1.我们现在的身份是一个SYSDBA管理员   root账号
+		管理员可以操作其他普通用户的权限
+		通过root账号查看mysql数据库中的user表格
+		记录着所有的用户信息
+			user列  host列  password列  authentication_string列
+	2.先创建一个新的用户
+		database  table  user
+		create user '用户名'@'IP' identified by '密码';
+		create user 'zzt'@'localhost' identified by '123456';
+		用户被创建成功啦(只有一个默认的权限  Usage 只允许登录 不允许做其他事情)
+		通过这个语句show grants for '用户名'@'IP';
+	3.给新的用户赋予权限
+		grant 权限 on 数据库名.表 to '用户名'@'IP';
+		grant all on *.* to 'zzt'@'localhost';
+		赋予权限之后最好做一个刷新
+		flush privileges;
+	4.注销root   用新用户登录
+	5.回收用户的权限
+		Usage
+		revoke 权限 on 数据库名.表名 from '用户名'@'IP';
+	6.修改用户的密码
+		update user表 set authentication_string = password('123') where user = 'zzt';
+	7.删除用户
+		drop user '用户名'@'IP';
+		drop user 'zzt'@'localhost';
+================================================================
+	常用的mysql权限如下：
+	数据库/数据表/数据列权限：
+		Create		建立新的数据库或数据表
+		Alter		修改已存在的数据表(例如增加/删除列)
+		Drop		删除数据表或数据库
+		Insert		增加表的记录
+		Delete		删除表的记录
+		Update		修改表中已存在的记录
+		Select		显示/搜索表的记录
+		-----------------------------------
+		References	允许创建外键
+		Index		建立或删除索引
+		Create View	允许创建视图
+		Create Routine	允许创建存储过程和包
+		Execute		允许执行存储过程和包
+		Trigger		允许操作触发器
+		Create User	允许更改、创建、删除、重命名用户和收回所有权限
+	全局管理MySQL用户权限：
+		Grant Option	允许向其他用户授予或移除权限
+		Show View	允许执行SHOW CREATE VIEW语句
+		Show Databases	允许账户执行SHOW DATABASE语句来查看数据库
+		Lock Table	允许执行LOCK TABLES语句来锁定表
+		File		在MySQL服务器上读写文件
+		Process		显示或杀死属于其它用户的服务线程
+		Reload		重载访问控制表，刷新日志等
+		ShutDown	关闭MySQL服务
+	特别的权限：
+		All		允许做任何事(和root一样)
+		Usage		只允许登录，其它什么也不允许做
+
+
+
+
+
+

@@ -1,0 +1,29 @@
+
+	搭建
+	1.引入jar包
+	2.获取一个SqlSession对象	   帮我们做事情
+	3.核心配置文件	configuration.xml
+
+	核心配置文件中的常用标签(configuration)
+		properties标签
+			通常是为了引入一个外部的文件信息
+			1.好处是可以在configuration中通过${key}方式找寻一个真正的信息
+			  可以隐藏真实信息的
+			2.可以在使用现在搭建环境时直接引入之前已有的信息
+		typeAliases标签
+			是为了某一个(一些)类 	起别名用的
+			<typeAliases>
+				<typeAlias type="domain.Student" alias="student"></typeAlias>
+			</typeAliases>
+		settings标签
+			是为了设置一些属性信息	比如懒加载对象  还有好多
+			lazyLoadingEnabled
+			aggressiveLazyLoading
+			<settings>
+				<setting name="" value=""/>
+			</settings>
+		environments标签
+			
+		mappers标签
+	映射配置文件中的常用标签(mapper)
+

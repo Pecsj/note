@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!ELEMENT school (class*)>
+<!ELEMENT class (teacher,student*)>
+<!ELEMENT teacher (sex)>
+<!ELEMENT student (sex)>
+<!ELEMENT sex (#PCDATA)>
+
+<!ATTLIST school
+    id CDATA #IMPLIED
+    name CDATA #IMPLIED
+    loc CDATA #IMPLIED
+>
+<!ATTLIST class
+    id CDATA #IMPLIED
+    name CDATA #IMPLIED
+    loc CDATA #IMPLIED
+>
+<!ATTLIST teacher
+    id CDATA #IMPLIED
+    name CDATA #IMPLIED
+    age CDATA #IMPLIED
+>
+<!ATTLIST student
+    id CDATA #IMPLIED
+    name CDATA #IMPLIED
+    age CDATA #IMPLIED
+>

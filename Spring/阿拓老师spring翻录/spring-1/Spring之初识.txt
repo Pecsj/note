@@ -1,0 +1,63 @@
+
+	Spring
+
+	V:View		JSP(HTML+EL+JSTL+JS-JQ-VUE)	HTML+AJAX+JSON+JS
+			发送请求---WEB容器--xml文件(注解)--找资源
+			WEB框架(减少xml或注解配置)
+	C:Controller	Servlet(WEB容器提供的)		Filter(WEB容器提供--特殊Servlet)
+	M:Model		Service数据处理		业务逻辑  比较 判断 计算
+			Dao    数据读写		原来都是JDBC+SQL		domain 数据存储
+			ORM框架(MyBatis)	  getMapper代理对象+注解
+	DB:DataBase	MySQL数据库(文件)
+
+	
+	Spring框架----可以理解为是一个管理者
+	管理是整个分层架构中每一个对象-------->JavaBean
+
+	SSH	Spring  Struts  Hibernate
+	SSM	Spring  SpringMVC  MyBatis
+
+	Spring Framework创始人
+		Rod Johnson
+		悉尼大学		
+		计算机学位   音乐学位
+		钢琴--->音乐学博士
+		回到软件开发领域  C/C++  Java
+
+
+	框架---别人封装好的供我们使用
+	1.下载jar
+	2.搭建到我们的开发环境中
+	3.Spring最主要学习的内容
+		IOC	Inversion Of Control控制反转
+		(DI)	Dependency Injection依赖注入
+		AOP	Aspect Oriented Programming面向切面编程	(Object Oriented Programming)
+		JDBC
+		MVC
+
+	==============================================================================
+	
+	下载
+		Spring官网
+		https://spring.io/
+		https://repo.spring.io/libs-release-local/org/springframework/spring/5.2.5.RELEASE/
+
+	创建一个项目
+	搭建Spring环境
+		1.导包	core beans context expression
+			commons-logging
+		2.配置文件
+			ApplicationContext.xml
+			内容(规则)参考手册
+			<bean name="" class=""></bean>
+		3.创建一个Bean工厂
+			BeanFactory f = new ClassPathXmlApplicationContext("");
+			Object obj = (造型)f.getBean("name");
+
+		4.对象的管理
+			好多对象-----好多<bean>
+			每一次创建的对象是new 单例
+			对象中有属性----DI
+
+
+

@@ -1,0 +1,57 @@
+
+#设计一对多的表格关系Emp  Dept
+
+#设计部门表格
+
+create table dept(
+
+	deptno int(10),
+
+	dname varchar(20),
+
+	loc varchar(20)
+) character set utf8;
+alter table dept add constraint pk_dept primary key(deptno);
+
+
+insert into dept values(10,'ACCOUNTING','NEW YORK');
+
+insert into dept values(20,'RESEARCH','DALLAS');
+
+insert into dept values(30,'SALES','CHICAGO');
+
+
+#设计员工表格
+
+create table emp(
+
+	empno int(4),
+
+	ename varchar(20),
+
+	sal float(10,2),
+	deptno int(10)
+
+) character set utf8;
+alter table emp add constraint pk_emp primary key(empno);
+
+alter table emp add constraint fk_emp_dept foreign key(deptno) references dept(deptno);
+
+insert into emp values(7369,'SMITH',800,20);
+
+insert into emp values(7499,'ALLEN',1600,30);
+
+insert into emp values(7521,'WARD',1250,30);
+
+insert into emp values(7566,'JONES',2975,20);
+
+insert into emp values(7782,'CLARK',2450,10);
+
+insert into emp values(7839,'KING',5000,10);
+
+insert into emp values(7788,'SCOTT',3000,20);
+
+
+
+select * from emp;
+select * from dept;

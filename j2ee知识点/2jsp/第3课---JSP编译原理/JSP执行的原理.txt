@@ -1,0 +1,35 @@
+
+	浏览器发送请求
+	1.请求文件资源
+		.html
+		底层Tomcat参考自己的web.xml直接找到文件资源  
+		文件中的内容(String <>)读取出来   直接响应回浏览器
+	2.请求操作资源
+		Servlet
+		底层Tomcat参考我们工程内自己的web.xml配置文件  servlet  servlet-mappint
+		通过反射找到我们自己写的XXXController类  反射找执行方法  service  doPost  doGet
+		方法执行完毕   是自己out.write("<>");响应的   直接回浏览器
+		有可能产生请求转发的 forward(req,resp);
+		JSP      xxx.jsp
+		底层Tomcat参考它自己的web.xml 找寻一个JSP解析引擎  JSPServlet
+		解析引擎 负责读取JSP的内容 将内容重新拼接组合 将新的内容写入一个java文件
+		java文件的名字叫    xxx_jsp.java   文件内容是out.write("");
+		java文件还需要进行编译  形成一个   xxx_jsp.class
+		class文件执行  回浏览器
+		这两个生成的文件默认存储在IDEA自己的文件夹下
+		C:\Users\Administrator\.IntelliJIdea2018.3\system\tomcat\Tomcat_9_0_19_TestJSP\work\Catalina\localhost\TestJSP\org\apache\jsp
+
+	3.为什么JSP是一个Servlet
+		从请求的配置文件可以看出
+		从真正生成的java类   方法也能看出    _jspInit()    _jspDestroy()    _jspService();
+	4.JSP中的内置对象    9个	
+		_jspService(request response){方法内部
+			session
+			applcation
+			out
+			page
+			pageContext
+			config
+		}
+
+

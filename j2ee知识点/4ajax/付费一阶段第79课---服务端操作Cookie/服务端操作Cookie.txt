@@ -1,0 +1,57 @@
+
+	知识回顾
+	
+	域对象
+		page(pageContext)  
+		request(原生 new)  session(每一个人用一个)  application(静态 一个)
+
+	session管理机制
+		每一个人拥有一个session
+		对于每一个人来讲  session对象是单例的
+		看所有人的session  好多个
+		1.管理类		里面有一个Map<标识,session>
+		2.Session类	session里面还有Map<String,Object>
+			session.setAttribute("key",obj);	
+		3.标识---->String类型值
+			JSESSIONID	存在浏览器端(Cookie)
+
+	=================================================
+
+	Cookie
+	1993年   网景公司   Lou  Montulli工程师
+	小甜品	小量信息
+		cookie在浏览器端存储(浏览器运行时 临时 关闭后 永久--存在文件里)
+
+		1.通过浏览器看到cookie对象
+		2.设置cookie是否永久的保存在文件中	临时  永久
+		3.cookie是一个对象	key=value   浏览器解析  Cookie对象(属性key，属性value)
+			JSESSIONID	A6D00C7EF3A47C5A443687C7CDDA8A98
+
+		4.cookie的使用
+			通过带两个String参数的构造方法创建Cookie对象
+			Cookie  c = new Cookie("key","value");
+			通过response对象将cookie携带走(服务器端回写响应信息的时候携带走)
+			response.addCookie(c);
+
+			下一次浏览器发送请求的时候会携带cookie信息
+			服务端的资源可以通过request对象获取cookie
+			Cookie[] cookies = request.getCookies();
+
+			Cookie对象中的常用方法
+			*cookie.getName();获取cookie的key
+			*cookie.getValue();获取cookie的value
+			*cookie.setMaxAge(int );设置cookie的失效时间  秒为单位的
+			cookie.getDomain();返回cookie的域名
+			cookie.getPath();
+			cookie.getVerson();
+		5.什么时候存储   、  什么时候带走的  、 什么位置可以获取
+			服务器端可以获取	request
+			浏览器端可以获取	JavaScript
+
+
+
+
+
+
+
+	

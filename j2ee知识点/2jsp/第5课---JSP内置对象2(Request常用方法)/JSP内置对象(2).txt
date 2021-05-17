@@ -1,0 +1,48 @@
+	
+	知识回顾
+	<%%>
+	<%@	%>	@page	用来在文件头部进行说明性的描述
+	<%!	%>	代码生成在最终.java文件中的  _jspService方法外部   与_jspService方法并列
+	<%	%>	代码都是在_jspService方法内部 	注意中间产生的变量不能重名   内置对象
+	<%=	%>	用来做输出打印展示   用来赋值
+
+	JSP中的内置对象---9个
+		类型名字  变量名字  常用方法
+		放置在JSP编译形成的.java中_jspService方法内部
+		HttpServletRequest		request
+		HttpServletResponse	response
+		HttpSession		session
+		ServletContext		application
+		JSPWriter			out
+		Object			page
+		PageContext		pageContext
+		ServletConfig		config
+		Exception			exception
+	========================================
+	HttpServletRequest		request
+	1.String = request.getParameter("key");获取浏览器发送请求携带的参数信息
+	2.request.setChareacterEncoding("UTF-8");设置接受请求信息时的字符集(post)
+	3.request.setAttribute("key",Object);存储某一个自己产生的数据  业务逻辑方法的结果
+	4.Object = request.getAttribute("key");获取之前一次请求中request对象存储的数据
+	5.RequestDispatcher = request.getRequestDispatcher("path");//设置-告知 转发的资源路径
+		rd.forward(request,response);//转发
+	6.Enumeration = request.getParameterNames();//获取请求携带参数全部的key
+	7.String[] = request.getParameterValues("key");//获取key一致的一组value值  通常用作复选框
+	8.StringBuffer = request.getRequestURL();	Uniform	Resource  Locator统一资源定位器
+		http://localhost:8080/JSPBuiltInObject/index.jsp
+	9.String = request.getRequestURI();	Uniform	Resource	Identifier统一资源标识符
+		/JSPBuiltInObject/index.jsp
+	10.request.getHeader("Accept-Language");//获取协议头传递的信息	国际化
+	11.HttpSession = request.getSession();
+
+
+自己读取了一个请求协议头信息
+GET    /index.jsp     HTTP/1.1
+Host: localhost:9999
+Connection: keep-alive
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/67.0.3396.62 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8
+Accept-Encoding: gzip, deflate, br
+Accept-Language: zh-CN,zh;q=0.9
+Cookie: Webstorm-2f8f75da=1b88d886-30e2-4089-abc9-af9030089775

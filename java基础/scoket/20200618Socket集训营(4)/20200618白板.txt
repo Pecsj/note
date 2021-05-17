@@ -1,0 +1,40 @@
+
+	
+	C/S模式小项目
+
+	Client客户端	Swing画窗口 很麻烦  客户留下很多代码+数据  客户端需要更新
+	Server服务端
+
+	
+	Browser浏览器
+	Server服务端	JavaWEB底层 socket	Tomcat服务器原理
+
+
+	ServerSocket server
+	Socket socket = new Socket();
+
+	socket.getInputStream
+	socket.getOutputStream
+
+	PrintWriter
+	InputStreamReader
+	BufferedReader
+
+	Map<String,User>	domain实体对象思想	
+
+	String常用方法    split  replace
+
+	extends Thread	run方法		try catch
+
+	Swing(JFrame JPanel JTextArea JButton)
+		功能实现	
+		绑定事件		JavaScript	
+		取消按钮
+
+
+
+
+
+
+
+

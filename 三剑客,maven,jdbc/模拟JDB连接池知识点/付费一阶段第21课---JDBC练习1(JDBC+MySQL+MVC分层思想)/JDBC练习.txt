@@ -1,0 +1,66 @@
+
+	知识回顾
+	JDBC六部曲
+	1.下载jar驱动包，导入工程
+		5.x	8.x
+	2.加载驱动类
+		Class.forName("类全名");
+		DriverManager.registerDriver(new Driver());
+		new Driver();
+		System.setProperty("jdbc.driver","类全名");
+		方式1和方式4更加灵活  代码编译没问题  
+		方式2和方式3本质一致  方式3相对好些   都依赖于jar包
+		类全名:
+			5.x : com.mysql.jdbc.Driver
+			8.x : com.mysql.cj.jdbc.Driver
+	3.获取连接
+		Connection conn = DriverManager.getConnection("url","user","password");
+		url:
+			5.x --> jdbc:mysql://ip:port/database
+			8.x --> jdbc:mysql://ip:port/database?serverTimezone=CST
+		设置事务
+			conn.setAutoCommit(false);// 默认值true 自动提交  设置为false 变成手动提交
+			conn.setTransactionIsolation(Connction.静态常量);
+			conn.commit()   conn.rollback()   conn.savePoint("");
+	4.创建状态参数
+		Statement stat = conn.createStatement();
+	5.执行操作
+		int count = stat.executeUpdate(String sql);    // insert  delete  update     create  alter
+		ResultSet rs = stat.executeQuery(String sql);      //   Set<Map<String,Object>>
+			rs.next();	rs.getXXX();
+	6.关闭
+		rs.close();    stat.close();    conn.close();
+
+	=========================================================
+
+	银行系统
+	登录   查询   存款   取款   转账   开户   销户
+
+	1.需求分析
+		需要数据     账号   密码   余额
+		存在哪里	 MySQL数据库    一张表格
+	2.创建表格
+		创建一些测试的数据
+	3.业务功能
+		分层架构
+		几个类	类的关系	类中的属性	 方法
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

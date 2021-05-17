@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <!--开启延迟加载的机制 关联的对象可以延迟加载-->
+        <setting name="lazyLoadingEnabled" value="true"/>
+        <!--aggressive 攻击性 侵略性 关闭对象的侵略性 不用就不需要加载 用到了关联对象的任意属性 就加载-->
+        <setting name="aggressiveLazyLoading" value="false"/>
+    </settings>
+    <environments default="development">
+        <environment id="development">
+            <transactionManager type="JDBC"></transactionManager>
+            <dataSource type="POOLED">
+                <property name="driver" value="com.mysql.jdbc.Driver"></property>
+                <property name="url" value="jdbc:mysql://localhost:3306/testmybatis?useSSL=false"></property>
+                <property name="username" value="root"></property>
+                <property name="password" value="root"></property>
+            </dataSource>
+        </environment>
+    </environments>
+    <mappers>
+        <!--<mapper resource="mapper/PersonMapper.xml"></mapper>-->
+        <mapper resource="mapper/IDCardMapper.xml"></mapper>
+    </mappers>
+</configuration>

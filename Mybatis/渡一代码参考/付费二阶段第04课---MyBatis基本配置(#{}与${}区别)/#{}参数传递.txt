@@ -1,0 +1,80 @@
+
+	知识回顾
+	
+	MyBatis基本使用流程
+	1.导包
+	2.核心配置文件    configuration.xml
+		内容的dtd规则可以参考官方手册	
+		configuration根标记
+			environments
+				environment
+			mappers
+				mapper
+	3.配置mapper文件	xxxMapper.xml
+		内容的dtd规则可以参考官方手册
+		<mapper namespace="dao全名">
+			<insert id="">
+			<delete id="">
+			<update id="">
+			<select id="" resultType="单行记录的存储类型">    对象   基本   map   数组
+	4.获取SqlSession对象
+		builder
+		factory
+		sqlSession		执行方法    insert   delete   update   selectOne   selectList
+
+
+	=================================================================
+
+	如何在操作SQL语句执行时	携带动态的信息
+		sqlSession调用方法时		增删改查方法都提供了两个重载
+			insert("sqlid");	insert("sqlid",object)
+		执行sql语句的时候	sql语句中使用#{key}	
+		
+		如果sql语句中只有一个#{key}	key是可以随便写
+		如果sql语句中两个以上的#{key}	需要key与传递参数的值对应	
+			domain对象
+			map
+
+		insert into student values(?,?,?,?,?);
+		pstat.setString(2,"zzt");	通过判断调用的方法   管理底层SQL是否拼接单引号
+
+		insert into student values(#{id},#{name},#{sex},,,);
+		我们传递给SqlSession一个对象
+		反射分析对象中每一个属性的类型
+		根据类型来判断该调用pstat.setString	帮我们管理是否拼接单引号
+
+
+		#{}  ----->	表示类型和值  通常用来做条件  列的值
+		${}  -----> 表示的就是一个普通字串   "asc"   通常是表名  列名  关键字
+
+
+
+	小任务
+		实现一个对于Student表格管理	学生管理系统
+			新增
+			修改信息(什么都可以 除了id号 姓名 性别 生日)
+			删除信息(按照id找到学生 删除)
+			当前学生信息的查询(单条)
+			全部学生查询(全表通查 按照学生编号降序排列${}---管理员身份  老师身份)
+			
+			肯定遇到sql语句参数的传递   #{}
+
+			V(HTML+JSON)+C(Servlet)+M(Service+Dao+domain)+(MyBatis)+MySQL
+
+		联合查询
+		动态SQL
+		基于Mapper操作(代理)
+		注解
+		底层机制
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DeptDao">
+
+    <!-- 方式一 利用两条语句 分别查询 也出现N+1问题 设置延迟加载的方式解决 -->
+    <!--<resultMap id="selectDept" type="domain.Dept">-->
+        <!--<id property="deptno" column="deptno"></id>-->
+        <!--<result property="dname" column="dname"></result>-->
+        <!--<result property="loc" column="loc"></result>-->
+        <!--<collection property="empList" javaType="list" ofType="domain.Emp" select="selectEmpForDept" column="deptno"></collection>-->
+    <!--</resultMap>-->
+    <!--<select id="selectEmpForDept" resultType="domain.Emp">-->
+        <!--select empno,ename,sal,deptno from emp where deptno = #{deptno}-->
+    <!--</select>-->
+
+    <!-- 方式二 利用联合查询 一次性将所有记录都查到 直接赋值就可以啦 -->
+    <resultMap id="selectDept" type="domain.Dept">
+        <id property="deptno" column="deptno"></id>
+        <result property="dname" column="dname"></result>
+        <result property="loc" column="loc"></result>
+        <collection property="empList" javaType="list" ofType="domain.Emp">
+            <id property="empno" column="empno"></id>
+            <result property="ename" column="ename"></result>
+            <result property="sal" column="sal"></result>
+        </collection>
+    </resultMap>
+
+    <!--========================================================-->
+    <select id="selectOne" resultMap="selectDept">
+        <!-- 方式一 -->
+        <!--select deptno,dname,loc from dept where deptno = #{deptno}-->
+
+        <!-- 方式二 -->
+        select e.empno,e.ename,e.sal,d.deptno,d.dname,d.loc from emp e right outer join dept d on e.deptno = d.deptno where d.deptno = #{deptno}
+    </select>
+
+    <select id="selectAll" resultMap="selectDept">
+        <!-- 方式一 -->
+        <!--select deptno,dname,loc from dept-->
+
+        <!-- 方式二 -->
+        select e.empno,e.ename,e.sal,d.deptno,d.dname,d.loc from emp e right outer join dept d on e.deptno = d.deptno
+    </select>
+</mapper>

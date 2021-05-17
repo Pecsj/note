@@ -1,0 +1,43 @@
+
+	知识回顾
+	基于Spring发送Email
+	
+	1.Spring帮我们创建的sender对象
+		<bean id="sender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        		<property name="host" value="smtp.qq.com"></property>
+        		<property name="username" value="370917198@qq.com"></property>
+        		<property name="password" value="sahavtowpilnbifc"></property>
+        		<property name="defaultEncoding" value="UTF-8"></property>
+        		<property name="javaMailProperties">
+            			<props>
+                			<prop key="mail.smtp.auth">true</prop>
+            			</props>
+        		</property>
+    		</bean>
+	2.创建BeanFactory 获取sender对象
+		JavaMailSender sender = factory.getBean("sender");	
+	3.通过sender创建一个message对象(可以理解为File 映射对象)
+		MimeMessage message = sender.createMimeMessage();
+	4.通过一个MimeMessageHelper对象帮我们向message中添加邮件的信息
+		发送人  接收人  发送时间  发送主题  发送正文
+
+
+
+
+	================================================================
+
+	Spring的Timer
+
+
+
+
+
+
+
+
+
+
+
+
+
+

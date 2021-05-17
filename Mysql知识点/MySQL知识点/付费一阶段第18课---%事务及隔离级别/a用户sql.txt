@@ -1,0 +1,197 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 6
+Server version: 5.7.25-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use xxx;
+Database changed
+mysql> insert into testatm values(5,'wangwu',500);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> set session transaction isolation level read uncommitted;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @@tx_isolation;
++------------------+
+| @@tx_isolation   |
++------------------+
+| READ-UNCOMMITTED |
++------------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> start transaction;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update testatm set abalance = 10 where aname = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from testatm;
++-------+-----------+----------+
+| aname | apassword | abalance |
++-------+-----------+----------+
+| 1     | zzt       |     1000 |
+| 3     | zhangsan  |      300 |
+| 4     | lisi      |      400 |
+| 5     | wangwu    |      500 |
++-------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> set session transaction isolation level read committed;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @@tx_isolation;
++----------------+
+| @@tx_isolation |
++----------------+
+| READ-COMMITTED |
++----------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> begin;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update testatm set abalance = 10 where aname = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from testatm;
++-------+-----------+----------+
+| aname | apassword | abalance |
++-------+-----------+----------+
+| 1     | zzt       |       10 |
+| 3     | zhangsan  |      300 |
+| 4     | lisi      |      400 |
+| 5     | wangwu    |      500 |
++-------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> begin;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update testatm set abalance = 555 where aname = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from testatm;
++-------+-----------+----------+
+| aname | apassword | abalance |
++-------+-----------+----------+
+| 1     | zzt       |      555 |
+| 3     | zhangsan  |      300 |
+| 4     | lisi      |      400 |
+| 5     | wangwu    |      500 |
++-------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> set session transaction isolation level repeatable read;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @@tx_isolation;
++-----------------+
+| @@tx_isolation  |
++-----------------+
+| REPEATABLE-READ |
++-----------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> begin;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> update testatm set abalance = 888 where aname = 1;
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from testatm;
++-------+-----------+----------+
+| aname | apassword | abalance |
++-------+-----------+----------+
+| 1     | zzt       |      888 |
+| 3     | zhangsan  |      300 |
+| 4     | lisi      |      400 |
+| 5     | wangwu    |      500 |
++-------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from testatm;
++-------+-----------+----------+
+| aname | apassword | abalance |
++-------+-----------+----------+
+| 1     | zzt       |      888 |
+| 3     | zhangsan  |      300 |
+| 4     | lisi      |      400 |
+| 5     | wangwu    |      500 |
++-------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> set session transaction isolation level serializable;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select @@tx_isolation;
++----------------+
+| @@tx_isolation |
++----------------+
+| SERIALIZABLE   |
++----------------+
+1 row in set, 1 warning (0.00 sec)
+
+mysql> select * from testatm;
++-------+-----------+----------+
+| aname | apassword | abalance |
++-------+-----------+----------+
+| 1     | zzt       |      888 |
+| 3     | zhangsan  |      300 |
+| 4     | lisi      |      400 |
+| 5     | wangwu    |      500 |
++-------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> begin;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> insert into testatm values (6,'zhaoliu',600);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> commit;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from testatm;
++-------+-----------+----------+
+| aname | apassword | abalance |
++-------+-----------+----------+
+| 1     | zzt       |      888 |
+| 3     | zhangsan  |      300 |
+| 4     | lisi      |      400 |
+| 5     | wangwu    |      500 |
+| 6     | zhaoliu   |      600 |
+| 7     | qianqi    |      700 |
++-------+-----------+----------+
+6 rows in set (0.00 sec)
+
+mysql>

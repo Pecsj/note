@@ -1,0 +1,73 @@
+
+	知识回顾
+	JSP
+	JSP	Java  Server  Page
+	服务与Servlet响应信息的拼接
+	动态相应信息拼接的"页面"
+	JSP与HTML不太一样	  JSP动态响应   HTML静态响应
+
+	JSP使用相对比较简单  看似是一个文件资源
+	在工程内的web文件夹中创建JSP文件	xxx.jsp
+	含有两种不同的语言	<HTML><CSS><JavaScript>	  <%java%>
+	创建JSP之后内容先写一个头信息
+	<%@page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8"%>
+	<html>
+		<%
+		%>
+	</html>
+	JSP中可以含有<%%>包含Java代码
+		<%@     %>	说明性的标记  通常会放在文件的顶部
+		<%!        %>	包含普通的Java代码	_jspService方法外部
+		<%         %>	包含普通的Java代码   _jspService方法内部
+		<%=      %>	包含普通的Java代码   通常是用来赋值   用来展示
+	JSP如何访问?
+	看似与HTML静态的文件资源很类似   浏览器发送请求直接访问就可以啦
+	*JSP编译过程--->很重要
+		JSP本质上就是一个Servlet
+		为了Servlet动态响应信息拼接服务的	JSP应该是Servlet的一部分
+		
+		浏览器发送请求---->index.jsp?key=value
+		请求到达Tomcat--->1.获取请求信息    index.jsp   key=value
+				2.创建一个Request对象   Response对象
+				3.根据请求的名字找寻资源	
+					先参考工程内部的web.xml配置文件    操作资源Servlet
+					再参考Tomcat内部的web.xml配置文件     *.jsp    JSP解析引擎
+					JspServlet--->解析引擎    
+					读取JSP中的内容  内容编译  形成一个新的index_jsp.java文件 
+					index_jsp.java文件编译成.class	执行  响应回浏览器
+	----------------------------------------------------------------------------------------
+	1.JSP中的不同<%%>形式的标签	
+		<%@	%>	做说明  通常放在头部
+		<%!	%>	写Java代码	_jspService方法外部
+		<%	%>	写Java代码	_jspService方法内部
+		<%=	%>	写Java代码	_jspService方法内部   赋值  展示	
+	2.JSP内置对象---->9个
+		内置对象放置在哪里？
+		放置在JSP生成的.java代码中的_jspService方法的内部
+	---->	HttpServletRequest		request
+	---->	HttpServletResponse	response
+	---->	HttpSession		session
+	---->	ServletContext		application
+		JSPWriter			out
+		Object			page
+		PageContext		pageContext
+	---->	ServletConfig		config
+		Exception			exception
+
+		1.HttpServletRequest
+			用来获取请求携带的参数信息
+			String value = request.getParameter("key");
+			用来设置接受请求参数时的字符集(POST)
+			request.setCharacterEncoding("UTF-8");
+			用来存储一个值   在另一个地方获取这个值
+			request.setAttribute("key",Object);
+			Object = request.getAttribute("key");
+			用来设置转发的资源位置
+			RequestDispatcher rd = request.getRequestDispatcher("path");
+			rd.forward(request,response);//真正的转发
+
+
+
+
+
+

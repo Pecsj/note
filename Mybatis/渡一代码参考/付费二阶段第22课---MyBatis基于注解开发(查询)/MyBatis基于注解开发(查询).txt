@@ -1,0 +1,33 @@
+
+	知识回顾
+	基于注解形式的开发
+	
+		原有形式以xml文件存在的
+			configuration.xml
+			<!--<mapper resource="mapper/StudentMapper.xml">-->
+			<mapper class="dao.StudentDao">
+			mapper.xml--------->注解方式
+
+		使用注解形式开发 必须采用mapper代理来执行
+			dao是一个接口+注解形式
+			dao是一个接口+mapper.xml
+
+		如果是xml  标签<insert> <delete> <update id=""> <select id="" resultType="">
+		如果是注解 @Insert  @Delete  @Update  @Select
+
+		@Insert("insert into student values(#{sid},#{sname},#{ssex})")
+		public void insert(Student student);
+
+		方法名字随意
+		方法参数从Service层来的
+			通常参数是一个  基础类型 int  Integer  String
+			通常参数是一个	domain对象  map
+			参数不是一个	Integer sid,String sname
+				1.将SQL语句中的#{key}--->#{param1},#{param2}
+				2.SQL语句不变采用原有的#{key} 方法每个参数前面添加@Param("key")
+
+	----------------------------------------------------------------------------
+
+	
+
+

@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script type="text/javascript">
+            window.onload = function() {
+                //1.发送异步请求 获取全部的emp数据List<Emp>  json
+                var xhr = new XMLHttpRequest();
+                xhr.open("post","selectAllEmp",true);
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState==4 && xhr.status==200){
+                        //2.展示在table的tbody内部
+                        var json = JSON.parse(xhr.responseText);
+                        var empList = json.empList;
+                        var tbodyObject = document.getElementById("showEmpTBody");
+                        for(var i=0;i<empList.length;i++){
+                            //每一次循环代表一个emp对象---展示在表格的一行内  tr
+                            var newTrObject = document.createElement("tr");
+                            //每一行记录前面多一个checkbox
+                            var inputObject = document.createElement("input");
+                            inputObject.type="checkbox";
+                            inputObject.name="empno";
+                            inputObject.value=empList[i].empno;
+                            var checkBoxTdObject = document.createElement("td");
+                            checkBoxTdObject.appendChild(inputObject);
+                            newTrObject.appendChild(checkBoxTdObject);
+
+                            //每一个emp对象中的8个属性
+                            var empTdObject = document.createElement("td");
+                            empTdObject.innerHTML=empList[i].empno;
+                            newTrObject.appendChild(empTdObject);
+                            var enameTdObject = document.createElement("td");
+                            enameTdObject.innerHTML=empList[i].ename;
+                            newTrObject.appendChild(enameTdObject);
+                            var jobTdObject = document.createElement("td");
+                            jobTdObject.innerHTML=empList[i].job;
+                            newTrObject.appendChild(jobTdObject);
+                            var mgrTdObject = document.createElement("td");
+                            mgrTdObject.innerHTML=empList[i].mgr;
+                            newTrObject.appendChild(mgrTdObject);
+                            var hiredateTdObject = document.createElement("td");
+                            hiredateTdObject.innerHTML=empList[i].hiredate;
+                            newTrObject.appendChild(hiredateTdObject);
+                            var salTdObject = document.createElement("td");
+                            salTdObject.innerHTML=empList[i].sal;
+                            newTrObject.appendChild(salTdObject);
+                            var commTdObject = document.createElement("td");
+                            commTdObject.innerHTML=empList[i].comm;
+                            newTrObject.appendChild(commTdObject);
+                            var deptnoTdObject = document.createElement("td");
+                            deptnoTdObject.innerHTML=empList[i].deptno;
+                            newTrObject.appendChild(deptnoTdObject);
+                            //将新的行对象添加在tbody内
+                            tbodyObject.appendChild(newTrObject);
+                        }
+                    }
+                }
+                xhr.send();
+
+                //3.给updateButton按钮绑定一个事件 提交表单
+                document.getElementById("updateButton").onclick = function() {
+                    var value = window.confirm("确认更新么?");
+                    if(value){
+                        document.getElementById("empForm").submit();
+                    }
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <form id="empForm" action="updateEmpByEmpno" method="post">
+            <div align="center">
+                <input id="updateButton" type="button" value="update">
+            </div>
+            <table id="empTable" border="1" align="center" width="80%">
+                <tr>
+                    <th></th><th>empno</th><th>ename</th><th>job</th><th>mgr</th><th>hiredate</th><th>sal</th><th>comm</th><th>deptno</th>
+                </tr>
+                <tbody id="showEmpTBody">
+
+                </tbody>
+            </table>
+        </form>
+    </body>
+</html>

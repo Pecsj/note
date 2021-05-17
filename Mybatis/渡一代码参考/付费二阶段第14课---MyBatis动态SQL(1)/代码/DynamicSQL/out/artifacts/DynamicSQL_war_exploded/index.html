@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script type="text/javascript">
+            window.onload = function(){
+                //获取下拉列表对象
+                var deptnoSelectObject = document.getElementById("deptnoSelect");
+                var jobSelectObject = document.getElementById("jobSelect");
+                //获取AJAX对象
+                var xhr = new XMLHttpRequest();
+                //发送异步请求 分别查询deptno(3)和job(5)
+                xhr.open("post","selectDeptnoAndJob",true);//打开一个AJAX通道 模拟一个请求
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState==4 && xhr.status==200){
+                        //处理响应信息 展示在下拉列表上面
+                        var json = JSON.parse(xhr.responseText);
+                        //获取json当中的两个集合  deptnoList  jobList
+                        var deptnoList = json.deptnoList;
+                        //将deptnoList集合中的信息取出来 放在下拉列表内 需要option组件包含
+                        for(var i=0;i<deptnoList.length;i++){
+                            var newOptionObject = document.createElement("option");
+                            newOptionObject.value = deptnoList[i];
+                            newOptionObject.innerHTML = deptnoList[i];
+                            deptnoSelectObject.appendChild(newOptionObject);
+                        }
+                        //获取jobList
+                        var jobList = json.jobList;
+                        //将jobList中的信息取出来 放在下拉列表内 需要option组件包含
+                        for(var i=0;i<jobList.length;i++){
+                            var newOptionObject = document.createElement("option");
+                            newOptionObject.value = jobList[i];
+                            newOptionObject.innerHTML = jobList[i];
+                            jobSelectObject.appendChild(newOptionObject);
+                        }
+                    }
+                }
+                xhr.send();
+            }
+        </script>
+    </head>
+    <body>
+        <form action="" method="post">
+            <div align="center">
+                deptno:
+                <select id="deptnoSelect" name="deptnoSelect">
+                    <option value="">==请选择==</option>
+                </select>
+                job:
+                <select id="jobSelect" name="jobSelect">
+                    <option value="">==请选择==</option>
+                </select>
+                <input id="selectButton" type="button" name="selectButton" value="查询">
+            </div>
+            <br>
+            <table id="showTable" align="center" border="1" width="80%">
+                <tr>
+                    <th>empno</th><th>ename</th><th>job</th><th>mgr</th><th>hiredate</th><th>sal</th><th>comm</th><th>deptno</th>
+                </tr>
+            </table>
+        </form>
+
+    </body>
+</html>

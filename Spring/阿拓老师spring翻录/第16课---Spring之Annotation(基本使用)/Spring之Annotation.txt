@@ -1,0 +1,30 @@
+
+	
+	Spring之Annotation
+
+	Spring中的这个注解----作用
+	与之前基于xml形式的配置一样的
+
+	
+	关于Spring的注解
+		最主要的是对于对象的管理
+		IOC   DI
+
+		<bean id="" class="">
+			<property>
+
+	想要将某一个类交给Spring来进行管理
+	可以在类上面写一个万能注解@Component   组件
+		@Component(value="id号")
+		如果value不写 默认的值是"" 但是肯定不能用这个""作为id
+		如果不写的话，对象的获取 类名字驼峰式
+		@Controller
+		@Service
+		@Repository
+
+		@Autowired
+			对象中的属性自动注入
+
+
+	
+	

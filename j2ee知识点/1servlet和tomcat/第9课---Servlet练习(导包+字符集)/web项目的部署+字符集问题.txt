@@ -1,0 +1,64 @@
+
+第一个问题，WEB项目如何导入外部的.jar包
+	深入理解项目的部署以及运行的过程
+	在IDEA编辑器中写完的这个项目  存在硬盘上 C:用户/账号名/IdeaProject(存储真实的代码文件)
+	创建的是一个web项目   执行需要Tomcat容器帮我们管理
+	需要将web项目部署在Tomcat内部   (webapps文件夹内)  D:tomcat9/webapps/
+	部署的过程本质上是I/O文件读写  必然会耗费很多时间
+	(IDEA)编辑器觉得耗费时间  默认的效果没有将真实的文件写入Tomcat 而是写了一个映射关系
+	项目修改了部署的路径  现在我们的项目存在了Tomcat内部的webapps内
+	我们原来的真实文件代码有两个主要的部分   src web
+	发现部署之后的文件只含有web文件夹的内容 src丢掉了
+	src不是真的丢掉了  src中存储的.java文件进行编译 .class才能用
+	web文件夹下  WEB-INF文件夹  classes文件夹(后来生成)
+
+	项目部署之后
+	HTML文件资源 直接读取内容 内容做响应
+	Servlet类 可以通过参考web.xml文件 获取类全名 通过反射 从而执行最终方法
+	JSP(HTML+Java)   解析---形成一个为了JSP解析而生成的Java类   Tomcat内部 (work文件夹内)
+	解析形成的新文件默认也是存在IDEA内的  为了减少耗费的时间
+
+
+第二个问题	    浏览器发送请求的时候  如果携带了中文的信息
+	    控制层接受的时候产生了文字乱码的问题
+		请求发送时的方式
+		get	在浏览器输入URL点击回车    <a href="">     <form method="get">
+		post	<form method="post">
+		两种不同请求的区别
+		get
+		URL看起来很复杂  请求后面会有?拼接一些参数
+		只有协议头   没有协议体  只能讲参数拼接在URL上面
+		post
+		URL看起来很简单  只有请求资源名  没有?拼接
+		有协议头和协议体两部分  协议头传递资源名  协议体传递参数信息
+
+		发送请求--->请求Tomcat--->Tomcat有一个默认处理字符集
+			Tomcat的配置文件中存储	ISO-8859-1老版本
+						UTF-8新版本(Tomcat8之后)
+	get请求的处理方式
+		发送请求的时候  请求名字 携带的参数信息都在协议头中
+		浏览器解析的时候  <meta charset="UTF-8">
+			如果Tomcat是老版本 get请求需要如下处理
+			String aname = request.getParameter("aname");
+			byte[] value = aname.getBytes("ISO-8859-1");
+			String newString = new String(value,"UTF-8");
+			如果Tomcat是新版本 可以不处理
+	post请求的处理方式
+		发送请求的时候  请求名字 协议头中
+		请求的参数信息是在协议体中(协议体只能传递字节)
+		浏览器解析的时候  <meta charset="UTF-8">
+		控制层接受的时候已经组合成一个String字符串
+			发送请求的时候按照UTF-8形式   拆开字节
+			接受的时候request对象直接给我组合(按照平台默认的字符集)成一个String
+		在request组合之前告知 按照哪一种字符集进行组合
+		request.setCharacterEncoding("UTF-8");
+
+
+
+
+
+
+
+
+
+

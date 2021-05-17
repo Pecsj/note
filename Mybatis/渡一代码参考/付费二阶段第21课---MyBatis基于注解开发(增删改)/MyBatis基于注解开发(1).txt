@@ -1,0 +1,42 @@
+
+	MyBatis
+	基于注解形式的开发
+
+	xml文件
+		configuration--配置信息  driver  url  username  password
+		mapper-----SQL语句   <insert> <delete>
+
+		两个好处
+		1.写完程序后还可更改(执行项目时候 修改几乎不会产生)
+		2.一个ma	pper文件  StudentMapper.xml  语句(CURD)在一起(语句在一起便于管理)
+		不好的地方
+		1.文件本身的结构比较复杂
+		2.文件中的SQL与DAO方法不在一起------开发者觉得写起来更方便的
+
+	注解方式
+		为了弥补XML文件的不好方式
+		1.写在方法上面(SQL+DAO方法 绑定在一起 开发者写起来更加方便)
+		2.注解通常就一行(比原来的xml形式简单 一对多 一对一 多对多关系也不是很简单)
+		需要注意
+		注解本身我们是调用不到的----底层需要通过反射技术来解析
+		如果想要使用注解方式执行----必须依托于Mapper代理
+		
+		DAO类是普通的  sqlSession对象属性  +  mapper.xml
+		#DAO类是接口    不需要对象属性	   +  mapper.xml
+		#DAO类是接口                        +  注解形式  
+
+		
+		@Param("")
+		@Insert("")
+		@Delete("")
+		@Update("")
+	
+		@Select("")
+
+
+
+
+
+
+
+

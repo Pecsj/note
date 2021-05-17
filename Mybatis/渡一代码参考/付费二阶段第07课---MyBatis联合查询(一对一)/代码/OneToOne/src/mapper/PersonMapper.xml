@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.PersonDao">
+
+    <!--方案一 采用两次查询执行-->
+    <!--自己定义一个赋值的规则  id是整个赋值规则的名字 -->
+    <!--<resultMap id="selectPerson" type="domain.Person">-->
+        <!--<id property="pid" column="pid"></id>-->
+        <!--<result property="pname" column="pname"></result>-->
+        <!--<association property="idcard" javaType="domain.IDCard" select="selectIDCardForPerson" column="cardid"></association>-->
+    <!--</resultMap>-->
+    <!--&lt;!&ndash;这个select标签是为了Person对象中的那个idcard属性再次查询用的&ndash;&gt;-->
+    <!--<select id="selectIDCardForPerson" resultType="domain.IDCard">-->
+        <!--select * from idcard where cardid = #{cardid}-->
+    <!--</select>-->
+
+    <!--方案二 以前学过的联合查询语句 等值连接 内链接 外连接-->
+    <resultMap id="selectPerson" type="domain.Person">
+        <id property="pid" column="pid"></id>
+        <result property="pname" column="pname"></result>
+        <association property="idcard" javaType="domain.IDCard">
+            <id property="cardid" column="cardid"></id>
+            <result property="address" column="address"></result>
+        </association>
+    </resultMap>
+    <!--=======================================================================-->
+    <!--dao调用的是下面这个标签对应的语句-->
+    <select id="selectOne" resultMap="selectPerson">
+        <!--方案二写法-->
+        select p.pid,p.pname,i.cardid,i.address from person p inner join idcard i on p.cardid = i.cardid where p.pid = #{pid}
+        <!--方案一写法-->
+--         select pid,pname,cardid from person where pid = #{pid}
+    </select>
+    <select id="selectAll" resultMap="selectPerson">
+        <!--方案二写法-->
+        select p.pid,p.pname,i.cardid,i.address from person p inner join idcard i on p.cardid = i.cardid
+        <!--方案一写法-->
+--         select pid,pname,cardid from person
+    </select>
+
+</mapper>

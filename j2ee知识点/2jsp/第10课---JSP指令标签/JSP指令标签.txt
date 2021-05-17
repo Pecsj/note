@@ -1,0 +1,60 @@
+
+	JSP标签
+		Java服务页面     HTML    Java
+
+	JSP指令标签
+	<%@ xxx %>	通常放置在JSP头部   做说明性质的描述
+	<%@ page %>
+		contentType="text/html;charset=UTF-8"   告知浏览器解析时遵循的规则
+		language="java"		告知JSP中含有的语言(默认)
+		pageEncoding="UTF-8"	告知Tomcat解析JSP时遵循的字符规则
+			Tomcat将JSP解析成Java文件---->   pageEncoding   charset   Tomcat默认
+			浏览器解析class文件回写的消息-->    charset    pageEncoding  浏览器默认
+		import=""	在JSP中导入的Java文件的包
+		isErrorPage="true"	设置当前JSP作为一个异常页	exception
+		errorPage="xxx.jsp"
+	<%@ taglib %>	Jsp   Standard   Tag  Library	JSTL
+		uri="http://java.sun.com/jsp/jstl/core" prefix="c"
+	<%@ include%>	用来在当前JSP中引入已经写好的资源      .jsp    .html
+		include标签引入一个JSP资源正常(不会出现中文乱码的问题 脚本也同时好用)
+		include标签引入一个HTML资源(产生中文乱码 即便是设置了charset也不好用)
+		解决上述HTML乱码问题需要配置一个文件 web.xml
+		主要配置page-encoding就可以了
+			<jsp-config>
+				<jsp-property-group>
+					<description>JSPConfiguration</description>
+					<display-name>JSPConfiguration</display-name>
+					<url-pattern>*.jsp</url-pattern>
+					<el-ignored>false</el-ignored>
+					<page-encoding>UTF-8</page-encoding>
+					<scripting-invalid>false</scripting-invalid>
+				</jsp-property-group>
+ 				<jsp-property-group>
+					<description>HTMLConfiguration</description>
+					<display-name>HTMLConfiguration</display-name>
+					<url-pattern>*.html</url-pattern>
+					<el-ignored>false</el-ignored>
+					<page-encoding>UTF-8</page-encoding>
+					<scripting-invalid>false</scripting-invalid>
+				</jsp-property-group>
+			</jsp-config>
+	JSP代码标签
+	JSP编译执行的原理
+	JSP看起来像是一个文件资源	其实本质上是一个操作资源	JSP本质就是一个Servlet
+	浏览器发送请求    index.jsp	--->请求到达Tomcat	 参考web.xml配置文件(工程 容器)
+	*.jsp的配置--->JspServlet(JSP解析引擎)
+	JspServlet这个类读取index.jsp的文件资源内容--->解析--->index_jsp.java
+	index_jsp.java源代码--->编译--->index_jsp.class字节码文件--->执行	out.write("<>");
+	浏览器接受了回写回来的响应信息--->解析--->效果
+	<%!	%>	生成的代码存在xxx_jsp.java类中，作为成员存在，通常用来定义属性，方法
+	<%	%>	生成的代码存在xxx_jsp.java类中的_jspService()方法内部，方法内的局部，通常是写逻辑
+	<%=	%>	生成的代码存在xxx_jsp.java类中的_jspService()方法内部，通常用来赋值或者打印输出
+
+	JSP动作标签	用来替代JSP中java创建对象  对象的赋值取值   请求转发  携带参数
+	<jsp:xxx>
+
+
+
+
+
+

@@ -1,0 +1,500 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.25-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| dept           |
+| emp            |
+| myclass        |
+| newteacher     |
+| person         |
+| student        |
+| teacher        |
+| users          |
++----------------+
+8 rows in set (0.00 sec)
+
+mysql> create database cons;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| cons               |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use cons;
+Database changed
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table myclass(
+    ->   classid int(4),
+    ->   cname varchar(20)
+    ->   ,
+    ->   loc varchar(20)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table myclass character set utf8;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into myclass values(1,'class1','beijing');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
++---------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into myclass values(1,'class1','beijing');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
+|       1 | class1 | beijing |
++---------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> delete from myclass;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from myclass;
+Empty set (0.00 sec)
+
+mysql> alter table myclass add constraint pk_myclass primary key(classid);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from myclass;
+Empty set (0.00 sec)
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | NO   | PRI | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into myclass values(1,'class1','beijing');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into myclass values(1,'class1','beijing');
+ERROR 1062 (23000): Duplicate entry '1' for key 'PRIMARY'
+mysql> insert into myclass values(2,'class2','shenzhen');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from myclass;
++---------+--------+----------+
+| classid | cname  | loc      |
++---------+--------+----------+
+|       1 | class1 | beijing  |
+|       2 | class2 | shenzhen |
++---------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> show keys from myclass;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| myclass |          0 | PRIMARY  |            1 | classid     | A         |           2 |     NULL | NULL   |      | BTREE      |         |               |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> insert into myclass(cname,loc) values('class3','shanghai');
+ERROR 1364 (HY000): Field 'classid' doesn't have a default value
+mysql> delete from myclass;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from myclass;
+Empty set (0.00 sec)
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | NO   | PRI | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table myclass modify classid int(4) auto_increment;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into myclass(cname,loc) values('class1','beijing');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
++---------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> insert into myclass(cname,loc) values('class1','beijing');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
+|       2 | class1 | beijing |
++---------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> alter table myclass auto_increment = 10;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into myclass(cname,loc) values('class1','beijing');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
+|       2 | class1 | beijing |
+|      10 | class1 | beijing |
++---------+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> alter table myclass modify classid int(4);
+Query OK, 3 rows affected (0.07 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> insert into myclass(cname,loc) values('class1','beijing');
+ERROR 1364 (HY000): Field 'classid' doesn't have a default value
+mysql> alter table myclass drop primary key;
+Query OK, 3 rows affected (0.06 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
+|       2 | class1 | beijing |
+|      10 | class1 | beijing |
++---------+--------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into myclass values(10,'class1','beijing');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
+|       2 | class1 | beijing |
+|      10 | class1 | beijing |
+|      10 | class1 | beijing |
++---------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | NO   |     | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table myclass modify classid int(4) null;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
+|       2 | class1 | beijing |
+|      10 | class1 | beijing |
+|      10 | class1 | beijing |
++---------+--------+---------+
+4 rows in set (0.00 sec)
+
+mysql> delete from myclass where classid = 10;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
+|       2 | class1 | beijing |
++---------+--------+---------+
+2 rows in set (0.00 sec)
+
+mysql> delete from myclass where classid = 2;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+---------+
+| classid | cname  | loc     |
++---------+--------+---------+
+|       1 | class1 | beijing |
++---------+--------+---------+
+1 row in set (0.00 sec)
+
+mysql> alter table myclass add constraint uk_myclass unique key(loc);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into myclass values(2,'class2','beijing');
+ERROR 1062 (23000): Duplicate entry 'beijing' for key 'uk_myclass'
+mysql> insert into myclass values(2,'class2','shenzhen');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+----------+
+| classid | cname  | loc      |
++---------+--------+----------+
+|       1 | class1 | beijing  |
+|       2 | class2 | shenzhen |
++---------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show keys from myclass;
++---------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table   | Non_unique | Key_name   | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++---------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| myclass |          0 | uk_myclass |            1 | loc         | A         |           2 |     NULL | NULL   | YES  | BTREE      |         |               |
++---------+------------+------------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> alter table myclass drop index uk_myclass;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show keys from myclass;
+Empty set (0.00 sec)
+
+mysql> alter table myclass add unique (loc);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  | UNI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> show keys from myclass;
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| Table   | Non_unique | Key_name | Seq_in_index | Column_name | Collation | Cardinality | Sub_part | Packed | Null | Index_type | Comment | Index_comment |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+| myclass |          0 | loc      |            1 | loc         | A         |           1 |     NULL | NULL   | YES  | BTREE      |         |               |
++---------+------------+----------+--------------+-------------+-----------+-------------+----------+--------+------+------------+---------+---------------+
+1 row in set (0.00 sec)
+
+mysql> alter table myclass drop index loc;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table myclass modify cname varchar(20) not null;
+Query OK, 2 rows affected (0.04 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | NO   |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table myclass modify cname varchar(20) null;
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table myclass change cname cname varchar(20) not null;
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | NO   |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table myclass change cname cname varchar(20) null;
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table myclass modify cname varchar(20) not null;
+Query OK, 0 rows affected (0.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | YES  |     | NULL    |       |
+| cname   | varchar(20) | NO   |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+----------+
+| classid | cname  | loc      |
++---------+--------+----------+
+|       1 | class1 | beijing  |
+|       2 | class2 | shenzhen |
++---------+--------+----------+
+2 rows in set (0.00 sec)
+
+mysql> insert into myclass values(3,null,'shanghai');
+ERROR 1048 (23000): Column 'cname' cannot be null
+mysql> alter table myclass modify cname varchar(20) not null default 'zzt is good';
+Query OK, 0 rows affected (0.00 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into myclass values(3,null,'shanghai');
+ERROR 1048 (23000): Column 'cname' cannot be null
+mysql> insert into myclass(classid,loc) values(3,'shanghai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+-------------+----------+
+| classid | cname       | loc      |
++---------+-------------+----------+
+|       1 | class1      | beijing  |
+|       2 | class2      | shenzhen |
+|       3 | zzt is good | shanghai |
++---------+-------------+----------+
+3 rows in set (0.00 sec)
+
+mysql>

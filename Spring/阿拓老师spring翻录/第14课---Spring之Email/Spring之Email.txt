@@ -1,0 +1,63 @@
+
+	
+	知识回顾
+	SpringJDBC
+	1.Spring给我们提供了一个类(对象)----操作数据库，必然需要连接
+		JdbcTemplate
+	2.在Spring核心配置文件中添加一个bean的管理
+		<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+			<!--需要配置一个数据源-->
+			<property name="dataSourse" ref="dataSourse">
+		</bean>
+	3.在Template对象之前还需要配置另一个bean，管理数据源(如何创建连接)
+		<bean id="dataSourse" class="org.springframework.jdbc.datasource.DriverManagerDataSourse">
+			<property name="driverClassName" value="com.mysql.jdbc.Driver">
+			<property name="url" value="jdbc:mysql://localhost:3306/newtest?key=value&amp;key=value">
+			<property name="username" value="">
+			<property name="password" value="">
+		</bean>
+	4.使用JdbcTemplate对象来帮我们读写数据库
+		JdbcTemplate template = (JdbcTemplate)factory.getBean();
+		数据库写操作(增删改)	原生的sql语句带有问号
+		int count = template.update(String sql,Object args...);
+		Object obj = template.queryForObject(String sql,Class clazz,Object args...);
+		T = template.queryForObject(String sql,RowMapper<T> rm,Object args...);
+		List<Map<String,Object>> = template.queryForList(String sql,Object args...);
+		List<T> = template.query(String sql,RowMapper<T> rm,Object args...);
+
+
+	======================================================================
+
+	Spring发送Email
+
+	1.写一个不基于Spring，Oracle官网给我们提供了mail.jar包
+	2.写一个基于Spring的发送
+		配置文件
+		对象管理
+
+	SpringTimer
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

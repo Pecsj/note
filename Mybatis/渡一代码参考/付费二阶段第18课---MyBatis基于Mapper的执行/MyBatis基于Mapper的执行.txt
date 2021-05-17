@@ -1,0 +1,80 @@
+
+	知识回顾
+	Mapper文件中	SQL动态
+	<where>
+	<if>
+	<choose> <when> <otherwise>
+	<foreach>
+	注意#{}  ${}
+
+	
+	MyBatis提供了SqlSession对象	
+		普通方式
+			dao普通类中一个普通方法---->Mapper文件(SQL)
+			通过SqlSession对象执行
+
+			dao方法中的参数通常不是自己的  (上一个层次传递过来的)
+			dao方法中的执行过程不用自己写  而需要一个SqlSession执行
+			
+
+		基于Mapper(代理对象)的执行方式
+
+
+			这个过程中发现Dao层次不做实质的事情
+			层次是否可以省略？？？---->不好	保留这个层次
+			给Dao配一个小弟 去完成原来Dao该做的事情(找SqlSession干活)
+			
+			(你们)Service业务层
+				负责处理逻辑 判断 比较
+			(我)Dao持久层----------(看代码就感觉是一个传话的人)
+				我的小弟会自动的去做我之前的事情
+				负责读写数据库
+				(艾薇)读写数据库需要SqlSession对象
+			数据库
+
+
+		Service--->Dao(保留 不做事 抽象)--->Dao的小弟(Mapper代理)-->找寻SqlSession做事
+
+
+		=========================================================================
+
+
+		如果想要基于Mapper的方式执行
+		1.Dao层次保留  Dao中的方法结构 参数 返回值 均不动 
+			只是将原有的具体方法变成抽象方法  Dao具体类变成接口
+		2.在Service层中获取Dao的方式发生改变
+			StudentDao dao = new StudentDao();
+			dao执行的过程  调用SqlSession做事("sqlid",参数);
+
+			StudentDao dao = sqlSession.getMapper(StudentDao.class);
+			dao的代理 执行过程？？？
+			dao的代理 需要调用SqlSession做事("sqlid",参数);
+			代理可以找到参数 代理相当于是原来Dao的子类 可能会有方法重写。。。
+			代理如何找到sql的呢？----映射文件名字的规则
+				namespace	dao的类全名一致
+				标签中的id	dao的方法名字一致
+
+
+			Service中获取一个Dao的对象
+			Dao普通类+xxxMapper.xml执行
+
+			
+			Service中获取一个Dao的Mapper对象(代理对象)
+			Dao接口+xxxMapper.xml执行
+
+
+			动态代理机制
+			静态代理
+
+
+			Service中获取一个Dao的Mapper对象(代理)
+			Dao接口+注解(sql)
+
+
+
+
+
+
+
+
+

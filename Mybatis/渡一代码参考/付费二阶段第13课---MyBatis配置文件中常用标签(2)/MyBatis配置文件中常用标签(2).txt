@@ -1,0 +1,71 @@
+
+	知识回顾
+	
+核心配置文件(configuration.xml)
+	properties标签
+	通常为了引入一个外部的文件信息(跟连接相关)
+	typeAliases标签
+	通常是为了某些类 起别名用的  别名通常全部字母小写
+	<typeAlias  type   alias>
+	settings标签
+	是为了一些属性的设置    延迟加载
+	<setting name value>
+	environments标签	  default属性 可以选择某一个environment环境
+		是为了做一些与数据库连接相关的配置
+		<environment id="">
+			<transactionManager type="JDBC"> 设置连接数据库的管理者
+				type可以写两种
+				JDBC     利用JDBC来管理提交 回滚等功能
+				MANAGED  配置上以后 什么都不做
+			<dataSource type="POOLED">  设置数据源相关的信息
+				需要设置连接的数据库是哪个 在哪里 账号和密码
+				type 设置当前数据源管理连接的方式
+				UNPOOLED	每次需要连接的时候简单的创建 简单的关闭
+					需要设置几个连接数据库的属性property
+					driver
+					url
+					username
+					password
+					defaultTransactionIsoilationLevel
+						四种不同隔离级别
+						Serializable	避免所有读取问题 性能很慢
+						Repeatable-Read	可以避免脏读 不可重复读
+						Read-Committed	可以避免脏读
+						Read-UnCommitted均无法避免
+				POOLED		这个数据源的管理方式实现了连接的缓存 连接复用
+					除了上述几个属性以外  设置其他的属性
+					poolMaximumActiveConnections	MyBatis默认10
+					poolTimeToWait			MyBatis默认20000  20秒
+				JNDI		这个数据源的配置是为了准备与外部应用一起使用
+					Java Naming and Directory Interface
+					Java命名和目录接口
+					C3P0 性能比较差 早些年
+					DBCP (DataBase Connection Pool) Apache组织的一个Commons开源项目
+					Druid (阿里开源项目中的一个产品) fastjson dubbo
+	mappers标签
+		mapper resource="一个映射文件(文件中的某一个标签--SQL)"
+		mapper class="一个类(方法上面的注解--SQL)"
+映射配置文件(xxxMapper.xml)
+	根标记  mapper	namespace属性
+		属性理论上可以随便写  强烈建议属性---dao类全名对应
+		以后的dao---变成接口---代理对象做事
+
+	子标记
+	<insert id="" parameterType="">
+	<delete id="">
+	<update id="">
+		以上的三个子标记 必须有id属性
+		insert into student values(#{sid},#{sname})
+		除了id以外还可以写parameterType	基本类型 map 对象
+	<select>
+		必须有id属性
+		必须告知查询后的数据放置在什么容器内  对象 map 基本类型
+		resultType属性
+		resultMap属性	自定义规则	用来设计表格之间的联合关系
+
+
+
+
+
+
+

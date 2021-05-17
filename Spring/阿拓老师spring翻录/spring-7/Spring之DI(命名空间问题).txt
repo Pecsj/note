@@ -1,0 +1,64 @@
+
+	
+	知识回顾
+	集合的注入方式
+	某一个对象中的属性是一个集合
+	<bean id="" class="">
+		<property name="list">
+			<list>
+				<value>
+				<ref>
+			<set>
+			<map>
+				<entry>
+	=======================================================
+	1.Properties
+		某一个bean对象中有一个属性是Properties类型(本质就是个map)
+		<bean id="" class="">
+			<property name="属性名">  <constructor-arg name="属性名">
+				<props>
+					<prop key="">value</pros>
+
+	--------------------------------------------------------
+	现在学过了bean对象中属性的DI
+		1.构造方法进行注入
+		2.通过set方法进行注入
+		
+		补充 配置文件中若两种方式都进行配置 是可以的
+		两种方式同时给一个属性进行赋值操作
+		我们会采用set方法的值作为最终的值	构造(执行的早)  set(执行的晚 覆盖)
+
+	
+	--------------------------------------------------------
+
+	在标签配置过程中  为了简便配置文件的写法
+	Spring给我们提供了以下的方式
+	命名空间
+		property		p:
+		constructor-arg		c:
+	有了这种命名空间规范后
+	可以将原来嵌套在bean标签中的两个属性 放在bean标签中
+		<bean p:age="18">
+			<property name="age" value="18">
+
+	想要使用这样命名空间的简单写法
+		1.需要在当前核心配置文件的头部导入一个规则(在beans中增加一个属性)
+			<beans 
+				xmlns:c="http://www.springframework.org/schema/c"
+				xmlns:p="http://www.springframework.org/schema/p">
+		
+			</beans>
+		2.可以在bean标签中通过  c:name=""  c:computer-ref=""
+
+	有了名命空间之后
+	写法相比于原来的写法容易了一些  建议大家知道即可
+		c:基本值  c:computer-ref="某一个别的bean的id"  c:list-ref=""
+		
+		<util:list>
+		<util:map>
+
+
+
+
+			
+	

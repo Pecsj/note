@@ -1,0 +1,487 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 3
+Server version: 5.7.25-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| myclass        |
+| person         |
+| student        |
+| teacher        |
++----------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student where classid = 1 or classid = 3;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where classid in (1,3);
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from myclass;
++---------+------------+----------+
+| classid | classname  | classloc |
++---------+------------+----------+
+|       1 | classone   | beijing  |
+|       2 | classtwo   | shenzhen |
+|       3 | classthree | hangzhou |
++---------+------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where classid in (select classid from myclass where classloc in ('beijing','hangzhou'));
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where classid not in (select classid from myclass where classloc = 'beijing');
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname   | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+|    4 | zhaoliu | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi  | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt     | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from myclass;
++---------+------------+----------+
+| classid | classname  | classloc |
++---------+------------+----------+
+|       1 | classone   | beijing  |
+|       2 | classtwo   | shenzhen |
+|       3 | classthree | hangzhou |
++---------+------------+----------+
+3 rows in set (0.00 sec)
+
+mysql> insert into myclass values(4,'classfour','shanghai');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass
+    -> ;
++---------+------------+----------+
+| classid | classname  | classloc |
++---------+------------+----------+
+|       1 | classone   | beijing  |
+|       2 | classtwo   | shenzhen |
+|       3 | classthree | hangzhou |
+|       4 | classfour  | shanghai |
++---------+------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> insert into student values(8,'abc','nan',19,'2011-12-12',78,89,97,79,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(9,'xyz','nv',18,'2011-11-11',77,99,77,88,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+------------+----------+
+| classid | classname  | classloc |
++---------+------------+----------+
+|       1 | classone   | beijing  |
+|       2 | classtwo   | shenzhen |
+|       3 | classthree | hangzhou |
+|       4 | classfour  | shanghai |
++---------+------------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
+|    8 | abc      | nan  |   19 | 2011-12-12 |   78.00 |   89.00 |   97.00 |    79.00 |       4 |
+|    9 | xyz      | nv   |   18 | 2011-11-11 |   77.00 |   99.00 |   77.00 |    88.00 |       4 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select classid from myclass where classid >2;
++---------+
+| classid |
++---------+
+|       3 |
+|       4 |
++---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where classid >any (select classid from myclass where classid > 2);
++------+-------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+-------+------+------+------------+---------+---------+---------+----------+---------+
+|    8 | abc   | nan  |   19 | 2011-12-12 |   78.00 |   89.00 |   97.00 |    79.00 |       4 |
+|    9 | xyz   | nv   |   18 | 2011-11-11 |   77.00 |   99.00 |   77.00 |    88.00 |       4 |
++------+-------+------+------+------------+---------+---------+---------+----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where classid <any (select classid from myclass where classid > 2);
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student where classid =any (select classid from myclass where classid > 2);
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname   | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+|    5 | qianqi  | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt     | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
+|    8 | abc     | nan  |   19 | 2011-12-12 |   78.00 |   89.00 |   97.00 |    79.00 |       4 |
+|    9 | xyz     | nv   |   18 | 2011-11-11 |   77.00 |   99.00 |   77.00 |    88.00 |       4 |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where classid !any (select classid from myclass where classid > 2);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '!any (select classid from myclass where classid > 2)' at line 1
+mysql> select * from student where classid !=any (select classid from myclass where classid > 2);
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
+|    8 | abc      | nan  |   19 | 2011-12-12 |   78.00 |   89.00 |   97.00 |    79.00 |       4 |
+|    9 | xyz      | nv   |   18 | 2011-11-11 |   77.00 |   99.00 |   77.00 |    88.00 |       4 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from student where classid >some (select classid from myclass where classid > 2);
++------+-------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+-------+------+------+------------+---------+---------+---------+----------+---------+
+|    8 | abc   | nan  |   19 | 2011-12-12 |   78.00 |   89.00 |   97.00 |    79.00 |       4 |
+|    9 | xyz   | nv   |   18 | 2011-11-11 |   77.00 |   99.00 |   77.00 |    88.00 |       4 |
++------+-------+------+------+------------+---------+---------+---------+----------+---------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student where classid <some (select classid from myclass where classid > 2);
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student where classid =some (select classid from myclass where classid > 2);
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname   | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+|    5 | qianqi  | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt     | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
+|    8 | abc     | nan  |   19 | 2011-12-12 |   78.00 |   89.00 |   97.00 |    79.00 |       4 |
+|    9 | xyz     | nv   |   18 | 2011-11-11 |   77.00 |   99.00 |   77.00 |    88.00 |       4 |
++------+---------+------+------+------------+---------+---------+---------+----------+---------+
+5 rows in set (0.00 sec)
+
+mysql> select * from student where classid !=some (select classid from myclass where classid > 2);
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
+|    8 | abc      | nan  |   19 | 2011-12-12 |   78.00 |   89.00 |   97.00 |    79.00 |       4 |
+|    9 | xyz      | nv   |   18 | 2011-11-11 |   77.00 |   99.00 |   77.00 |    88.00 |       4 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from student where classid >all (select classid from myclass where classid > 2);
+Empty set (0.00 sec)
+
+mysql> select * from student where classid <all (select classid from myclass where classid > 2);
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student where classid =all (select classid from myclass where classid > 2);
+Empty set (0.00 sec)
+
+mysql> select * from student where classid !=all (select classid from myclass where classid > 2);
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nv   |   17 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
+|    8 | abc      | nan  |   19 | 2011-12-12 |   78.00 |   89.00 |   97.00 |    79.00 |       4 |
+|    9 | xyz      | nv   |   18 | 2011-11-11 |   77.00 |   99.00 |   77.00 |    88.00 |       4 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+8 rows in set (0.00 sec)
+
+mysql> select * from teacher;
++------+-------+------+------------+
+| tid  | tname | tsex | tbirthday  |
++------+-------+------+------------+
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    2 | zzt2  | nv   | 2000-01-01 |
+|    3 | zzt3  | nan  | 2000-01-01 |
++------+-------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select tid,tname,tsex from teacher union select sid,sname,ssex from student;
++------+----------+------+
+| tid  | tname    | tsex |
++------+----------+------+
+|    1 | zzt1     | nan  |
+|    2 | zzt2     | nv   |
+|    3 | zzt3     | nan  |
+|    1 | zhangsan | nan  |
+|    2 | lisi     | nv   |
+|    4 | zhaoliu  | nv   |
+|    5 | qianqi   | nv   |
+|    6 | wangjiu  | nv   |
+|    7 | zzt      | nan  |
+|    8 | abc      | nan  |
+|    9 | xyz      | nv   |
++------+----------+------+
+11 rows in set (0.00 sec)
+
+mysql> select * from teacher union select sid,sname,ssex from student;
+ERROR 1222 (21000): The used SELECT statements have a different number of columns
+mysql> select sid,sname,ssex from student union select tid,tname,tsex from teacher;
++------+----------+------+
+| sid  | sname    | ssex |
++------+----------+------+
+|    1 | zhangsan | nan  |
+|    2 | lisi     | nv   |
+|    4 | zhaoliu  | nv   |
+|    5 | qianqi   | nv   |
+|    6 | wangjiu  | nv   |
+|    7 | zzt      | nan  |
+|    8 | abc      | nan  |
+|    9 | xyz      | nv   |
+|    1 | zzt1     | nan  |
+|    2 | zzt2     | nv   |
+|    3 | zzt3     | nan  |
++------+----------+------+
+11 rows in set (0.00 sec)
+
+mysql> select tid,tname,tsex from teacher union select sname,sid,sbirthday from student;
++----------+-------+------------+
+| tid      | tname | tsex       |
++----------+-------+------------+
+| 1        | zzt1  | nan        |
+| 2        | zzt2  | nv         |
+| 3        | zzt3  | nan        |
+| zhangsan | 1     | 2000-01-01 |
+| lisi     | 2     | 2001-02-06 |
+| zhaoliu  | 4     | 2001-01-04 |
+| qianqi   | 5     | 2002-03-03 |
+| wangjiu  | 6     | 2002-02-02 |
+| zzt      | 7     | 2001-11-24 |
+| abc      | 8     | 2011-12-12 |
+| xyz      | 9     | 2011-11-11 |
++----------+-------+------------+
+11 rows in set (0.00 sec)
+
+mysql> create table newteacher as select * from teacher;
+Query OK, 3 rows affected (0.02 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from newteacher;
++------+-------+------+------------+
+| tid  | tname | tsex | tbirthday  |
++------+-------+------+------------+
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    2 | zzt2  | nv   | 2000-01-01 |
+|    3 | zzt3  | nan  | 2000-01-01 |
++------+-------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update newteacher set tid = 8 where tname = 'zzt2';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update newteacher set tid = 9 where tname = 'zzt3';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from teacher;
++------+-------+------+------------+
+| tid  | tname | tsex | tbirthday  |
++------+-------+------+------------+
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    2 | zzt2  | nv   | 2000-01-01 |
+|    3 | zzt3  | nan  | 2000-01-01 |
++------+-------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from newteacher;
++------+-------+------+------------+
+| tid  | tname | tsex | tbirthday  |
++------+-------+------+------------+
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    8 | zzt2  | nv   | 2000-01-01 |
+|    9 | zzt3  | nan  | 2000-01-01 |
++------+-------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from teacher union select * from newteacher;
++------+-------+------+------------+
+| tid  | tname | tsex | tbirthday  |
++------+-------+------+------------+
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    2 | zzt2  | nv   | 2000-01-01 |
+|    3 | zzt3  | nan  | 2000-01-01 |
+|    8 | zzt2  | nv   | 2000-01-01 |
+|    9 | zzt3  | nan  | 2000-01-01 |
++------+-------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from teacher union all select * from newteacher;
++------+-------+------+------------+
+| tid  | tname | tsex | tbirthday  |
++------+-------+------+------------+
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    2 | zzt2  | nv   | 2000-01-01 |
+|    3 | zzt3  | nan  | 2000-01-01 |
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    8 | zzt2  | nv   | 2000-01-01 |
+|    9 | zzt3  | nan  | 2000-01-01 |
++------+-------+------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from newteacher union select * from teacher;
++------+-------+------+------------+
+| tid  | tname | tsex | tbirthday  |
++------+-------+------+------------+
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    8 | zzt2  | nv   | 2000-01-01 |
+|    9 | zzt3  | nan  | 2000-01-01 |
+|    2 | zzt2  | nv   | 2000-01-01 |
+|    3 | zzt3  | nan  | 2000-01-01 |
++------+-------+------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from newteacher union all select * from teacher;
++------+-------+------+------------+
+| tid  | tname | tsex | tbirthday  |
++------+-------+------+------------+
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    8 | zzt2  | nv   | 2000-01-01 |
+|    9 | zzt3  | nan  | 2000-01-01 |
+|    1 | zzt1  | nan  | 2000-01-01 |
+|    2 | zzt2  | nv   | 2000-01-01 |
+|    3 | zzt3  | nan  | 2000-01-01 |
++------+-------+------+------------+
+6 rows in set (0.00 sec)
+
+mysql>

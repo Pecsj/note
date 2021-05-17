@@ -1,0 +1,69 @@
+
+	
+	知识回顾
+	@RequestMapping
+	接收请求参数
+	变量(变量名字 请求key一致 如果名字不一致 可以通过@RequestParam)
+	变量(对象形式 对象中每一个属性 请求的key一致)
+	变量(Map对象 前面添加@RequestParam)
+	原生的Request Response对象来获取
+
+	如果传递参数带有中文
+	Get请求---没有问题
+	Post请求--配置一个Filter
+
+	@RequestParam
+	@RequestHeader
+	@CookieValue
+	@RequestBody  接收时按照JSON处理  key=value&key=value	@ResponseBody
+	@ModelAttribute
+
+	如果请求过来的数据需要自己进行类型转化
+	实现自定义的类型转换器
+		自定义一个类  实现Converter<S,T>  重写convert方法(自己定义转化的过程)
+		配置<bean class="ConversionServiceFactoryBean">
+			<property name="converters">
+				<set>
+		配置驱动<mvc:annotation-driven conversion-service="">
+
+
+	浏览器发送一个请求
+	请求xxx.do
+	通过核心的"小总管"DispatcherServlet分发
+	具体的类中的某个具体的方法
+	通过方法中的参数列表接收请求的信息
+	方法中调用业务层执行具体逻辑-----service.login(name,pass);----dao----DB
+	根据结果进行响应信息的处理	控制层---控制响应信息View
+		
+		处理响应信息的方式
+		1.采用原生response对象，获取输出流的方式进行直接响应
+			方法返回值void就可以了
+			方法的参数HttpServletResponse response
+			方法的内部获取PrintWriter输出流对象  response.getWriter();
+			writer.write("<>");
+			如果响应信息中含有中文
+			需要在方法的最上面设置中文字符集的解析方式
+			response.setCharacterEncoding("UTF-8");
+            		response.setContentType("text/html;charset=UTF-8");
+		2.转发	request.getRequestDispatcher().forward(request,response);
+		3.重定向response.sendRedirect();
+		以上这种方式并不好，不建议大家使用
+
+
+		利用"小总管"来帮我们处理转发和重定向的事情
+		方法的返回值利用String类型
+		方法内部return需要转发/重定向的资源位置
+		重定向需要在资源名字之前添加  redirect:xxx.jsp
+		转发也可以填写关键字   forward:xxx.jsp   默认不写就当做转发啦
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,107 @@
+
+
+#设计一个老师的表格
+create table teacher(
+	tid int(10),
+
+	tname varchar(20),
+	tsex varchar(4),
+	tage int(3)
+) character set utf8;
+
+#添加主键约束
+alter table teacher add constraint pk_teacher primary key(tid);
+
+
+#设计一个学生的表格
+
+create table student(
+
+	sid int(10),
+
+	sname varchar(20),
+
+	ssex varchar(4),
+
+	sage int(3)
+) character set utf8;
+
+#添加主键约束
+
+alter table student add constraint pk_student primary key(sid);
+
+
+
+#设计一张中间表 老师-学生的关系
+create table tea_stu(
+	tid int(10),
+
+	sid int(10)
+) character set utf8;
+
+#分别设置两个列的外键约束
+alter table tea_stu add constraint fk_teacher foreign key(tid) references teacher(tid);
+
+alter table tea_stu add constraint fk_student foreign key(sid) references student(sid);
+
+#设置联合主键
+alter table tea_stu add constraint pk_tea_stu primary key(tid,sid);
+
+
+#添加测试数据
+
+insert into teacher values(1,'zzt','男',18);
+
+insert into teacher values(2,'panda','男',58);
+insert into teacher values(3,'艾薇','女',16);
+
+insert into student values(1,'赵一','男',18);
+
+insert into student values(2,'钱一','女',17);
+
+insert into student values(3,'孙一','女',19);
+
+insert into student values(4,'李一','男',18);
+
+insert into student values(5,'周一','男',17);
+
+insert into student values(6,'吴一','女',19);
+
+insert into student values(7,'郑一','女',18);
+
+insert into student values(8,'王一','男',16);
+
+
+insert into tea_stu values(1,1);
+insert into tea_stu values(1,2);
+insert into tea_stu values(1,3);
+
+insert into tea_stu values(1,4);
+insert into tea_stu values(1,5);
+
+insert into tea_stu values(1,6);
+
+insert into tea_stu values(1,7);
+
+insert into tea_stu values(1,8);
+insert into tea_stu values(2,1);
+insert into tea_stu values(2,2);
+insert into tea_stu values(2,4);
+
+insert into tea_stu values(2,7);
+
+insert into tea_stu values(3,1);
+
+insert into tea_stu values(3,2);
+
+insert into tea_stu values(3,5);
+
+insert into tea_stu values(3,8);
+
+
+
+select * from teacher;
+
+select * from student;
+
+select t.*,s.* from teacher t,tea_stu ts,student s where t.tid = ts.tid and ts.sid = s.sid;

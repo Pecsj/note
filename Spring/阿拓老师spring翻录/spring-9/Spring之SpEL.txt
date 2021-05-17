@@ -1,0 +1,74 @@
+
+	
+	知识回顾
+	扩展
+	1.bean的"继承"---->模板的感觉
+		几个不同的bean引用了同样的一些bean
+		Room  Person
+			Computer1
+			Computer2
+			Computer3
+		设计一个模板的bean对象
+		<bean id="" class="" abstract="true"> 当做模板使用 不能被创建
+			<property name="c1" ref="c1">
+			<property name="c2" ref="c2">
+			<property name="c3" ref="c3">
+		一下的正常bean对象中就可以直接引入模板bean了
+		<bean id="" class="" parent="模板id">
+	2.在beans标签中
+		<beans
+			default-lazy-init="true" default-autowire="byName">
+			<bean lazy-init="false">
+			<bean>
+		</beans>
+	3.如何在核心文件中引入外部的properties文件
+		命名空间的标签
+		<context:property-placeholder loaction="classpath:xxx.properties"></>
+		可以在某一个bean中直接使用外部文件中的内容
+		<bean id="" class="" p:name="${key}">
+		
+
+	===============================================================================
+
+	EL(JSP的时候学过)
+	Expression  Language
+	表达式语言	
+		String value = request.getParameter("key");
+		String value = (String)request.getAttribute("key");
+		if(value!=null){
+			拿来使用
+		}
+	${}	帮助JSP进行域对象中取值操作
+		做一些简单的算术运算 逻辑运算 比较运算 等等
+
+	=====================================================================
+
+	SpringEL
+	SpEL	Spring Expression Language
+	语法结构#{}
+	也能取值  需要外部的文件  类似上面刚讲过的properties  ${key}
+	
+	#{}
+	Spring管理对象的DI注入
+		1.管理对象属性的注入  基本类型 int float boolean String
+			#{'zzt'}  #{123}  #{123.45}  #{true}
+		2.赋值同时做一些运算
+			算术  + - * / %都没有问题  ^Java是位运算 ^Spring是幂运算
+			比较  > >= < <= != ==	gt ge lt le ne eq
+			逻辑  没有与符号  ||  !	and or not
+		3.赋值的时候可能遇到对象形式
+			#{beanID}
+		4.可以操作对象的属性
+			#{beanID.属性名}
+		5.可以操作对象方法
+			#{beanID.方法名()}
+		6.可以引入静态常量
+			#{2 * T(java.lang.Math).PI}
+
+	=======================================================================
+
+	Spring AOP 如何理解切面   Filter 责任链模式 动态代理
+
+
+
+		

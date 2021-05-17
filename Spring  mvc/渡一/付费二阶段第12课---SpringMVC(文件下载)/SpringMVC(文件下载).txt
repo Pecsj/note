@@ -1,0 +1,34 @@
+
+	
+	知识回顾
+	文件上传问题
+	1.导包   fileupload  commons-io
+	2.DiskFileItemFactory	ServletFileUpload	parseRequest
+	3.List<FileItem>
+	4.判断是否为表单   item.isFormField()
+		item.getFieldName
+		item.getString("UTF-8")
+	5.文件对象
+		item.getName()
+		item.write(new File("上传路径"));
+
+	
+	基于SpringMVC方式
+	1.导包
+	2.配置文件解析器		<bean id="" class="">
+	3.Controller类中做简单操作即可
+		方法参数可以直接用变量来接收
+		String text
+		MultipartFile upload
+	4.获取文件名字  文件内容 传输
+		upload.getOriginalFilename();
+		upload.transferTo(new File("上传路径"));
+
+
+
+
+	文件的下载
+
+
+
+

@@ -1,0 +1,36 @@
+
+	知识回顾
+	1.JSP----JS区别
+		JS----JavaScript	基于对象和事件驱动的脚本语言
+		JSP--Java Server Page	Java服务器页面   Java服务页
+		原来我们是在Java中的Servlet类中   用out.write("<>");
+		JSP为了服务Servlet的    拼接响应信息的部分   相当于换了一个拼接的位置
+		JSP融合了    HTML  +  Java
+	2.JSP从写法上看似是个文件
+		.java     .html       .jsp
+		JSP看似是个文件    因为文件中存有HTML+Java代码    最终浏览器展示的时候不认识
+		JSP实际上应该是一个操作资源(JSP本质就是Servlet)
+		所以底层想要执行看见JSP中的内容  需要Tomcat支持   浏览器访问
+	3.如何创建一个JSP文件
+		创建JSP以后  需要在第一行填写一个描述信息
+		<%@page 属性=值%>
+			contentType="text/html;charset=UTF-8";//告知浏览器
+			language="java"//用来说明JSP中可以含有除了HTML形式的其他语言
+			pageEncoding="UTF-8"//用来说明Tomcat在进行JSP编译的时候
+		文件中的内容   如果是正常的HTML标签   正常写
+			      如果想要在JSP中写Java    <%%>
+	
+
+	V	视图层	JSP    HTML
+	C	控制层	Servlet
+	M	模型层	
+			业务层Service
+			持久层Dao	持久化对象domain
+	DB	数据层	MySQL	文件
+
+
+
+
+
+
+			

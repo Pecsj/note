@@ -1,0 +1,33 @@
+
+	知识回顾
+		@Insert  @Delete  @Update
+		@Param
+		@ResultMap
+
+		@Results(id="规则名",value={
+			@Result(property="",column="",id=true),
+			@Result(property="",column=""),
+			@Result(property="",column=""),
+			@Result(property="",javaType=XXX.class,column="",one=@One(select="方法名",fetchType=FetchType.LAZY)),
+		})
+		@Select("select * from xxx where xxx = #{key}")
+		public Person selectOne(String key);
+
+		@Select("")
+		public IDCard selectIDCard();
+
+	============================================================================
+
+		EMP(员工)	DEPT(部门)
+
+
+
+
+
+
+
+
+
+
+
+

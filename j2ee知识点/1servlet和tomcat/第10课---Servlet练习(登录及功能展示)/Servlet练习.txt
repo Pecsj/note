@@ -1,0 +1,8 @@
+
+	1.如何在web项目中导入.jar包
+		注意项目部署之后   进行一个编译过程   java---class    JSP---java---class
+		src不存在    web文件夹中有一个WEB-INF文件夹    classes文件夹
+		需要将外部的.jar文件导入到  web文件夹中的WEB-INF文件夹   自己创建一个lib文件夹
+	2.请求的时候可能会传递中文
+		get	不需要处理		(Tomcat9默认字符集UTF-8)      iso-8859-1
+		post	再接收参数之前自己处理    request.setCharacterEncoding("UTF-8");

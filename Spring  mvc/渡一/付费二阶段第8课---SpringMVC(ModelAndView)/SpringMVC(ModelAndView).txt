@@ -1,0 +1,45 @@
+
+	
+	利用控制层的方法返回值来处理响应
+	1.void	  不用框架帮我们处理  需要自己处理  response.getWriter() write()
+	2.String  让框架帮我们去做转发、重定向   String----资源名字
+			forward:     redirect:
+	3.Object  domain String Map List----->JSON
+			1.处理工具---jar
+			2.告知框架方法的返回值需要解释  @Responsebody
+	4.ModelAndView
+			存储信息
+			转发的路径
+
+	服务端业务层可能会产生一些数据
+	这些数据我们需要存入作用域中带走
+		request.setAttribute();
+
+	1.可以利用原生Map来处理
+		Map接收请求参数(@RequestParam)
+		Map可以返回数据(@ResponseBody)
+	2.可以利用Model 或 ModelMap
+		Model底层继承ModelMap
+		存储数据之前不需要自己创建
+		只需将变量放置在方法的参数里即可  框架会帮我们自动注入
+		m.addAttribute("",object);
+		但是只能存储数据
+		不能携带转发的路径资源
+		对象不需要返回
+	3.可以利用ModelAndView
+		不能放在方法的参数里 框架不会帮我们注入
+		需要用的时候 自己new即可
+		mv.addObject("key",object);
+		mv.setViewName("xxx.jsp");
+		可以包含数据和转发路径
+		需要将自己创建的mv对象返回
+	4.如果想要将值存入session作用域范畴内
+		需要在类名上面添加注解
+		@SessionAttributes({"key","",""})
+
+
+
+
+
+
+

@@ -1,0 +1,70 @@
+
+	知识回顾
+	JSTL	JSP标准标签库
+		JSP    Standard   Tag   Library
+		由apache组织提供的开源标准标签	
+
+	在JSP中替代Java的流程或处理字符串等等
+		
+	使用步骤
+		1.下载两个外部jar包
+			jstl.jar    standard.jar	1.2
+		2.建议将这两个包放入tomcat的lib文件夹内
+		3.打开idea创建web项目
+			注意可能需要设置包与项目的关联
+		4.需要创建JSP
+			在JSP头部描述
+			<%@ taglib uri="http://java.sun.com/jsp/jstl/xxxx" prefix=""%>
+		
+			JSTL核心标签库	core	c
+			<c:out value="">
+			<c:if test="">
+			<c:choose>
+				<c:when test="">
+				<c:when test="">
+				<c:otherwise>
+			<c:forEach>
+				begin  end  step   varStatus(对象 index)
+				var  items
+
+			<c:forTokens var="value" items="a-b-c"delims="-">
+
+		
+			JSTL函数标签库
+				用来处理字符串
+				可以理解为是以前Java中的String类常用方法
+				1.需要在JSP上进行描述
+				<%@ taglib uri="" prefix=""%>
+				2.通常在业务层已经处理掉了字符的所有信息  通常不怎么用
+				3.写法与核心标签不太一样
+					${fn:xxx()}
+
+			JSTL格式化标签库
+				用来处理日期  实现格式化
+				可以理解为是以前的Date类型      SimpleDateFormat
+				1.在JSP进行描述
+				<%@ taglib uri="" prefix=""%>
+				2.写法与之前的核心标签一样
+					<fmt:xxx>
+				<fmt:formatDate value="${requestScope.date}" pattern="yyyy-MM-dd kk:mm:ss">
+
+
+		V	HTML(CSS JS) JSP+EL+JSTL
+		C	Servlet	
+		M	Service
+			Dao	domain
+			JDBC(ORM)	SQL
+		DB	MySQL
+
+
+
+
+
+
+
+
+
+
+
+
+

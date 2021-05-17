@@ -1,0 +1,125 @@
+
+	知识回顾 
+	Servlet类的管理机制
+	1.Servlet类的对象是一个单例模式(对象唯一的)
+		自己写的类里面添加一个属性  每一次发送新的请求 打开新的浏览器发送 属性一直唯一
+	2.单例模式采用生命周期托管的形式实现的
+		Tomcat底层有一个类似于ServletController类的管理者
+		管理者里面有一个Map集合   请求名字  真实Servlet类对象的关系
+	3.Servlet对象的生命周期问题
+		对象创建    对象每一次使用    对象的销毁
+		  init()    service(req,resp)   destroy()
+	4.Servlet对象的创建是延迟加载的方式
+		web.xml文件(如果配置错误 启动Tomcat时候就产生问题)
+		说明Tomcat启动的时候读取了我们的配置文件---->请求  真实类名
+		启动时候可能会有很多的Servlet对象   如果是立即加载的话  内存压力很大
+	-------------------------------------------------------------------------------------------
+	5.如果想要改变对象的加载  从延迟的方式变成立即的方式(Tomcat启动的时候就创建对象)
+		在web.xml文件中添加一个配置就可以啦
+		<servlet>
+			<servlet-name><>
+			<servlet-class><>
+			<load-on-startup>整数0</load-on-startup>
+		</servlet>
+		<servlet-mapping>
+		</servlet-mapping>
+	6.如果对象是立即加载的 可能当前对象对于整个项目的执行非常重要
+		有些时候通常会携带一些重要的信息
+		<servlet>
+			<servlet-name><>
+			<servlet-class><>
+			<init-param>
+				<param-name>key1</param-name>
+            				<param-value>value1</param-value>
+			</init-param>
+			<load-on-startup>整数0</load-on-startup>
+		</servlet>
+		<servlet-mapping>
+		</servlet-mapping>
+
+		可以在init方法内使用带ServletConfig的参数读取
+		String value = config.getInitParameter("key");//某一个key对应的value
+		Enumeration en = config.getInitParameterNames();//获取全部的key
+		String name = config.getServletName();//获取当前Servlet类名
+		ServletContext application = config.getServletContext();//获取全局上下文对象
+
+	7.Servlet类的继承关系
+		我们自己的类继承HttpServlet(抽象类)
+		HttpServlet又继承了一个类GenericServlet(抽象类)
+		GenericServlet又实现了三个接口
+			Servlet接口    ServletConfig接口   Serializable接口
+
+		
+		ServletConfig接口里面只有四个方法(抽象的)
+			String = getInitParameter(String var1);
+			Enumeration<String> = getInitParameterNames();
+			String = getServletName();
+			ServletContext = getServletContext();
+		Servlet接口里面有五个方法(抽象的)
+			void init(ServletConfig var1) throws ServletException;
+			void service(ServletRequest var1, ServletResponse var2) throws ServletException, IOException;
+			void destroy();
+			ServletConfig getServletConfig();
+			String getServletInfo();
+		GenericServlet抽象类为什么实现接口?????-----体现出来的是缺省适配器设计模式
+			9个接口中的方法都添加过来
+			将其中的8个方法都进行了方法重写----添加具体实现{}
+			多添加了一个init()无参数的方法
+			只留下了一个方法是没有具体实现的service方法(留给用户必须添加)
+			多了一些自己独有的方法init()  log()
+		HttpServlet抽象类的存在目的????-----具体化的说明和体现  肯定是跟HTTP协议有关
+			添加了很多具体的属性   都与协议有关  get  post  。。。
+			添加了很多具体的与请求方式对应的方法
+				doGet
+				doPost
+			添加了几个自己独有的方法   getLastModifer   set   getAllDeclaredMethods
+			保留了上面service方法 但将这个方法添加具体实现
+				方法内部将两个没有协议的参数  强制类型转化成带HTTP协议的参数
+			添加了一个独有的service方法   最终真正执行的那个
+				方法内部先通过request.getMethod();获取请求的方式get/post
+				找寻对应请求方式的方法执行  doPost   doGet
+		
+		我们自己的类继承 HttpServlet
+		重写了service方法
+		根据请求的方式找寻对应的doXXX方法
+		请求发送过来  服务器底层通过反射就找service方法
+		我们如果重写了service  正常执行我们的
+		如果我们没有重写service 找HttpServlet类中的service方法
+		HttpServlet类中的service方法 调用了doPost或doGet 其中的一个
+		doPost或doGet方法不会做事 判断请求是正常的HTTP协议 返回405(没有方法执行)
+		建议大家类中重写doPost或doGet其中的一个 更清晰的体现出请求的过程了
+			
+		-------------------------------------------------------------------------
+		1.自己写一个类   继承HttpServlet
+			可以继承GenericServlet   ？？？ 重写service方法  将两个参数转型成HTTP
+			可以直接实现Servlet接口  ？？？ 重写五个方法  init  service  destroy 。。。
+		2.重写方法	   重写doPost   doGet
+			可以重写service方法
+		3.方法的参数和异常与之前service方法一致
+		4.别忘了配置web.xml文件
+
+
+		之前讲过的思想
+		Box接口-------定义规则  
+			add()   get()   remove()    size() 
+			addAll()   addFirst()   addLast()
+		AbstractBox抽象类----缺省适配器模式
+			add()   get()   remove()    size() 
+			addAll(){异常}   addFirst(){异常}   addLast(){异常}
+		ArrayBox----继承AbstractBox
+			add()    get()   remove()    size()
+		LinkedBox----继承AbstractBox
+			add()    get()   remove()    size()
+			addAll(){}   addFirst(){}   addLast(){}
+			
+
+	响应信息的拼接很麻烦
+		servlet类中自己写字符串   out.write();
+	用来拼接响应信息的模板JSP
+
+
+
+
+
+
+

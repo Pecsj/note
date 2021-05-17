@@ -1,0 +1,41 @@
+
+	EL（Expression  Language表达式语言）
+	1.代替JSP中Java程序获取域对象中的信息
+		page(pageContext)	request session  application
+		setAttribute("key",objcet);
+		(造型)getAttribute("key");
+	2.取值的不同类型
+		基本数据类型+包装类类型+String类型
+		${xxxScope.key}
+		对象类型
+		${xxxScope.key.属性}----->拥有对应的get方法
+		${xxxScope.key.方法()}
+		数组类型
+		集合类型
+	3.EL有几个自己的作用域对象(EL内置隐式对象)
+		*${param.xxx}
+		${paramValues.xxx)
+		*${requestScope.xxx}
+		*${sessionScope.xxx}
+		${applicationScope.xxx}
+		${pageScope.xxx}
+		${initParam.}		web.xml配置文件   
+		${cookie}
+		${header[accept-language]}
+	4.做简单的计算
+		算数运算	+ - * /  % mod
+		比较运算	>gt  >=ge  <lt  <=le  !=ne  ==eq
+		逻辑运算	&&(and)  ||(or)  !(not)
+
+	5.控制流程
+		判断
+		循环
+		JSTL	<x:xxx>	<c:forEach>
+
+
+
+
+
+
+
+		

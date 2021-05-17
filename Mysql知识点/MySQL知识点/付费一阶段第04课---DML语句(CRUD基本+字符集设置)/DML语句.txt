@@ -1,0 +1,108 @@
+知识回顾
+	SQL结构化查询语言
+		*DDL定义   DML操作  DQL查询  DCL控制   TPL事务
+	
+	DDL数据定义语言
+		用来定义数据库中的对象(database  table)
+		
+		创建一个小数据库
+		create database 小数据库名字;	不区分大小写
+		创建一个表格
+		create table 表格名字(	---->	public class 类的名字{----domain实体对象
+		     列名  类型(长度),			     类型  属性;
+		     列名  类型(长度),			     类型  属性;
+		     列名  类型(长度)			     类型  属性;
+		);				}
+
+	数据库中的数据类型
+		数值型(整数  小数)
+		    整数    tinyint   smallint   meduimint   *int   bigint
+		    小数    *float     *double     decimal     numeric
+		字符串
+		    char     *varchar     binary    varbinary    blob   text
+		日期/时间
+		    *date     time    *datetime     timestamp
+
+	修改语句
+		修改表名
+		alter table 表名 rename [to] 新名字
+		修改原有的列(列名 类型 长度)
+		alter table 表名 change 原列名 新列名 新类型 新长度
+		新增一个列
+		alter table 表名 add 新列名 新类型 新长度
+		删除原有的列
+		alter table 表名 drop 原列名
+
+	删除表格
+		drop table 表名;
+	删除数据库
+		drop databae 数据库名;
+===================================================================
+
+	*DML数据操作语言
+		操作的是表格中的数据信息
+		写入信息(数据库中的信息发生了真实的改变)
+			新增insert   删除delete   修改update
+		读取信息(数据库中的信息没有发生改变  读取信息展示出来)   DQL
+			查询select
+
+	新增记录
+		insert  into  表名 (列名,列名,列名) values(值,值,值);
+		如果想要新增的记录是全部表格的列
+		可以省略表名后面的括号内容
+		但要求values后面值的个数及类型都必须与表格中列顺序 类型 个数一致
+		否则添加有误
+		insert into 表名字 values(值,值,值);
+		如果想要同一条insert语句新增多个记录
+		insert into 表名字 values(值,值,值),(值,值,值),(值,值,值);
+	删除记录
+		delete from 表名 [where....];
+	修改记录
+		update 表名 set 列=值,列=值 [where...];
+	查询记录
+		select 列名,列名,列名 from 表名 [where ...];
+	----------------------------------------------------------------------------
+
+	补充一个创建数据库  创建表格的知识(关于字符集)
+	create database test;
+	按照以前的方式  默认创建的数据库  字符集有默认值--->latin1()
+	当前数据库中的所有表格都按照这个字符集进行处理  不能存储中文
+	create database test 【default character set = 'utf8'】; 
+	如果不知道自己的数据库是什么字符集
+	可以通过如下语句来进行查询
+	select 列 from 表 where 数据库 = 名字;
+	select schema_name , default_character_set_name from information_schema.schemata 
+	where schema_name = '自己的数据库名';
+
+	如果不想让数据库中所有的表格存储中文  只单纯的某一张表格需要中文
+	创建表格的时候设置字符集
+	create table 表名(
+	   列名 类型 长度,
+	   列名 类型 长度
+	) character set utf8 collate utf8_general_ci;
+
+	排序规则 utf8_general_ci;	utf8_unicode_ci;
+
+	show table status from 数据库名 like '表名';
+
+
+	
+	小任务	Oracle数据库中的Scott账号中的一张范例表
+	创建一张表格，用来记录员工的信息，表格名字叫做EMP(Employee)
+	表格中有八个列，具体如下：
+	empno  ename   job      mgr      hiredate    sal    comm  deptno
+	  编号     姓名        职务     上级       入职日期    月薪  佣金  部门
+	(7369,'SMITH','CLERK',7902,'1980-12-17',800,NULL,20),
+	(7499,'ALLEN','SALESMAN',7698,'1981-2-20',1600,300,30),
+	(7521,'WARD','SALESMAN',7698,'1981-2-22',1250,500,30),
+	(7566,'JONES','MANAGER',7839,'1981-4-2',2975,NULL,20),
+	(7654,'MARTIN','SALESMAN',7698,'1981-9-28',1250,1400,30),
+	(7698,'BLAKE','MANAGER',7839,'1981-5-1',2850,NULL,30),
+	(7782,'CLARK','MANAGER',7839,'1981-6-9',2450,NULL,10),
+	(7788,'SCOTT','ANALYST',7566,'1987-4-19',3000,NULL,20),
+	(7839,'KING','PRESIDENT',NULL,'1981-11-17',5000,NULL,10),
+	(7844,'TURNER','SALESMAN',7698,'1981-9-8',1500,0,30),
+	(7876,'ADAMS','CLERK',7788,'1987-5-23',1100,NULL,20),
+	(7900,'JAMES','CLERK',7698,'1981-12-3',950,NULL,30),
+	(7902,'FORD','ANALYST',7566,'1981-12-3',3000,NULL,20),
+	(7934,'MILLER','CLERK',7782,'1982-1-23',1300,NULL,10)

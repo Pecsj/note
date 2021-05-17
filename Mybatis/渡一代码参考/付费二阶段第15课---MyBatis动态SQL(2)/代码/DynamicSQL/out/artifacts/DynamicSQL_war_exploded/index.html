@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+        <script type="text/javascript">
+            window.onload = function(){
+                //获取下拉列表对象
+                var deptnoSelectObject = document.getElementById("deptnoSelect");
+                var jobSelectObject = document.getElementById("jobSelect");
+                //获取AJAX对象
+                var xhr = new XMLHttpRequest();
+                //发送异步请求 分别查询deptno(3)和job(5)
+                xhr.open("post","selectDeptnoAndJob",true);//打开一个AJAX通道 模拟一个请求
+                xhr.onreadystatechange = function() {
+                    if(xhr.readyState==4 && xhr.status==200){
+                        //处理响应信息 展示在下拉列表上面
+                        var json = JSON.parse(xhr.responseText);
+                        //获取json当中的两个集合  deptnoList  jobList
+                        var deptnoList = json.deptnoList;
+                        //将deptnoList集合中的信息取出来 放在下拉列表内 需要option组件包含
+                        for(var i=0;i<deptnoList.length;i++){
+                            var newOptionObject = document.createElement("option");
+                            newOptionObject.value = deptnoList[i];
+                            newOptionObject.innerHTML = deptnoList[i];
+                            deptnoSelectObject.appendChild(newOptionObject);
+                        }
+                        //获取jobList
+                        var jobList = json.jobList;
+                        //将jobList中的信息取出来 放在下拉列表内 需要option组件包含
+                        for(var i=0;i<jobList.length;i++){
+                            var newOptionObject = document.createElement("option");
+                            newOptionObject.value = jobList[i];
+                            newOptionObject.innerHTML = jobList[i];
+                            jobSelectObject.appendChild(newOptionObject);
+                        }
+                    }
+                }
+                xhr.send();
+
+                //=============================================================
+
+                //给查询按钮绑定一个功能
+                document.getElementById("selectButton").onclick = function(){
+                    //异步请求  AJAX
+                    xhr.open("post","selectEmp?deptno="+deptnoSelectObject.value+"&job="+jobSelectObject.value,true);
+                    xhr.onreadystatechange = function(){
+                        if(xhr.readyState==4 && xhr.status==200){
+                            //1.让表格的tbody部分清空
+                            var tbody = document.getElementById("tbody");
+                            tbody.innerHTML="";
+                            //2.接收异步请求回来的信息
+                            var json = JSON.parse(xhr.responseText);
+                            var empList = json.empList;
+                            for(var i=0;i<empList.length;i++){
+                                //每一次循环代表一个emp对象---展示在表格的一行内  tr
+                                var newTrObject = document.createElement("tr");
+                                //每一个emp对象中的8个属性
+                                var empTdObject = document.createElement("td");
+                                empTdObject.innerHTML=empList[i].empno;
+                                newTrObject.appendChild(empTdObject);
+                                var enameTdObject = document.createElement("td");
+                                enameTdObject.innerHTML=empList[i].ename;
+                                newTrObject.appendChild(enameTdObject);
+                                var jobTdObject = document.createElement("td");
+                                jobTdObject.innerHTML=empList[i].job;
+                                newTrObject.appendChild(jobTdObject);
+                                var mgrTdObject = document.createElement("td");
+                                mgrTdObject.innerHTML=empList[i].mgr;
+                                newTrObject.appendChild(mgrTdObject);
+                                var hiredateTdObject = document.createElement("td");
+                                hiredateTdObject.innerHTML=empList[i].hiredate;
+                                newTrObject.appendChild(hiredateTdObject);
+                                var salTdObject = document.createElement("td");
+                                salTdObject.innerHTML=empList[i].sal;
+                                newTrObject.appendChild(salTdObject);
+                                var commTdObject = document.createElement("td");
+                                commTdObject.innerHTML=empList[i].comm;
+                                newTrObject.appendChild(commTdObject);
+                                var deptnoTdObject = document.createElement("td");
+                                deptnoTdObject.innerHTML=empList[i].deptno;
+                                newTrObject.appendChild(deptnoTdObject);
+                                //将新的行对象添加在tbody内
+                                tbody.appendChild(newTrObject);
+                            }
+                        }
+                    }
+                    xhr.send();
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <form action="" method="post">
+            <div align="center">
+                deptno:
+                <select id="deptnoSelect" name="deptnoSelect">
+                    <option value="">==请选择==</option>
+                </select>
+                job:
+                <select id="jobSelect" name="jobSelect">
+                    <option value="">==请选择==</option>
+                </select>
+                <input id="selectButton" type="button" name="selectButton" value="查询">
+            </div>
+            <br>
+            <table id="showTable" align="center" border="1" width="80%">
+                <tr>
+                    <th>empno</th><th>ename</th><th>job</th><th>mgr</th><th>hiredate</th><th>sal</th><th>comm</th><th>deptno</th>
+                </tr>
+                <tbody id="tbody"></tbody>
+            </table>
+        </form>
+    </body>
+</html>

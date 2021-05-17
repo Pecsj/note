@@ -1,0 +1,34 @@
+
+	知识回顾
+	1.Filter	Tomcat提供的一个组件
+	2.Filter是一个特殊的Servlet
+	3.基本使用
+		创建一个类    继承HttpFilter(Tomcat9之后)   实现Filter接口(Tomcat9之前)
+		重写方法doFilter方法
+		三个参数HttpServletRequest   HttpServletResponse   FilterChain
+		配置xml文件
+	4.管理机制
+		继承或实现的关系
+		filter对象是单例   生命周期托管的方式   立即加载的方式
+		发送请求   从浏览器出发   会经过filter
+			从服务器内部出发   转发默认是不经过filter(设置)   重定向经过filter
+	5.过滤器链
+		好多个filter对象    都处理相同的请求  /*
+		我们经过filter不是目的   找到真实的资源
+		经过的filter会在真实资源执行之前做些事情   之后也会做事情
+
+
+	链表结构
+		Node类(节点)   每一个对象 管理一个值
+		0.属性    Node    prev   (找到上一个责任人在哪里)
+		1.属性    Object  value  (存值)
+		2.属性    Node    next   (找到下一个责任人在哪里)
+	过滤器链(责任链设计模式)
+		Chain of Responsbility Pattern
+		Filter类	每一个filter对象  管理当前filter做的事情
+		doFilter方法
+
+	Listener监听器
+
+
+

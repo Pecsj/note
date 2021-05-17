@@ -1,0 +1,55 @@
+
+	
+	Spring的注解
+
+		用于替代bean标签的作用
+		配置bean标签 Spring容器中帮我们管理一个对象
+		@Component
+		让用户更加能体现出分层架构	具体的对象
+		@Controller
+		@Service
+		@Repository
+		如上几个注解的作用  是为了将注解的类对象交由spring容器管理
+
+		
+		用于做bean对象的DI注入
+		@Autowired
+
+
+	=======================================================
+	1.研究一下对象创建的问题
+		单例	@Scope(value="singleton/prototype" | scopeName="")
+		立即加载	@Lazy
+			不写这个注解的效果是立即加载对象的机制
+			写了这个注解，默认值true不起作用，只用来省了@Lazy中的信息
+			如果想要让对象变成延迟加载的机制  @Lazy("true")
+		对象创建可以执行方法
+			<bean init-method="" destroy-method=""></bean>
+		可以通过两个注解来设置
+			@PostConstruct
+			@PreDestroy
+
+	2.研究一下对象中包含着对象属性
+		比如这种Controller----Service
+
+		<bean id="" class="" scope="" lazy-init="">
+			<property name="" value=""|ref="">
+		</bean>		
+
+		可以通过set方法上、或构造方法上添加注解
+		@Autowired来实现对象中属性的自动注入
+		其实也可以不用属性的set方法和带参数构造方法
+		而直接将注解放置在属性的上面(底层通过反射直接操作私有属性 赋值)
+
+		@Qualifier来实现一个对象注入的微调整
+			当注入的对象不止一个的时候  可以通过此注解来进行指定
+
+		@Value注解用来做固定值注入的
+
+		@Resource(name="impl2")这个注解是Java提供的
+		与上述两个注解的作用一样  直接通过name找寻对象做注入的
+		不是Spring家族的注解  统一管理显得不方便了  看情况使用
+
+
+
+

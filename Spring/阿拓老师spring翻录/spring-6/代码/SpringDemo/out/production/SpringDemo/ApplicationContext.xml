@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--通过属性对应的set方法做自动DI-->
+    <!--<bean name="student" class="domain.Student">-->
+        <!--<property name="sid" value="1"></property>-->
+        <!--<property name="sname">-->
+            <!--<value type="java.lang.String">zzt</value>-->
+        <!--</property>-->
+        <!--<property name="ssex" value="18"></property>-->
+        <!--<property name="sage" value="18"></property>-->
+    <!--</bean>-->
+
+    <!--通过带参数的构造方法 给属性赋值-->
+    <!--<bean name="student" class="domain.Student">-->
+        <!--<constructor-arg name="sid" value="1" type="java.lang.Integer"></constructor-arg>-->
+        <!--<constructor-arg name="sname" value="1" type="java.lang.String"></constructor-arg>-->
+        <!--<constructor-arg name="ssex" type="java.lang.String">-->
+            <!--<value>男</value>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg name="sage" value="18" ></constructor-arg>-->
+    <!--</bean>-->
+
+    <!--==================================================================-->
+
+    <!--以下讲了一些特殊情况 比如null 比如特殊符号 等-->
+    <!--<bean name="student" class="domain.Student">-->
+        <!--<constructor-arg name="sid" value="1"></constructor-arg>-->
+        <!--<constructor-arg name="sname">-->
+            <!--<value><![CDATA[<zzt~>]]></value>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg name="ssex" value="男"></constructor-arg>-->
+        <!--<constructor-arg name="sage" value="18"></constructor-arg>-->
+    <!--</bean>-->
+
+    <!--<bean name="student" class="domain.Student">-->
+        <!--<property name="sid" value="1"></property>-->
+        <!--<property name="sname">-->
+            <!--<value><![CDATA[]]></value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--=====================================================================-->
+
+
+    <!--<bean name="room" class="domain.Room">-->
+        <!--<property name="name" value="001"></property>-->
+        <!--<property name="computer"><bean name="computer" class="domain.Computer"></bean></property>-->
+        <!--<property name="computer.brand" value="联想"></property>-->
+        <!--<property name="computer.name" value="S5"></property>-->
+        <!--<property name="computer.price" value="7000"></property>-->
+    <!--</bean>-->
+
+    <!--===============================================================================-->
+
+    <!--<bean name="controller" class="controller.StudentController" autowire="constructor"></bean>-->
+    <!--<bean name="service" class="service.StudentService" autowire="constructor"></bean>-->
+    <!--<bean name="dao" class="dao.StudentDao"></bean>-->
+
+    <!-- 某一个bean中的属性名 对应 另一个bean的name或者id名 -->
+    <!--<bean name="dao" class="dao.StudentDao"></bean>-->
+    <!--<bean name="service" class="service.StudentService" autowire="byType"></bean>-->
+    <!--<bean name="controller" class="controller.StudentController" autowire="byType"></bean>-->
+
+
+    <!--接口的bean属性-->
+    <!--<bean name="ti" class="testinterface.ImplA"></bean>-->
+    <!--<bean name="tiB" class="testinterface.ImplB"></bean>-->
+    <!--<bean name="testService" class="testinterface.TestService" autowire="byName"></bean>-->
+
+
+    <!-- ====================================================  -->
+    <!--对象中存储数组类型-->
+    <!--<bean id="testBean" class="domain.TestBean">-->
+        <!--<property name="name" value="zzt"></property>-->
+        <!--<property name="age" value="18"></property>-->
+        <!--<property name="computer">-->
+            <!--<bean class="domain.Computer"></bean>-->
+        <!--</property>-->
+        <!--<property name="array">-->
+            <!--<array value-type="java.lang.String">-->
+                <!--<value>aaa</value>-->
+                <!--<value>bbb</value>-->
+                <!--<value>ccc</value>-->
+                <!--<value>ddd</value>-->
+            <!--</array>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+    <!--<bean id="c1" class="domain.Computer"></bean>-->
+    <!--<bean id="c2" class="domain.Computer"></bean>-->
+    <!--<bean id="c3" class="domain.Computer"></bean>-->
+    <!--<bean id="c4" class="domain.Computer"></bean>-->
+
+    <!--<bean id="testBean" class="domain.TestBean">-->
+        <!--<property name="name" value="zzt"></property>-->
+        <!--<property name="age" value="18"></property>-->
+        <!--<property name="computers">-->
+            <!--<array value-type="domain.Computer">-->
+                <!--<ref bean="c1"></ref>-->
+                <!--<ref bean="c2"></ref>-->
+                <!--<ref bean="c3"></ref>-->
+                <!--<ref bean="c4"></ref>-->
+            <!--</array>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+    <!--对象中存储一个list集合-->
+    <!--<bean id="testBean" class="domain.TestBean">-->
+        <!--<constructor-arg name="name" value="zzt" type="java.lang.String"></constructor-arg>-->
+        <!--<constructor-arg name="age" value="18" type="java.lang.Integer"></constructor-arg>-->
+        <!--<constructor-arg name="list" type="java.util.List">-->
+            <!--<list value-type="java.lang.String">-->
+                <!--<value>aaa</value>-->
+                <!--<value>bbb</value>-->
+                <!--<value>ccc</value>-->
+                <!--<value>ddd</value>-->
+            <!--</list>-->
+        <!--</constructor-arg>-->
+    <!--</bean>-->
+
+
+    <!--<bean id="c1" class="domain.Computer"></bean>-->
+    <!--<bean id="c2" class="domain.Computer"></bean>-->
+    <!--<bean id="c3" class="domain.Computer"></bean>-->
+    <!--<bean id="c4" class="domain.Computer"></bean>-->
+    <!--<bean id="testBean" class="domain.TestBean">-->
+        <!--<constructor-arg name="name" value="zzt"></constructor-arg>-->
+        <!--<constructor-arg name="age" value="18"></constructor-arg>-->
+        <!--<constructor-arg name="list" type="java.util.List">-->
+            <!--<list value-type="domain.Computer">-->
+                <!--<ref bean="c1"></ref>-->
+                <!--<ref bean="c2"></ref>-->
+                <!--<ref bean="c3"></ref>-->
+                <!--<ref bean="c4"></ref>-->
+            <!--</list>-->
+        <!--</constructor-arg>-->
+    <!--</bean>-->
+
+
+    <!--存储set集合-->
+    <!--<bean id="testBean" class="domain.TestBean">-->
+        <!--<constructor-arg name="name" type="java.lang.String">-->
+            <!--<value>zzt</value>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg name="computer" type="domain.Computer">-->
+            <!--<bean class="domain.Computer"></bean>-->
+        <!--</constructor-arg>-->
+        <!--<constructor-arg name="set" type="java.util.Set">-->
+            <!--<set value-type="domain.Computer">-->
+                <!--<bean class="domain.Computer"></bean>-->
+                <!--<bean class="domain.Computer"></bean>-->
+                <!--<bean class="domain.Computer"></bean>-->
+                <!--<bean class="domain.Computer"></bean>-->
+            <!--</set>-->
+        <!--</constructor-arg>-->
+    <!--</bean>-->
+
+
+    <!--对象中存储一个map集合-->
+    <!--<bean id="testBean" class="domain.TestBean">-->
+        <!--<property name="name" value="zzt"></property>-->
+        <!--<property name="computer">-->
+            <!--<bean class="domain.Computer"></bean>-->
+        <!--</property>-->
+        <!--<property name="map">-->
+            <!--<map key-type="java.lang.Integer" value-type="java.lang.String">-->
+                <!--<entry key="1" value="aaa"></entry>-->
+                <!--<entry key="2" value="bbb"></entry>-->
+                <!--<entry key="3" value="ccc"></entry>-->
+                <!--<entry key="4" value="ddd"></entry>-->
+            <!--</map>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+
+    <bean id="c1" class="domain.Computer"></bean>
+    <bean id="c2" class="domain.Computer"></bean>
+    <bean id="c3" class="domain.Computer"></bean>
+    <bean id="c4" class="domain.Computer"></bean>
+
+    <bean id="testBean" class="domain.TestBean">
+        <property name="name" value="zzt"></property>
+        <property name="computer">
+            <bean class="domain.Computer"></bean>
+        </property>
+        <property name="map">
+            <map key-type="java.lang.String" value-type="domain.Computer">
+                <entry key="a" value-ref="c1"></entry>
+                <entry key="b" value-ref="c2"></entry>
+                <entry key="c" value-ref="c3"></entry>
+                <entry key="d" value-ref="c4"></entry>
+            </map>
+        </property>
+    </bean>
+
+
+</beans>

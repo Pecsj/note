@@ -1,0 +1,35 @@
+create database atm
+;
+
+
+use atm;
+
+
+
+create table atm(
+
+	aname varchar(20),
+
+	apassword varchar(20),
+	abalance float(10,2)
+
+) character set utf8;
+
+
+
+alter table atm add primary key(aname);
+
+
+
+insert into atm values 
+
+('zhangsan','333',300),('lisi','444',400),('wangwu','555',500)
+
+;
+
+select * from atm;
+
+
+
+
+

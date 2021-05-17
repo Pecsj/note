@@ -1,0 +1,73 @@
+
+	
+	使用流程
+	1.导入jar包
+		SpringMVC应该是Spring框架的一个部分，类似于SpringJDBC
+		包名字  web  mvc
+		SpringMVC充当了控制层的管理
+		SpringMVC中间也会存在一个自己的配置 建议用注解
+		请求 响应  Controller层次
+		Controller层次的类对象通常会交给Spring来管理 @Controller
+		SpringMVC使用依赖于Spring(核心的包 beans core)
+	2.核心配置web.xml	核心入口执行类DispatcherServlet
+		<servlet>
+	
+		<servlet-mapping>
+			*.do
+		2.1现在的Controller类有一些规则(暂时)
+
+	3.小配置
+		请求名字----真实资源对应关系	properties   annotation
+		更建议使用注解形式
+		之前是配置在src根目录下ApplicationContext.xml
+		发现这里是一个web项目
+		SpringMVC默认去web-inf文件夹下找配置文件
+		SpringMVC默认的配置文件名    <servlet-name>标签里面的名字 - servlet.xml
+		如果想要修改默认的配置路径
+		可以在web.xml中  servlet标签内添加init-param
+			<servlet>
+				<servlet-name>mvc</servlet-name>
+				<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+				<init-param>
+					<param-name>contextConfigLocation</param-name>
+					<param-value>classpath:ApplicationContext.xml</param-value>
+				</init-param>
+				<load-on-startup>0</load-on-startup>
+			</servlet>
+			<servlet-mapping>
+				<servlet-name>mvc</servlet-name>
+				<url-pattern>*.do</url-pattern>
+			</servlet-mapping>
+	4.浏览器可以发送请求
+
+
+========================================================================================================================
+
+	以上的流程虽然可以实现
+	但是相比较而言跟最早的Tomcat一样
+	Controller类有很多规则  耦合度太高了
+	基于xml形式的配置相较于注解稍微麻烦了一些
+	将上述的流程改成注解的方式  controller的规则去掉
+	
+	Tomcat核心web.xml没动的
+	小配置(Spring的核心配置)
+		所有的xml形式去掉了
+		扫描所有带注解的包
+		<context:component-scan base-package="controller"></context:component-scan>
+		开启请求响应注解的处理(加载HandlerMapping类)
+		<mvc:annotation-driven></mvc:annotation-driven>
+	原有的Controller类就不用了那么多规则啦
+		类上面添加@Controller注解
+		类上面添加@RequestMapping注解------请求名字对应
+		类中的方法上添加@RequestMapping注解----请求执行的方法
+
+	下节课深入研究一下@RequestMapping注解的使用
+
+
+
+	5.参数如何处理
+		真实资源类中的方法	参数列表
+		利用是底层框架对于数据的IOC DI
+	6.响应信息如何处理
+		String
+		ModelAndView

@@ -1,0 +1,96 @@
+
+	
+	知识回顾
+	SpringMVC---->控制层处理(分发请求 处理相应)
+
+	1.导包(beans context core expression   aop web webmvc)
+	2.核心的入口配置(本质是一个Servlet)
+		web.xml中配置入口
+		DispatcherServlet	所有控制层请求统一接收  并分发(谁)
+		*.do
+	3.需要配置一个SpringMVC自己的文件(请求--资源对应关系)
+		文件默认是在web-inf文件夹下找的
+		文件默认名字是   <servlet-name>标签名 - servlet.xml
+		如果想要修改文件的路径及名字
+		可以在2步骤中xml文件里进行修改   init-param
+			contextConfigLocation
+			classpath: xxx.xml
+
+		<context:compont-scan>
+		<mvc:annotation-driven>		加载了HandlerMapping
+	4.自己写Controller
+		没有继承或实现关系
+		方法可以随便写
+		参数可以随便   返回值 void String ModelAndView
+	5.自己写的Controller类上添加注解
+		@Controller	---->  Spring将对象管理起来<bean>
+		@RequestMapping ---->  SpringMVC 请求和对应资源连接在一起
+
+
+		@RequestMapping可以放置在哪里
+		请求如何发送
+
+		
+		.html
+		.jsp
+		.do
+		发送请求----DispatcherServlet
+
+			一个请求对应一个Servlet类(继承关系 重写方法)
+			如何让Servlet类减少
+			DAO  Service层都是跟表格domain个数对应
+			想要变成一个请求对应一个Servlet类中的一个方法
+			发送请求的时候Servlet类中只有一个方法被认识(service doPost/doGet)
+			将Servlet类中的service方法改变了一种方式
+			原来service方法是做具体的控制 1.取值 2.调用业务 3.响应
+			将service方法升级成一个"小总管"  1.接收请求 2.分析(哪个方法) 3.分发
+			后来又发现每一个Servlet类中都有一个"小总管"
+			"小总管提取出来了" DispatcherServlet  
+				1.接收请求 2.分析(哪个类 哪个方法) 3.分发让方法执行
+				4.过程中还做了请求参数处理  响应信息的处理   IOC+DI
+
+
+	========================================================================================
+
+
+	0.@RequestMapping注解放置在什么位置
+		可以放置在类上面(通常这个类应该是Controller)
+		可以放置在方法上面(Controller类中某个具体方法)
+	1.如何发送请求
+		#方式一: 发送时候直接写  类名.do
+			 在类上面写注解RequestMapping(path | value = "类名.do")
+			 在类中只有一个方法 方法上面添加注解RequestMapping
+		#方式二：发送请求时候    类名字.do?method=方法名
+			 类上面写注解(类名.do)
+			 方法上面写注解(params={""})
+			 (请求结构就比较麻烦  类名.do?method=方法名)
+			 (类的注解也很麻烦 类上一个 方法上一个 方法的这个注解还有params参数)
+		方式三： 发送请求的时候   xxx.do  (xxx通常是一个方法名)
+			 类上面就不用写注解啦
+			 类中方法的上面写注解  注解中写与请求对应的那个  xxx.do
+	2.@RequestMapping注解中的"方法"
+		path={"",""}
+		value={"",""}
+		params={"",""}
+		method={RequestMethod.GET}
+		headers={"Accept-Language",""}
+
+	3.接收请求参数
+		正常形式
+		domain形式
+		map
+	4.找业务
+	5.处理响应
+
+
+
+
+
+
+
+
+
+
+
+
+

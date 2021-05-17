@@ -1,0 +1,55 @@
+
+	知识回顾
+
+	一对多对应关系
+	
+	Emp(n)			Dept(1)
+	主键                           外键           	主键
+	empno ename sal deptno	deptno  dname   loc
+
+	Emp类(一行  一个对象)	Dept类(一行  一个对象)
+	Integer  empno		Integer  deptno
+	String    ename		String    dname
+	Float      sal		String    loc
+	Dept      dept		List<Emp>    empList
+
+	resultMap
+		id
+		result
+		association	collection
+
+	=========================================================
+
+	设计多对多关系表格
+
+	老师			学生
+	tid   tname   tsex  tage	sid   sname   ssex    sage。。。
+			中间表(关系)
+			tid	sid
+	
+	多对多关系三个表格
+	由于中间表只存储了关系  没有必要存储这个domain
+	两个domain   Teacher   Student
+	每一个对象中分别存储一个集合  集合里面存储跟自己有关的另一些对象
+	
+
+
+	需求
+	给老师的tid	查询老师的信息 + 所教的所有学生信息
+	需求
+	给学生的sis	查询学生的信息 + 所听的所有老师的课程
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

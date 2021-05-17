@@ -1,0 +1,73 @@
+
+	JDBC
+	0.JavaSE知识
+		数组，集合，对象---->可以理解为小容器
+		产生的数据都是内存中，临时空间，数据保存不了，丢失
+		文件---->永久性存储  硬盘上  数据持久化
+		I/O----->读取文件中的数据/内容	     Java内存  <---桥梁--->  硬盘
+	1.数据库
+		可以理解为数据的本质就是通过I/O读写文件
+		我们做的事情就变少了
+		发送简单的SQL指令	解析  读取  写入文件  分析
+		数据是为了今后做逻辑准备
+		给用户查看使用   用户提供的数据 我们处理好写回数据库中
+	2.全称
+		Java  DataBase  Connectivity
+		可以理解为是以前的	Socket桥梁   流读写数据库
+			作用
+			1.负责产生链接  2.传送SQL指令  3.处理响应信息  4.处理事务
+		确切的说JDBC是Java平台提供的一套统一的执行规范/标准(接口)
+		每一个不同厂商生产的数据库产品   都实现了此规范
+	3.JDBC驱动类型
+		JDBC-ODBC   每一个客户机都需要安装   很耗费空间  管理不方便
+		JDBC-Native  类似第一种，每一个客户机安装，调用本地原生C/C++，具体到某一个数据库，想要改变，需要改变底层代码实现
+		JDBC-Net       使用了标准的Socket通信，不需要每一个客户机都进行安装，相对比较灵活
+		纯JavaJDBC    一个纯粹的基于Socket进行的通信，不需要安装客户机上，每一个数据库的厂商自身提供的
+	4.先找到适合MySQL数据的JDBC驱动包
+		下载驱动包
+		去官方网站https://www.mysql.com
+			Downloads选项卡
+			Community社区
+				MySQL Connectors选项
+				Connector/J下载位置
+				需要选择下载的对应操作系统   选择倒数第二个 平台独立
+		解压zip包
+			找到一个mysql-connector-java-5.1.47.jar	
+	-------------------------------------------------------------------------------------------------
+	5.一切准备好啦，可以开发
+		通过Java利用jdbc的桥梁操作MySQL数据库
+		JDBC六部曲
+		1.导包(将找到的这个jar文件包导入到Java工程里)
+			在我们的工程里创建一个文件夹lib
+			将mysql-connector-java.jar复制到当前工程的lib文件夹内
+			做一个设置
+				File-->Project Structure-->Libraries
+				点击中间的+  选择Java  选择jar文件路径
+		2.加载驱动类   Driver
+			Class.forName("com.mysql.jdbc.Driver");
+		3.获取连接-----可以理解为以前的Socket
+			Connection conn = DriverManager.getConnection(url,user,password);
+		4.创建状态参数(流)---可以理解为是以前socket.getInputStream  socket.getOutputStream
+			Statement stat = conn.createStatement();
+		5.执行数据库操作
+			写DML--->insert delete update   (对数据库进行更新)
+			executeUpdate(sql);
+			读DQL---->select		    (数据库没有发生变化  我需要处理结果)
+			executeQuery(sql);
+		6.关闭
+			close();
+
+	--------------------------------------------------------------------------------------------
+	小任务
+	1.去官方网站下载一个驱动包.jar    5.x   8.x
+	2.写一个JDBC基础流程
+		表格的新增记录
+		修改刚刚新增的那条记录
+		删除那条记录
+
+
+
+
+
+
+

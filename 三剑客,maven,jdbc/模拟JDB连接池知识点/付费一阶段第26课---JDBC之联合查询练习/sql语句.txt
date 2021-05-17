@@ -1,0 +1,56 @@
+select * from country;
+
+select * from area;
+
+select * from city;
+
+
+select * from country c,area a,city ci 
+
+where c.cid = a.cid and a.aid = ci.aid
+
+
+
+#1.查询人口数在1000到2000之间的城市所属在哪个地区
+
+select distinct aname from area a 
+
+inner join city ci on a.aid = ci.aid 
+
+where ci.citysize between 1000 and 2000
+
+
+
+#2.查询每个国家的城市个数 按照城市个数升序排列
+
+select c.cname,count(ci.cityid) as citycount 
+
+from country c inner join area a 
+
+on c.cid = a.cid inner join city ci 
+
+on a.aid = ci.aid group by c.cname
+ 
+order by citycount asc
+
+
+
+#11.查询人口总数超过5000的国家名称
+
+select c.cname from country c 
+
+inner join area a on c.cid = a.cid 
+
+inner join city ci on a.aid = ci.aid 
+
+group by c.cname 
+
+having sum(ci.citysize) > 5000
+
+
+
+
+
+
+
+

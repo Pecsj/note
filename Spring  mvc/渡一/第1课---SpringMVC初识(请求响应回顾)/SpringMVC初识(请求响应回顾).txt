@@ -1,0 +1,88 @@
+
+	
+	知识回顾
+	Spring的注解编程
+
+	注解与xml形式的作用是一样的
+
+	xml中做的配置   对象管理<bean>  机制scope lazy-init  自动注入 autowire="byName"
+	
+	1.用于替代原有的bean标签 对象创建
+		@Component	<bean id="" class="" autowire="" scope="singleton" lazy-init="true">
+		MVC分层架构更加清晰
+		控制层@Controller
+		业务层@Service
+		持久层@Repository
+	2.用于替代原有bean标签中的属性 对象机制的管理
+		@Scope("singleton | prototype")
+		@Lazy(true | false)
+		@PostConstructor	当前对象创建时执行的方法  method-init
+		@ProDestroy		当前对象销毁时执行的方法  method-destroy
+	3.用于对象创建后的自动注入
+		@Autowired	byName方式  byType方式
+		@Qualifier	搭配着上面的注解做一个对象的微调整
+		@Value		支持SpEL
+		@Resource	不是Spring家族的注解
+	4.以上注解都是写在自己定义的类中
+		有些时候类不是我们写的  JdbcTemplate  DataSource
+		还想要通过注解的方式去管控这些对象
+		
+		1.自己定义类
+		  类中定义方法，作用是为了创建那些需要管控的对象
+		  方法通常有返回值，就是那些类的对象
+		  方法上面添加@Bean
+		2.需要在自己写的类上面添加注解---->核心xml文件一样 让spring知道 读取我
+		  @Configuration
+		3.改变了原有读取xml文件的过程 创建工厂的方式也要相应进行改变
+		  BeanFactory factory = new AnnotationConfigApplicationContext(xxx.class);
+		4.如果我们想要添加一些外部文件的信息
+		  可以采用@PropertySource引入外部文件中的内容
+		  内容可以利用SpEL来读取
+		5.自定义的类中可能会有很多的方法
+		  其实可以将自定义类拆分  好多个小配置类
+		  通过@Import(xxx.class)引入小配置类
+
+
+=======================================================================================================
+
+
+	对象的管控
+	SpringIOC  SpringDI  SpringAOP
+	用于与数据库交互
+	SpringJDBC
+	用于做任务处理
+	SpringTimer
+
+
+	用于做请求与响应的处理
+	SpringMVC
+
+	回顾一下之前的请求与响应
+
+	1.导包    别人写好的类
+	2.主配置  web.xml	DispatcherServlet   *.do
+	3.小配置  请求--真实类(方法)  对应关系
+	4.浏览器发请求	找到真实类
+	5.请求参数	真实类方法中写参数变量就行了----参数的IOC和DI
+			普通类型 String int map类型 domain类型
+	6.响应信息	返回值void String ModelAndView
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

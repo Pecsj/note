@@ -1,0 +1,29 @@
+
+	知识回顾
+
+	AJAX	异步的JavaScript和XML技术
+		Asynchronous   JavaScript  And  Xml
+
+		浏览器有很多展示的信息(响应)
+			URL回车    a    form  submit    js
+		浏览器展示信息没有变化的时候   发送一个异步请求
+		JavaScript    发请求 事件    请求回来响应信息
+		Xml文件的作用是为了  存储和传输数据
+			JSON	JavaScript  Object  Notation	
+			对象的出现是为了替代原有的xml进行数据的存储和传输
+		可以通过这样的方式让浏览器中展示的信息做局部(无限扩大到整个body)的改变
+
+	==================================================
+
+	小任务
+	级联查询	三级联动
+
+
+
+
+
+
+
+
+
+

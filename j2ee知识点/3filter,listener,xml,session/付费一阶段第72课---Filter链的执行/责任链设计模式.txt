@@ -1,0 +1,50 @@
+
+	1.Filter拦截请求
+		处理请求     直接给予响应    转发    重定向    放行
+		浏览器出发的请求会经过Filter
+		服务器内部的请求转发  请求重定向   是否会经过Filter
+
+		从浏览器发送出来的请求都会经过filter	前提是配置
+
+
+		从服务器发送出来的请求转发forward   默认是不经过filter的
+		从服务器发送出来的请求重定向sendRedirect   是经过filter的
+
+		如果是同一次请求    默认是不经过filter
+		如果是一次新请求    是经过filter
+
+		如果想要让所有的请求都经过filter过滤
+		做一个xml配置
+
+		<filter>
+			<filter-name>one</filter-name>
+			<filter-class>filter.FilterOne</filter-class>
+			<init-param>
+				<param-name>key</param-name>
+				<param-value>value</param-value>
+			</init-param>
+		</filter>
+		<filter-mapping>
+			<filter-name>one</filter-name>
+			<url-pattern>/*</url-pattern>
+			<dispatcher>REQUEST</dispatcher>
+			<dispatcher>FORWARD</dispatcher>
+		</filter-mapping>
+
+	2.Filter处理请求
+		好多真实资源之前的一个操作	用户认证
+		通常拦截pattern    /*      *.xxx
+		多个filter都匹配同一个pattern	执行顺序?
+
+		多个filter都会执行
+		看起来是按照我们的web.xml的配置顺序来执行????
+
+
+
+
+
+
+
+
+
+

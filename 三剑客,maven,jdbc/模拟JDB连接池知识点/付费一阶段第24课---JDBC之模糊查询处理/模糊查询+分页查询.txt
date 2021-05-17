@@ -1,0 +1,48 @@
+
+	知识回顾
+	1.SQL注入
+		xxx' or '1'= '1
+		所谓的注入就是通过 特殊的字符 拼接到我们的SQL语句中
+		改变原有SQL语句的执行
+		拼接特殊的字符大多都是SQL中的合法关键字
+	2.预处理状态参数
+		PreparedStatement
+		使用方式与之前的Statement类似
+		通过连接获取    PreparedStatement pstat = conn.prepareStatement(?????);
+		在创建对象时需要预先加载SQL    需要一个String参数
+		SQL语句为了防止注入的问题   可以使用动态化参数处理   可以利用?替代 值和类型
+		SQL语句的可读性就增强   并且提高了执行效率
+		注意:sql语句上面的问号需要在执行操作之前赋值
+		pstat.setXXX(parameterIndex,value);
+
+	=====================================================
+	查询多条记录   对象  ArrayList<对象>
+
+	模糊查询	like   % _	
+		方式一
+		Sql语句正常写   select * from emp where ename like ?;
+		pstat.setString(1,"%"+letter+"%");
+		方式二
+		Sql语句稍微改变一下  select * from emp where ename like  "%" ? "%";
+		sql语句对于Java程序来说本身就是一个字符串
+		String sql = "select * from emp where ename like  \"%\" ? \"%\"";
+		sql语句本身的双引号和String类型的双引号冲突
+		可以利用转义字符来帮忙
+
+	分页查询   limit 起始行索引，每页几个
+	
+	联合查询  emp dept
+
+
+
+
+
+
+
+
+
+
+
+
+
+

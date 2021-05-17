@@ -1,0 +1,293 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 4
+Server version: 5.7.25-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| cons               |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+6 rows in set (0.00 sec)
+
+mysql> use cons;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_cons |
++----------------+
+| myclass        |
+| student        |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> drop table student;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> drop table myclass;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
+Empty set (0.00 sec)
+
+mysql> create table myclass(
+    ->  classid int(4),
+    ->  cname varchar(20),
+    ->  loc varchar(20)
+    -> ) character set utf8;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> alter table myclass add primary key(classid);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | NO   | PRI | NULL    |       |
+| cname   | varchar(20) | YES  |     | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table myclass add unique key(cname);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc myclass;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| classid | int(4)      | NO   | PRI | NULL    |       |
+| cname   | varchar(20) | YES  | UNI | NULL    |       |
+| loc     | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> insert into myclass values(1,'一班','北京');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into myclass values(2,'二班','深圳');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into myclass values(3,'三班','杭州');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into myclass values(4,'四班','上海');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from myclass;
++---------+--------+--------+
+| classid | cname  | loc    |
++---------+--------+--------+
+|       1 | 一班   | 北京   |
+|       2 | 二班   | 深圳   |
+|       3 | 三班   | 杭州   |
+|       4 | 四班   | 上海   |
++---------+--------+--------+
+4 rows in set (0.00 sec)
+
+mysql> create table student(
+    ->  sid int(15),
+    ->  sname varchar(30),
+    ->  ssex varchar(4),
+    ->  sage int(4),
+    ->  classid int(4)
+    -> ) character set utf8;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table student add primary key(sid);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table student add constraint fk_myclass foreign key(classid) references myclass(classid);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into student values(1,'赵一一','男',18,1);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into student values(2,'钱二二','男',19,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(3,'孙三三','女',17,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(4,'李四四','女',17,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(5,'周五五','男',18,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(6,'吴六六','男',19,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(7,'郑七七','男',18,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into student values(8,'王baba','男',19,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++-----+-----------+------+------+---------+
+| sid | sname     | ssex | sage | classid |
++-----+-----------+------+------+---------+
+|   1 | 赵一一    | 男   |   18 |       1 |
+|   2 | 钱二二    | 男   |   19 |       1 |
+|   3 | 孙三三    | 女   |   17 |       1 |
+|   4 | 李四四    | 女   |   17 |       2 |
+|   5 | 周五五    | 男   |   18 |       2 |
+|   6 | 吴六六    | 男   |   19 |       2 |
+|   7 | 郑七七    | 男   |   18 |       3 |
+|   8 | 王baba    | 男   |   19 |       3 |
++-----+-----------+------+------+---------+
+8 rows in set (0.00 sec)
+
+mysql> create table teacher(
+    ->  tid int(4),
+    ->  tname varchar(20),
+    ->  tsex varchar(4)
+    -> ) character set utf8;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table teacher add primary key(tid);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> create table teacher_student(
+    ->  tid int(4),
+    ->  sid int(15)
+    -> ) character set utf8;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> alter table teacher_student add constraint fk_teacher foreign key(tid) references teacher(tid);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table teacher_student add constraint fk_student foreign key(sid) references student(sid);
+Query OK, 0 rows affected (0.06 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table teacher_student add primary key(tid,sid);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into teacher values(1,'郑中拓1','男');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher values(2,'郑中拓2','男');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher values(3,'郑中拓3','男');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from teacher;
++-----+------------+------+
+| tid | tname      | tsex |
++-----+------------+------+
+|   1 | 郑中拓1    | 男   |
+|   2 | 郑中拓2    | 男   |
+|   3 | 郑中拓3    | 男   |
++-----+------------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into teacher_student values(1,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher_student values(1,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher_student values(1,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher_student values(2,1);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher_student values(2,3);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher_student values(2,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher_student values(3,2);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher_student values(3,4);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into teacher_student values(3,5);
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from teacher_student;
++-----+-----+
+| tid | sid |
++-----+-----+
+|   1 |   1 |
+|   2 |   1 |
+|   1 |   2 |
+|   3 |   2 |
+|   1 |   3 |
+|   2 |   3 |
+|   2 |   4 |
+|   3 |   4 |
+|   3 |   5 |
++-----+-----+
+9 rows in set (0.00 sec)
+
+mysql> create table idcard(
+    ->  cardid varchar(18),
+    ->  address varchar(30)
+    -> ) character set utf8;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> alter table idcard add primary key(cardid);
+Query OK, 0 rows affected (0.03 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into idcard values('230104200001011234','道里区派出所');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into idcard values('230104200002024321','道外区派出所');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> create table person(
+    ->  pid int(10),
+    ->  pname varchar(20),
+    ->  psex varchar(4),
+    ->  cardid varchar(18)
+    -> ) character set utf8;
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> alter table person add primary key(pid);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table person add constraint fk_idcard foreign key(cardid) references idcard(cardid);
+Query OK, 0 rows affected (0.07 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table person add unique cardid;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table person add unique key(cardid);
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into person values(1,'郑中拓','男','230104200001011234');
+Query OK, 1 row affected (0.00 sec)
+
+mysql>

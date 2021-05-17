@@ -1,0 +1,68 @@
+
+	知识回顾
+	1.核心配置文件加载的问题
+		ClassPathXmlApplicationContext("");
+		FileSystemXmlApplicationContext("");
+	2.Spring核心
+		IOC控制反转
+		对象的控制权一旦交给了别人
+		对象创建时是否能自动将属性注入--->DI
+
+		普通对象--普通属性的注入  基本类型 包装类 String
+
+		Student student = new Student();//对象由我们自己创建
+		Student student = (Student)f.getBean("student");//对象交给Spring框架帮我们创建
+
+		对象赋值(set方法)
+		student.setSid(1);
+		student.setSname("zzt");
+		对象赋值(构造方法)
+		Student student = new Student(1,"zzt");
+
+		<bean>
+			<property name="属性名" value="属性值"><property/>
+			<property name="">
+				<value type=""></value>
+			<property/>
+		</bean>
+
+		<bean>
+			<constructor-arg name="" value="" type="">
+			<constructor-arg name="">
+				<value>
+			<constructor-arg/>
+		</bean>
+	================================================================================
+
+	通过标签管理对象的创建   IOC DI
+		如果某一个属性中需要赋值空对象  null对象 而非是"null"
+		我们可以利用<null></null>
+
+
+		如果某一个属性中带有特殊字符	String类型
+		需要利用这个标签来进行操作<![CDATA[xxx]]>
+		注意 这个标签需要以分层的形式 写在<value>中间</value>
+
+	正常开发中我们交给Spring管理的对象可能不一定是上述那种类型
+	Student里面有很多属性值   每一个对象的属性值不一样
+	我们使用对象中的属性值---->domain	属性值通常都是原生的  int Integer String
+	我们使用对象中的方法------>controller  service  dao	属性即便是有 通常都是对象
+ 
+
+	如果对象里面的属性是基本类型	<property name="属性名" value="值">
+	如果对象里面的属性是对象类型	<property name="属性名" ref="另一个bean的name或id">	
+
+	如果对象里面的那个属性对象 是私有的 不想别其他人访问
+	我们可以采用内部bean的写法
+		<bean>
+			<property>
+				<bean>
+
+	下节课
+	对象之间存在包含关系的  且对象都交给spring管理的情况
+	能否产生一个自动的装配  自动DI
+
+	集合
+
+
+		

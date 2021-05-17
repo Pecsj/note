@@ -1,0 +1,53 @@
+
+	知识回顾
+	JSP的9个内置对象
+	HttpServletRequest		request		一次请求
+	HttpServletResponse	response		客户端响应信息
+	HttpSession		session		一次会话
+	ServletContext		application	全局上下文
+	JSPWriter			out		输出对象
+	Object			page		当前页对象
+	PageContext		pageContext	页面上下文
+	ServletConfig		config		读取信息对象
+	Exception			exception		异常对象
+
+	
+	HttpServletRequest		request		一次请求
+	常用方法
+	String value = request.getParameter("key");	获取请求传递过来的参数
+	request.setCharacterEncoding("UTF-8");	设置接收参数时的字符集post
+	request.setAttribute("key",Object);
+	Object value = request.getAttribute("key");
+	ResquestDispatcher rd = request.getRequestDispatcher("path");	告知需要转发的资源路径
+		rd.forward(request,response);		转发<--->重定向
+	String[] values = request.getParameterValues("key");
+	Enumeration en = request.getParameterNames();
+	StringBuffer = request.getRequestURL();	http://ip:port/工程名/资源名
+	String = request.getRequestURI();		/工程名/资源名
+	String value = request.getHeader("Accept-Language");	国际化
+	HttpSession session = request.getSession();
+	Cookie[] = request.getCookies();
+
+	
+	Internationalization国际化	I18N
+	
+	浏览器会出现很多	HTTP状态码
+		404	没有找到资源
+			html   jsp  名字写错啦
+			Servlet	 名字写错啦    忘记配置  web.xml   注解@WebServlet("请求名")
+		405	没有找到可执行的方法
+			service
+			doPost	doGet
+		500	服务器产生异常
+			JSP  Servlet   执行代码产生问题
+		200	正常的响应状态
+
+
+
+
+
+
+
+
+
+

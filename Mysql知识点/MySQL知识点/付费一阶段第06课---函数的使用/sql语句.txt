@@ -1,0 +1,531 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 5
+Server version: 5.7.25-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| student        |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> create table person(
+    ->   username varchar(10),
+    ->   address  varchar(10),
+    ->   salary   int(6),
+    ->   department varchar(10)
+    -> ) character set utf8 collate utf8_greneral_ci;
+ERROR 1273 (HY000): Unknown collation: 'utf8_greneral_ci'
+mysql> create table person(
+    ->   username varchar(10),
+    ->   address  varchar(10),
+    ->   salary   int(6),
+    ->   department varchar(10)
+    -> ) character set utf8 collate utf8_general_ci;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into person values('张三','武当',6000,'保洁部');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into person values('张无忌','魔教',6000,'事业部');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into person values('张三丰','武当',4000,'产业部');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into person values('周芷若','峨眉',8000,'事业部');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into person values('谢逊','魔教',5000,'产业部');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> insert into person values('杨逍','魔教',7000,'事业部');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from person;
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张三      | 武当    |   6000 | 保洁部     |
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 张三丰    | 武当    |   4000 | 产业部     |
+| 周芷若    | 峨眉    |   8000 | 事业部     |
+| 谢逊      | 魔教    |   5000 | 产业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
++-----------+---------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> select username,address,(salary+100)*12 as yearsal from person;
++-----------+---------+---------+
+| username  | address | yearsal |
++-----------+---------+---------+
+| 张三      | 武当    |   73200 |
+| 张无忌    | 魔教    |   73200 |
+| 张三丰    | 武当    |   49200 |
+| 周芷若    | 峨眉    |   97200 |
+| 谢逊      | 魔教    |   61200 |
+| 杨逍      | 魔教    |   85200 |
++-----------+---------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select username,address,salary*12+1000 as yearsal from person;
++-----------+---------+---------+
+| username  | address | yearsal |
++-----------+---------+---------+
+| 张三      | 武当    |   73000 |
+| 张无忌    | 魔教    |   73000 |
+| 张三丰    | 武当    |   49000 |
+| 周芷若    | 峨眉    |   97000 |
+| 谢逊      | 魔教    |   61000 |
+| 杨逍      | 魔教    |   85000 |
++-----------+---------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select username as 姓名,address as 居住地,salary as 月薪,salary*12 as 年薪 from person;
++-----------+-----------+--------+--------+
+| 姓名      | 居住地    | 月薪   | 年薪   |
++-----------+-----------+--------+--------+
+| 张三      | 武当      |   6000 |  72000 |
+| 张无忌    | 魔教      |   6000 |  72000 |
+| 张三丰    | 武当      |   4000 |  48000 |
+| 周芷若    | 峨眉      |   8000 |  96000 |
+| 谢逊      | 魔教      |   5000 |  60000 |
+| 杨逍      | 魔教      |   7000 |  84000 |
++-----------+-----------+--------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select * from person where department = '事业部';
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 周芷若    | 峨眉    |   8000 | 事业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
++-----------+---------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from person where address = '魔教';
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 谢逊      | 魔教    |   5000 | 产业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
++-----------+---------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from person where salary = 6000;
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张三      | 武当    |   6000 | 保洁部     |
+| 张无忌    | 魔教    |   6000 | 事业部     |
++-----------+---------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from person where salary between 6000 and 8000;
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张三      | 武当    |   6000 | 保洁部     |
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 周芷若    | 峨眉    |   8000 | 事业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
++-----------+---------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from person where salary in(6000,7000,8000);
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张三      | 武当    |   6000 | 保洁部     |
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 周芷若    | 峨眉    |   8000 | 事业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
++-----------+---------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from person where salary between 6000 and 8000 or username like '张%';
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张三      | 武当    |   6000 | 保洁部     |
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 张三丰    | 武当    |   4000 | 产业部     |
+| 周芷若    | 峨眉    |   8000 | 事业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
++-----------+---------+--------+------------+
+5 rows in set (0.00 sec)
+
+mysql> select * from person where salary in(6000,7000,8000) or username like '张%' and username != '张三丰';
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张三      | 武当    |   6000 | 保洁部     |
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 周芷若    | 峨眉    |   8000 | 事业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
++-----------+---------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from person where salary = 5000 or username = '张三';
++----------+---------+--------+------------+
+| username | address | salary | department |
++----------+---------+--------+------------+
+| 张三     | 武当    |   6000 | 保洁部     |
+| 谢逊     | 魔教    |   5000 | 产业部     |
++----------+---------+--------+------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from person where address = '魔教' order by username asc;
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
+| 谢逊      | 魔教    |   5000 | 产业部     |
++-----------+---------+--------+------------+
+3 rows in set (0.00 sec)
+
+mysql> select * from person where salary > 5000 order by address desc;
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
+| 张三      | 武当    |   6000 | 保洁部     |
+| 周芷若    | 峨眉    |   8000 | 事业部     |
++-----------+---------+--------+------------+
+4 rows in set (0.00 sec)
+
+mysql> select * from person order by salary desc,username asc;
++-----------+---------+--------+------------+
+| username  | address | salary | department |
++-----------+---------+--------+------------+
+| 周芷若    | 峨眉    |   8000 | 事业部     |
+| 杨逍      | 魔教    |   7000 | 事业部     |
+| 张三      | 武当    |   6000 | 保洁部     |
+| 张无忌    | 魔教    |   6000 | 事业部     |
+| 谢逊      | 魔教    |   5000 | 产业部     |
+| 张三丰    | 武当    |   4000 | 产业部     |
++-----------+---------+--------+------------+
+6 rows in set (0.00 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| person         |
+| student        |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nan  |   18 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |    99.00 |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> update student set physical = null where sname = 'zzt';
+Query OK, 1 row affected (0.00 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nan  |   18 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select sid,sname,chinese+english+physics+physical as sum from student;
++------+----------+--------+
+| sid  | sname    | sum    |
++------+----------+--------+
+|    1 | zhangsan | 374.00 |
+|    2 | lisi     | 366.00 |
+|    4 | zhaoliu  | 372.00 |
+|    5 | qianqi   | 325.00 |
+|    6 | wangjiu  | 303.00 |
+|    7 | zzt      |   NULL |
++------+----------+--------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,year(sbirthday),month(sbirthday),day(sbirtyday) from student;
+ERROR 1054 (42S22): Unknown column 'sbirtyday' in 'field list'
+mysql> select sname,year(sbirthday),month(sbirthday),day(sbirthday) from student;
++----------+-----------------+------------------+----------------+
+| sname    | year(sbirthday) | month(sbirthday) | day(sbirthday) |
++----------+-----------------+------------------+----------------+
+| zhangsan |            2000 |                1 |              1 |
+| lisi     |            2001 |                2 |              6 |
+| zhaoliu  |            2001 |                1 |              4 |
+| qianqi   |            2002 |                3 |              3 |
+| wangjiu  |            2002 |                2 |              2 |
+| zzt      |            2001 |               11 |             24 |
++----------+-----------------+------------------+----------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,if(sage>17,'大','小') from student;
++----------+-------------------------+
+| sname    | if(sage>17,'大','小')   |
++----------+-------------------------+
+| zhangsan | 大                      |
+| lisi     | 大                      |
+| zhaoliu  | 大                      |
+| qianqi   | 小                      |
+| wangjiu  | 小                      |
+| zzt      | 大                      |
++----------+-------------------------+
+6 rows in set (0.00 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| person         |
+| student        |
++----------------+
+2 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nan  |   18 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,chinese+physical from student;
++----------+------------------+
+| sname    | chinese+physical |
++----------+------------------+
+| zhangsan |           190.00 |
+| lisi     |           188.00 |
+| zhaoliu  |           193.00 |
+| qianqi   |           170.00 |
+| wangjiu  |           142.00 |
+| zzt      |             NULL |
++----------+------------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,chinese+ifnull(physical,0) from student;
++----------+----------------------------+
+| sname    | chinese+ifnull(physical,0) |
++----------+----------------------------+
+| zhangsan |                     190.00 |
+| lisi     |                     188.00 |
+| zhaoliu  |                     193.00 |
+| qianqi   |                     170.00 |
+| wangjiu  |                     142.00 |
+| zzt      |                      99.00 |
++----------+----------------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    2 | lisi     | nv   |   18 | 2001-02-06 |   92.00 |   93.00 |   85.00 |    96.00 |       1 |
+|    4 | zhaoliu  | nan  |   18 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
+|    7 | zzt      | nan  |   18 | 2001-11-24 |   99.00 |   99.00 |   99.00 |     NULL |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,length(sname) from student;
++----------+---------------+
+| sname    | length(sname) |
++----------+---------------+
+| zhangsan |             8 |
+| lisi     |             4 |
+| zhaoliu  |             7 |
+| qianqi   |             6 |
+| wangjiu  |             7 |
+| zzt      |             3 |
++----------+---------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,ssex,concat(sname,ssex) from student;
++----------+------+--------------------+
+| sname    | ssex | concat(sname,ssex) |
++----------+------+--------------------+
+| zhangsan | nan  | zhangsannan        |
+| lisi     | nv   | lisinv             |
+| zhaoliu  | nan  | zhaoliunan         |
+| qianqi   | nv   | qianqinv           |
+| wangjiu  | nv   | wangjiunv          |
+| zzt      | nan  | zztnan             |
++----------+------+--------------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,substr(sname,1,3) from student;
++----------+-------------------+
+| sname    | substr(sname,1,3) |
++----------+-------------------+
+| zhangsan | zha               |
+| lisi     | lis               |
+| zhaoliu  | zha               |
+| qianqi   | qia               |
+| wangjiu  | wan               |
+| zzt      | zzt               |
++----------+-------------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,instr(sname,'a') from student;
++----------+------------------+
+| sname    | instr(sname,'a') |
++----------+------------------+
+| zhangsan |                3 |
+| lisi     |                0 |
+| zhaoliu  |                3 |
+| qianqi   |                3 |
+| wangjiu  |                2 |
+| zzt      |                0 |
++----------+------------------+
+6 rows in set (0.00 sec)
+
+mysql> select * from student where sname like '%A%';
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    4 | zhaoliu  | nan  |   18 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select * from student where instr(sname,'A') != 0;
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+| sid  | sname    | ssex | sage | sbirthday  | chinese | english | physics | physical | classid |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+|    1 | zhangsan | nan  |   18 | 2000-01-01 |   98.00 |   95.00 |   89.00 |    92.00 |       1 |
+|    4 | zhaoliu  | nan  |   18 | 2001-01-04 |   99.00 |   90.00 |   89.00 |    94.00 |       2 |
+|    5 | qianqi   | nv   |   17 | 2002-03-03 |   76.00 |   88.00 |   67.00 |    94.00 |       3 |
+|    6 | wangjiu  | nv   |   17 | 2002-02-02 |   80.00 |   75.00 |   86.00 |    62.00 |       3 |
++------+----------+------+------+------------+---------+---------+---------+----------+---------+
+4 rows in set (0.00 sec)
+
+mysql> select sname,replace(sname,'a','A') from student;
++----------+------------------------+
+| sname    | replace(sname,'a','A') |
++----------+------------------------+
+| zhangsan | zhAngsAn               |
+| lisi     | lisi                   |
+| zhaoliu  | zhAoliu                |
+| qianqi   | qiAnqi                 |
+| wangjiu  | wAngjiu                |
+| zzt      | zzt                    |
++----------+------------------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,upper(sname) from student;
++----------+--------------+
+| sname    | upper(sname) |
++----------+--------------+
+| zhangsan | ZHANGSAN     |
+| lisi     | LISI         |
+| zhaoliu  | ZHAOLIU      |
+| qianqi   | QIANQI       |
+| wangjiu  | WANGJIU      |
+| zzt      | ZZT          |
++----------+--------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,lpad(sname,10,'*') from student;
++----------+--------------------+
+| sname    | lpad(sname,10,'*') |
++----------+--------------------+
+| zhangsan | **zhangsan         |
+| lisi     | ******lisi         |
+| zhaoliu  | ***zhaoliu         |
+| qianqi   | ****qianqi         |
+| wangjiu  | ***wangjiu         |
+| zzt      | *******zzt         |
++----------+--------------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,lpad(sname,5,'*') from student;
++----------+-------------------+
+| sname    | lpad(sname,5,'*') |
++----------+-------------------+
+| zhangsan | zhang             |
+| lisi     | *lisi             |
+| zhaoliu  | zhaol             |
+| qianqi   | qianq             |
+| wangjiu  | wangj             |
+| zzt      | **zzt             |
++----------+-------------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,lpad(sname,length(sname)+4,'*') from student;
++----------+---------------------------------+
+| sname    | lpad(sname,length(sname)+4,'*') |
++----------+---------------------------------+
+| zhangsan | ****zhangsan                    |
+| lisi     | ****lisi                        |
+| zhaoliu  | ****zhaoliu                     |
+| qianqi   | ****qianqi                      |
+| wangjiu  | ****wangjiu                     |
+| zzt      | ****zzt                         |
++----------+---------------------------------+
+6 rows in set (0.00 sec)
+
+mysql> select sname,rpad(lpad(sname,length(sname)+4,'*'),length(sname)+8,'*') from student;
++----------+-----------------------------------------------------------+
+| sname    | rpad(lpad(sname,length(sname)+4,'*'),length(sname)+8,'*') |
++----------+-----------------------------------------------------------+
+| zhangsan | ****zhangsan****                                          |
+| lisi     | ****lisi****                                              |
+| zhaoliu  | ****zhaoliu****                                           |
+| qianqi   | ****qianqi****                                            |
+| wangjiu  | ****wangjiu****                                           |
+| zzt      | ****zzt****                                               |
++----------+-----------------------------------------------------------+
+6 rows in set (0.00 sec)
+
+mysql>

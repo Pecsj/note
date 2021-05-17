@@ -1,0 +1,68 @@
+
+	知识回顾
+	HttpServletResponse	response		客户端响应信息
+	response.setCharacterEncoding("UTF-8");
+	PrintWriter pw = response.getWriter();
+	int statusNumber = response.getStatus();	200  404  405  500
+	response.setStatus(int statusNumber);
+	response.addCookie(new Cookie("key","value"));
+	#response.sendRedirect("path");//请求重定向
+
+		转发forward		重定向redirect
+1.类不一样
+		RequestDispatcher类中的方法	HttpServletResponse类中的方法
+		forward(req,resp);			sendRedirect("path");
+2.调用的方式不一样
+		request.getRequestDispatcher("path");	response.sendRedirect("path");
+		rd.forward(req,resp);
+3.转发或重定向请求都是在服务器端产生的
+		转发是在服务器内部发起的	重定向是在服务器内部发起的
+		在服务器内部转发		告知浏览器需要重新定位新的资源
+		浏览器不知道		浏览器被动的发起一个新的请求   浏览器知道
+		一次请求			相当于产生了新请求
+4.浏览器URL地址栏是否会发生改变？？？
+		URL不会发生变化		URL会发生改变
+5.请求时候是否传递参数??? req  resp
+		传递了req resp		没有传递req resp
+		可以获取之前请求携带的参数	不能获取之前请求携带的参数
+6.转发只能在当前服务器的当前工程内部		重定向可以发送给新的服务器或新的工程
+
+=====================================================================
+
+	HttpServletRequest		request		一次请求
+	HttpServletResponse	response		响应信息
+	----------------------------------------------
+	HttpSession		session		一次会话
+		session.setAttribute("key",Object);
+		Object = session.getAttribute("key");
+		session.removeAttribute("key");
+		Enumeration en = session.getAttributeNames();//获取全部的key
+		小任务
+		将之前的银行系统  用户名存入session中
+		
+	ServletContext		application
+	JSPWriter			out
+	Object			page
+	PageContext		pageContext
+	ServletConfig		config
+	Exception			exception	
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

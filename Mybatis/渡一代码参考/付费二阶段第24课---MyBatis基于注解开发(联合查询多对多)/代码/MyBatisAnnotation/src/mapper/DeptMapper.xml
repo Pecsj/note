@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.DeptDao">
+
+    <!--自定义规则-->
+    <resultMap id="selectDept" type="domain.Dept">
+        <id property="deptno" column="deptno"></id>
+        <result property="dname" column="dname"></result>
+        <result property="loc" column="loc"></result>
+        <collection property="empList" javaType="list" ofType="domain.Emp" column="deptno" select="selectEmp"></collection>
+    </resultMap>
+    <!--辅助标签-->
+    <select id="selectEmp" resultType="domain.Emp">
+        select * from emp where deptno = #{deptno}
+    </select>
+
+    <!--与dao方法对应的标签-->
+    <select id="selectOne" resultMap="selectDept">
+        select * from dept where deptno = #{deptno}
+    </select>
+</mapper>

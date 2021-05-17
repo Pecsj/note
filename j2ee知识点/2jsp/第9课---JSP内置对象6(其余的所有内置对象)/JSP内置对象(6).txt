@@ -1,0 +1,76 @@
+
+	知识回顾
+	HttpSession	session	一次会话
+		session.setAttribute("key",Object);
+		Object = session.getAttribute("key");
+		session.removeAttribute("key");
+		Enumeration en = session.getAttributeNames();
+
+		session最大的不活跃时间	1800秒==30分钟
+		session.setMaxInactiveInterval(int 秒);	设置session出了这个时间间隔就不再活跃(无法获取session中的信息)
+		session.invalidate();//设置session对象失效(session没有啦)			
+		String JSessionID = session.getId();
+		#session的管理机制留在后面   Cookie  Session  ThreadLocal
+
+	===================================================================
+	request   response   session
+	ServletContext	application	全局上下文对象	index.jsp	index_jsp.java
+		request一次请求   	new
+		session一次会话
+		application上下文	static
+
+		application.setAttribute("key",Object);
+		Object = application.getAttribute("key");
+		application.removeAttributer("key");
+		Enumeration en = application.getAttributeNames();
+
+		String value = application.getInitParameter("key");
+		Enumeration en = application.getInitParameterNames();
+
+		application.getRequestDispatcher("").forwar(req,resp);
+		String realPath = application.getRealPath("/");
+			写完的源代码不能执行---部署
+			正常情况下部署到当前的工程的out文件夹内
+			修改了配置  部署到Tomcat的webapps文件夹内
+			实现国际化效果  读取文件  src//xxx
+			request.getRequestURL()	request.getRequestURI();
+			Thread.currentThread().getContextClassLoader().getResourceAsStream();
+
+	JSPWriter		out
+		write   println
+	Object		page = this;	当前页对象		index_jsp.java这个类的对象
+	PageContext	pageContext	页面对象上下文
+		pageContext.setAttribute()	getAttribute()	removeAttribute();
+
+	
+	作用域对象
+		pageContext	只有在当前页作用域中可以访问(xx_jsp.java当前这个类的范围内)
+		request		一次请求的范围之内
+		session		一次会话的范围内(好多次请求  同一个人)
+		application	全局范围之内(好多个session可以共享)
+
+	ServletConfig	config
+		String value = config.getInitParameter("key");
+		Enumeration en = config.getInitParameterNames();
+		String name = config.getServletName();
+		ServletContext application = config.getServletContext();
+
+	Exception		exception
+		可以写一个新的jsp	比如error.jsp
+		在error.jsp头信息上设置     isErrorPage="true"
+		在正常的jsp中设置头信息   errorPage="error.jsp"
+		404没有找到资源  不是异常
+
+	=================================================
+	JSP每一个内置对象   类型  变量名字  对象中的常用方法   参数 返回值
+		request  response  session 
+		application  config
+		page pageContext
+		exception
+
+	JSP动作标签
+	EL+JSTL	自定义
+
+
+
+

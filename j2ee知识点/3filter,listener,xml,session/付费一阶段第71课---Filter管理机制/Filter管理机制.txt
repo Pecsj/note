@@ -1,0 +1,65 @@
+
+	知识回顾
+	Filter过滤器
+	1.是Tomcat提供的一个组件
+	2.他是一个特殊的Servlet
+		特殊在可以放行   有一个多的参数FilterChain
+	3.基本使用
+		自己创建一个类
+		继承HttpFilter(Tomcat9以后的)      Tomcat9之前 直接实现Filter接口
+		重写方法doFilter		      init     doFilter     destroy
+		doFilter方法中有三个参数    HttpServletRequest   HttpServletResponse   FilterChain
+		可以抛出两个异常  ServletException   IOException
+		配置web.xml    
+	4.基本的使用
+		用户认证
+		事务的处理
+		字符集处理
+	5.深入研究一下底层管理机制
+		继承或实现的关系
+		
+		接口Serializable
+			序列化接口
+		接口FilterConfig
+			getFilterName();
+			getServletContext();
+			String value = getInitParameter("key");
+			Enumeration = getInitParameterNames();
+		接口Filter
+			default void init(FilterConfig filterConfig) throws ServletException {}
+			void doFilter(ServletRequest var1, ServletResponse var2, FilterChain var3) throws IOException, ServletException;
+			default void destroy() {}
+		抽象的父类GenericFilter
+			目的是一个缺省适配器模式
+			将大部分的抽象方法都添加了实现
+			还增加了init方法重载
+		抽象的父类HttpFilter
+			做一个参数类型的转化  
+			将无协议的参数强制转化成Http协议的参数
+		我们自己写的类
+		
+		对象的创建    生命周期
+		filter对象是一个单例的
+		filter对象的单利模式   采用生命周期托管的方式实现的
+		filter对象是一个立即加载的方式	不能通过配置load-on-startup来进行修改
+		生命周期也可以通过init   doFilter   destroy方法重写看
+
+	6.发送请求
+		从浏览器出发
+		从服务器出发(转发 重定向)
+	*7.filter对象如果不止一个
+		如何执行的
+		FilterChain---->过滤器链
+		责任链设计模式---->AOP
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,66 @@
+
+	知识回顾
+	EL	Expression  Language	表达式语言
+	1.写法	${  }
+	2.作用	域对象中取值	requestScope   sessionScope   applicationScope   pageScope
+				request.getAttribute("key");	${requestScope.key}
+				${param.key}
+		做简单的计算	算术运算	${param.value + 10}
+				逻辑运算	${requestScope.value &&}
+				比较运算	${param.value >= }	ge le gt lt eq ne
+
+		EL无法做到循环  判断  等流程控制问题
+	=====================================================
+
+	JSTL
+		JavaServerPage   Standard  Tag  Library
+		JSP   Standard  Tag   Library	JSP标准标签库
+
+		开源的JSP标准标签
+		由apache组织的jakarta小组来维护    jstl1.2
+
+		需要下载两个外部的jar包
+		jstl.jar	standard.jar
+
+		大体上提供了三个包	核心(流程控制)   函数(处理String)   格式化(Date Time)
+
+
+	使用JSTL来代替之前的Java
+	1.将两个.jar文件导入项目
+		可以在工程内web文件夹的WEB-INF文件夹内创建自己的文件夹lib
+		也可以直接将两个jar文件导入Tomcat中的lib文件夹
+	2.启动idea编辑器
+		创建一个新的web工程
+		设置新导入的jstl包关联
+	3.创建一个新的JSP
+		JSP中描述一个头信息	目的是为了告知JSP有新的标签可以用
+		<%@ taglib uri="http://java.sun.com/jsp/jstl/xxxx" prefix=""%>
+
+		核心标签core   前缀c
+		<c:out value=""></c:out>	可以写字符串   可以写表达式语言
+		<c:if test=""></c:if>	表达式语言
+		<c:choose>
+			<c:when>
+			<c:otherwise>
+		<c:forEach>
+			begin  end   step   varStatus（是一个对象  index属性索引）
+			var    items
+
+
+		内部类是带$		LinkedList$Node
+		局部内部类			Test$1A
+			public class Test{
+				public void testOne(){
+					class A{}
+				}
+				public void testTwo(){
+					class A{}
+				}
+			}
+
+	小任务
+		将之前实现的shopping
+		JSP中所有的<%%>的Java代码改成EL+JSTL的写法
+
+
+

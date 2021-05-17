@@ -1,0 +1,77 @@
+
+	
+	知识回顾
+
+	Spring注解的方式实现对象的管控
+		注解作用与XML形式的作用是一样的
+
+	
+	用于对象创建的注解<bean id="" class="">
+		@Component(value="id")
+			value可以省略   @Component("id")
+			小括号都可以省略@Component	id是默认  类名字的驼峰式
+		@Controller
+		@Service
+		@Depository
+	用于对象创建后的机制<bean id="" class="" scope="singleton" lazy-init="false" init-method destroy-method>
+		@Scope("singleton | prototype多例")
+		@Lazy(true)
+		@PostConstructor	对象加载就执行的方法	写在方法上面
+		@PreDestroy		对象被回收执行的方法	写在方法上面
+	对象中可能含有属性
+		属性的自动注入DI
+		@Autowired	属性上面  属性对应的set方法上面  带有参数的构造方法上面
+		@Qualifier	属性对象注入的微调整  属性有多个对象对应  选择其中一个
+		@Value("值")	还支持SpEL	@Value("${值}")
+		@Resource(name="")不是Spring家族提供的注解   Java提供的  统一性来讲不好
+
+
+	Spring中提供新的注解
+	用来解决那些类不是我们自己创建的
+	但却想要通过注解的方式来管理
+
+	1.需要自己写一个类ConfigClass
+		类的目的是与之前配置文件的目的一致
+		告知Spring加载初始化的时候该如何创建，管理对象
+
+		类中可以自己设计方法
+		方法通常是用来创建对象   与Spring底层加载<bean>标签 反射对象的作用一直
+		方法上面添加@Bean
+	2.需要在自定义类的上面进行一个描述
+		添加@Configuration
+		告知Spring这个类是我的配置 需要让他干活
+	3.创建BeanFactory工厂
+		BeanFactory factory = new AnnotationConfigApplicationContext(ConfigClass.class);
+		factory.getBean("id");
+	4.自己创建的类中会设计方法
+		方法是用来创建bean对象  对象通常是别人写好的类型 JdbcTemplate
+		方法上面添加@Bean
+		如果bean注解中不写id	方法名字即使默认对象的id
+	5.如果自己写的类中除了自定义方法
+		还需要告知Spring需要扫描其他包
+		在自己类上面添加一个注解@ComponentScan(value={} | basePackages={})
+		@ComponentScan(basePackages={"controller","service","dao","domain"})
+	6.如果在自己类中创建对象需要一些动态的参数
+		可以使用外部配置文件的方式引入
+		工程内创建一个文件    .properties
+		当前主配置类中添加注解
+		@PropertySource("classpath:jdbc.properties")
+		可以在配置类中添加属性
+		属性以@Value("${key}")
+	7.如果主配置中方法过多
+		且方法之间有些没有必然关联
+		主配置类拆开
+		变成多个小配置类
+		主配置类中通过@Import(小配置类.class)进行引入
+
+
+
+
+
+
+
+
+
+
+
+

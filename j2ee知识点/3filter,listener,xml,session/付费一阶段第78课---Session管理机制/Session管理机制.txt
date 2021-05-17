@@ -1,0 +1,119 @@
+
+	JavaWEB
+
+	1.Tomcat		WEB容器
+	2.Servlet    JSP(编译+EL+JSTL)    Filter    Listener	(文件上传与下载 外部jar包)
+	3.配置web.xml文件
+	4.XML文件的解析
+
+
+	域对象的特点
+		--->浏览器发送请求   
+	request		到达Tomcat  解析(请求名 携带参数)  (new Request对象)
+			Java中的原生管理方式   每次都new  没有引用指向被GC回收
+
+	*session		一次会话	周期是在浏览器和服务器没有断线的过程中
+			每一个人拥有一个(特点一定是通过编码来实现的)
+			session.setAttribute("key",object);
+			session.getAttribute();
+
+	application	全局(上下文)的对象	特点大家公用
+			Java中的单例管理方式   或者类中static元素
+
+
+	游泳馆
+	游泳馆肯定有储物柜(session)
+	1.储物柜本身是游泳馆的固定资产  
+	2.某一个具体的小柜子  也不属于某一个人  与人没有对应关系
+		(无状态的)
+	3.小柜子一旦分配给了某一个人   形成一种对应关系   人不离开游泳馆
+		关系一直存在(人通过某一个标识找到自己对应的柜子)
+	4.一旦我离开了  柜子就释放了
+	5.我的柜子  别人打不开
+
+
+	类比session对象的管理机制
+	1.session对象是服务器管理的
+	2.session对象应该不止一个
+	3.每一个人就一个session	管理者一个就够了   里面那个存储session对象的map一个就够了
+
+	
+	服务器
+	里面应该有一个类   管理session对象的
+	public class SessionManager{//负责管理session  一个对象就够了
+		//有一个集合  为了存储好多个session对象
+		private static Map<String 标识,session> sessionMap = new HashMap();
+		public static HttpSession getSession(String 标识){
+			return sessionMap.get(标识);
+		}
+	}
+	public class HttpSession{//一个小柜子  好多个对象
+		//还有一个集合  小柜子里面的储物格
+		private Map<String,Object> attributeMap = new HashMap();
+		
+		public void setAttribute(String key,Object value){
+			attributeMap.put(key,value);
+		}
+		public Object getAttribute(String key){
+			return attributeMap.get(key);
+		}
+	}
+
+	//如果想要使用session对象
+	HttpSession session = SessionManager.getSession("标识");
+	session.setAttribute("key",objcet);
+
+	Object value = session.getAttribute("key");
+
+
+	通过刚才的了解
+	1.session对象是服务器管理的(session对象存储在服务器端)
+	2.session对象是无状态的(每一个session对象与浏览器不存在直接的对应关系)
+	3.session需要一个标识来寻找
+		标识是谁分配的?	服务器
+		标识长成什么样?	是一个String(唯一)
+		标识存储在哪里?	存储在浏览器端的
+		什么时候存进去的?	标识是服务器分配的   需要存储在浏览器端
+				服务器需要将标识传递给浏览器
+				服务器在第一次给浏览器回写响应的时候带回来的  (标识)
+		标识具体存储在哪里?	Cookie(执行时是一个对象  key value)  可以永久的存储在文件中
+
+		0.服务器需要先启动(携带着项目-->有好多资源Servlet JSP Filter)
+		1.浏览器主动发送请求(第一次请求时没有标识)
+		2.服务器解析请求 根据请求找资源 响应信息给回浏览器的时候String
+			第一次给予响应信息<html>图片 按钮 表格</html>  +  标识
+		3.浏览器需要解析回来的响应信息
+			String(展示+标识)	标识存起来(以后每一次请求都带着)
+
+====================================================
+
+	Cookie
+	单词翻译过来    小甜品  小点心  小饼干
+	互联网领域中    小量信息
+
+	刚开始建立网站的时候	   不需要好多人来浏览   没有互联网
+	随着Internet服务的发展  简历很多网路端的服务器
+	访问者需要更频繁的与互联网中的服务进行交互
+	需要让访问者与服务器保持一种持续的连接状态
+	这时候才产生了Cookie对象
+	1993年   网景公司   Lou Montulli工程师
+	为了让用户在访问某个网站时，提高速度，保存信息和状态
+	cookie是一个浏览器端的对象
+	对象形态是  key-value形式的
+	
+
+	Session对象的管理机制
+		两个类   一个类负责管理session   一个类负责session对象中的存储
+		session对象是每一个人一个的
+		session对象本身有好多个
+		session对象是无状态的	服务器进行分配
+		每一个浏览器第一次访问服务器的时候   
+		服务器在第一次给响应的时候 分配一个session的标识	JSESSIONID   String
+		JSESSIONID存在浏览器中的cookie里	cookie("JSESSONID","随机")
+	
+	浏览器从第二次开始 发送请求都会带着这个cookie对象
+	每一次都能找到属于自己的那个session对象了
+
+
+
+

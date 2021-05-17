@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.EmpDao">
+
+    <select id="selectEmpByMybatis" resultType="domain.Emp">
+        select * from emp
+        <where>
+            <if test="deptno!=null and deptno!='' ">
+                and deptno = #{deptno}
+            </if>
+            <if test="job!=null and job!='' ">
+                and job = #{job}
+            </if>
+        </where>
+        order by sal
+        <choose>
+            <when test=" orderFlag=='desc' ">
+                ${orderFlag}
+            </when>
+            <when test=" orderFlag=='asc' ">
+                asc
+            </when>
+        </choose>
+    </select>
+
+
+    <update id="updateEmpByMybatis"><!--SALESMAN MANAGER-->
+        update emp set job = 'SALESMAN' where empno in
+        <foreach collection="list" item="empno" index="i" open="(" close=")" separator=",">
+            #{empno}
+        </foreach>
+    </update>
+
+
+    <!--业务方法的支持-->
+    <select id="selectAllEmp" resultType="domain.Emp">
+        select * from emp
+    </select>
+
+</mapper>

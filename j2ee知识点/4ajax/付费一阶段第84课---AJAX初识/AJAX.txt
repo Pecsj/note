@@ -1,0 +1,77 @@
+
+	知识回顾
+	web3.0之后    基于注解的开发
+	访问web容器中提供的组件
+	Servlet    Filter    Listener	JSP
+	配置web.xml	请求----真实资源
+		配置文件中的内容过多	   8行
+		注解出现替代web.xml
+
+	1.请求Servlet
+		自己写一个类  继承  重写  参数  异常
+		类上面添加一个注解
+		@WebServlet()
+			urlPatterns={"请求","请求"}
+			value={"",""}
+			loadOnStartUp=0
+			initParams={@WebInitParam(name="",value=""),@WebInitParam(name="",value="")}
+	2.请求Filter
+		自己写一个类  继承  重写  参数  异常
+		类上面添加一个注解
+		@WebFilter()
+			urlPatterns={"请求","请求"}
+			value={"",""}
+			initParams={@WebInitParam(name="",value=""),@WebInitParam(name="",value="")}
+	3.执行Listener
+		自己写一个类  实现  重写方法
+		类上面添加一个注解
+		@WebListener
+
+	有了注解之后   配置比原有的web.xml简单一些
+		web.xml   8行配置
+		注解----1行
+		请求-----真实类的对应关系
+		一个请求(一个功能点)-----对应一个类(只有一个方法 service  doPost doGet)
+		1.一个类中只有一个方法   类很浪费
+		2.一个功能对应一个类    功能有好多   类就有好多   配置就有好多呀
+		WEB框架出现 将好多类合并   一个类 好多个方法 每一个方法对应一个功能
+
+===================================================================
+
+	HTML+CSS+JavaScript(DOM)
+	AJAX
+
+	看一个小案例
+	做一个注册的功能
+		账号  密码  国籍  爱好
+		点击注册
+		JS可以做很多页面(展示信息)验证------不需要底层数据的支持
+		如果这个验证需要底层数据的支持----JS做不到	发送请求到底层去
+
+		将刚才的所有数据表格都填写完毕
+		点击注册按钮    发一个请求	--->Controller   Service   Dao   JDBC   SQL  新增
+		整个浏览器重新刷新		<---响应信息           <---		主键冲突
+
+		用户每一次都需要将所有数据填写完毕    统一提交
+		有可能数据产生问题    刷新浏览器中的响应信息    
+		刚才的数据还没有保留	   用户需要再次填写所有信息   再次统一提交
+		用户体验非常不好
+
+
+	AJAX	荷兰足球甲级联赛	俱乐部AJAX--->阿贾克斯
+		Asynchronus    Javascript    And    Xml
+		异步JavaScript和XML技术
+			异步请求---->Controller  Service  Dao  JDBC  SQL
+			JS(DOM)	     <----响应信息
+			XML   关注数据的存储和传输	
+			JSON目的是为了替代原有的XML    数据的存储和数据传输
+			JavaScript   Object   Notation	----->  String
+
+
+
+
+
+		
+
+
+

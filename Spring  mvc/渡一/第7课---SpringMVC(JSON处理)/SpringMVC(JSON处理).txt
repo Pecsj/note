@@ -1,0 +1,52 @@
+
+
+	知识梳理
+	1.如何发送请求
+		xxx.do    方法上面@RequestMapping
+	2.如何接收参数
+		方法变量  基础类型String,int  对象domain  注解map
+		@CookieValue   @RequestBody
+	3.如何处理响应	
+		void(自己写响应 原生response.getWriter().write();)
+		String(转发foward:xxx.jsp 重定向redirect:xxx.jsp)
+
+
+	继续研究一下如何处理响应信息
+		void  String以外
+		现在开发项目通常都是前后端分离形式
+			JSP(编译过程 性能不好)  静态数据+动态数据  一次请求 一次拼接 一次响应
+			静态数据先响应  动态数据发送异步请求 而后在浏览器端进行拼接展示
+			HTML+AJAX+JSON(JS操作)
+
+			String  转发路径   AJAX请求直接响应
+			Map  domain--->AJAX响应--JSON
+
+	总结
+	响应信息方式如下
+		void表示不需要框架帮我们处理响应信息
+			只能自己通过原生response获取输出流 回写响应信息
+		String(没有@ResponseBody注解)
+			表示请求框架帮我们处理响应信息路径的转发或重定向
+			forward:
+			redirect:
+		通常发送异步请求  map domain list set
+			表示需要框架帮我们处理响应信息  将这些对象转化成JSON形式响应回去
+			1.导包jackson(core databind annotations)
+			2.方法上面添加@Responsebody注解告知框架帮我们解析
+		还演示了发送请求如果是JSON形式该如何处理
+			发送端设置JSON形式
+			接收端(服务端的方法) 参数上面@RequestBody即可 domain对象接收
+
+
+	遗留一个小问题
+		服务端需要将某些数据存入request/session作用域中
+		替代原有request.setAttribute();
+			Model  ModelMap  ModelAndView(自己封装那个)
+
+
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        https://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--通过属性对应的set方法做自动DI-->
+    <!--<bean name="student" class="domain.Student">-->
+        <!--<property name="sid" value="1"></property>-->
+        <!--<property name="sname">-->
+            <!--<value type="java.lang.String">zzt</value>-->
+        <!--</property>-->
+        <!--<property name="ssex" value="18"></property>-->
+        <!--<property name="sage" value="18"></property>-->
+    <!--</bean>-->
+
+    <!--通过带参数的构造方法 给属性赋值-->
+    <bean name="student" class="domain.Student">
+        <constructor-arg name="sid" value="1" type="java.lang.Integer"></constructor-arg>
+        <constructor-arg name="sname" value="1" type="java.lang.String"></constructor-arg>
+        <constructor-arg name="ssex" type="java.lang.String">
+            <value>男</value>
+        </constructor-arg>
+        <constructor-arg name="sage" value="18" ></constructor-arg>
+    </bean>
+
+
+</beans>

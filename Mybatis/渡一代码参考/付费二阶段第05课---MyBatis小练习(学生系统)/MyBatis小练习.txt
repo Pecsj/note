@@ -1,0 +1,33 @@
+
+	知识回顾
+	#{}
+	${}
+
+	select * from student where name = #{name}	代替类型和值
+
+	sqlSession.selectOne("sqlid",Object);
+
+	select * from student order by id ${flag}	
+
+	=============================================================
+
+	学生管理的小系统
+		注册(新增)
+		修改( 名字 性别 。。。)  id不能修改
+		注销(删除)
+		查询个人信息(单条记录查询)
+		全部学生的信息 按照id降序排列     limit 1,5  传递页码  计算 begin count
+
+
+
+
+
+
+
+
+
+
+
+
+
+

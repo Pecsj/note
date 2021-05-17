@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE school SYSTEM "myxml.dtd">
+
+<school id="xxx" name="" loc="">
+    <class id="" name="" loc="">
+        <teacher id="" name="" age="">
+            <sex>男</sex>
+        </teacher>
+        <student id="" name="" age="">
+            <sex>女</sex>
+        </student>
+        <student>
+            <sex></sex>
+        </student>
+        <student>
+            <sex></sex>
+        </student>
+    </class>
+    <class>
+        <teacher>
+            <sex></sex>
+        </teacher>
+        <student>
+            <sex></sex>
+        </student>
+        <student>
+            <sex></sex>
+        </student>
+        <student>
+            <sex></sex>
+        </student>
+    </class>
+</school>

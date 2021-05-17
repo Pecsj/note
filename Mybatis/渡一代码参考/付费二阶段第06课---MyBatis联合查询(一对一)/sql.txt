@@ -1,0 +1,37 @@
+﻿
+    create database testmybatis;
+    use testmybatis;
+    
+    #一对一的表关系
+    #	人  身份证
+    create table idcard(
+       cardid varchar(18),
+       address varchar(20)
+    ) character set utf8;
+    alter table idcard add constraint pk_idcard primary key(cardid);
+    
+    create table person(
+       pid int(15),
+       pname varchar(30),
+       cardid varchar(18) #外键 唯一
+    ) character set utf8;
+    alter table person add constraint pk_person primary key(pid);
+    alter table person add constraint fk_person_idcard foreign key(cardid) references idcard(cardid);
+    alter table person add constraint uk_person unique(cardid);
+    
+    insert into idcard values('110000200001010101','东城区');
+    insert into idcard values('110000200002020202','西城区');
+    insert into idcard values('110000200003030303','海淀区');
+    
+    insert into person values(1,'赵一','110000200001010101');
+    insert into person values(2,'钱二','110000200002020202');
+    insert into person values(3,'孙三','110000200003030303');
+    
+    select * from person p inner join idcard i on p.cardid = i.cardid
+    
+    select * from person where pid = 1;
+    
+    
+    
+    
+    

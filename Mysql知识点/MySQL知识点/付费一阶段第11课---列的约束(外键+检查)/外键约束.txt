@@ -1,0 +1,87 @@
+
+	知识回顾
+	表格中列的约束
+	全部都是在创建表格之后做的表格列结构的修改
+	需要用到DDL语句进行操作    alter   drop
+	*1.主键约束(Primary Key)
+		主键列在表格中只能存在一份(一个表格中只有一个列可以设置为主键约束)
+		第一个要求  当前列的值不能为null
+		第二个要求  当前列的值不能重复
+		通常用来做唯一的标识   快速寻找当前这一行记录
+		1.添加主键约束
+			alter table 表名字 add constraint pk_表 primary key(列);
+			alter table 表名字 add primary key(列);
+		2.设置主键自动增长
+			alter table 表名字 modify 列 类型 长度 auto_increment;
+			alter table 表名字 auto_increment = 值;
+		3.删除主键约束
+			alter table 表名字 drop primary key;
+		4.删除主键约束后
+			唯一的特性被取消了  但是非空的特性还在
+			自己手动修改非空的特性
+			alter table 表名字 modify 列 类型 长度 null;
+			alter table 表名字 change 列 列 类型 长度 null;
+	2.唯一约束(Unique Key)
+		与主键特性类似  没有主键更严苛
+		在表格中可以添加多个列的唯一约束
+		只有一个要求  当前列的值不能重复   可以为null
+		1.添加唯一约束
+			alter table 表名字 add constraint uk_表 unique [key] (列);
+			alter table 表名字 add unique [key] (列);--->约束名默认就是列名
+		2.删除唯一约束
+			alter table 表名字 drop index uk_表;
+			*alter table 表名字 drop index 列名;
+	3.非空约束
+		可以在表格中添加多个列的约束
+		只有一个要求  当前列的值不能为null
+		1.添加非空约束
+		alter table 表名字 modify 列 类型 长度 not null default 值;
+		alter table 表名字 change 列 列 类型 长度 not null default 值;
+		2.删除非空约束
+		alter table 表名字 modify 列 类型 长度 null;
+		alter table 表名字 change 列 列 类型 长度 null;
+	*4.外键约束(Foreign Key)
+		表格中可以有多个列被设置为外键约束
+		当前列的值可以为空    可以重复
+		当前列的值不能随便的填写    值去另外一张表格内寻找
+		外键是当前列的值受到另外一张表格某一个列的影响
+		另外一张表格的列   是唯一约束(主键 唯一)
+		1.添加外键约束
+			alter table 表名字 add constraint fk_当前表_关联表 foreign key(列) references 另一个表(列);
+		2.通过show keys from 表;    desc 表;     show create table 表名;
+			PRI  UNI  MUL---->multiple(多样 并联)
+		3.删除外键约束
+			alter table 表名字 drop foreign key 约束名字;
+			注意:通过上述语句其实已经将外键约束删掉了
+			        自动在当前表格内添加一个新的key
+			        需要再次手动将这个生成的key删掉   外键约束才真的删除干净
+			alter table 表名字 drop key 约束名字;
+		----------------------------------------------------------------------------------
+			alter table student add foreign key(列) references 另一个表(列);
+			注意:  如果是简写的效果添加外键   外键的名字不是默认列名  student_ibfk_1
+			alter table student drop foreign key student_ibfk_1;
+			alter table student drop key classid;
+	5.检查约束(Check)
+		列在存值的时候做一个细致的检查  范围是否合理
+		alter table student add constraint ck_sage check(sage>15  and sage<30);
+	
+
+	小任务
+	1.设计一个存储班级信息的表格myclass
+		classid    cname   loc
+		主键        非空        唯一
+	2.设计一个存储学生信息的表格student
+		sid    sname   sage   ssex   classid
+		主键                                       外键
+	3.思考
+		现实生活中 哪些信息之间有关系
+		关系什么样的关系?
+		一对多   多对多   一对一
+		**表格之间的联合查询
+			
+	
+
+
+
+
+

@@ -1,0 +1,13 @@
+
+	知识回顾
+	解析XML(文件内容的读取input)
+	
+	DOM(Doucment Object Model)	javax包下
+	SAX(Simple Api for XML)
+
+	JDOM	(Java-based Document Object Model)
+		外部jar包
+		1.下载jar包
+		2.获取里面的对象  进行文件操作
+	DOM4J	(Document Object Model for Java)
+		外部jar

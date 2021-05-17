@@ -1,0 +1,62 @@
+
+	EL	Expression   Language
+	表达式语言
+
+
+	V	Swing(事件)	Servlet(out.write("<html>");)		JSP
+	C	自己调用		Servlet(字符集 取值 找业务 拼接响应信息)	Servlet 字符集 取值 找业务 转发
+	M	service		service				serivce
+		dao		dao				dao
+		(domain)		(domain)				(domain)
+		I/O		JDBC				JDBC
+	DB	文件.txt		MySQL				MySQL
+
+
+	V:	JSP	负责事情拼接响应信息--->展示	取值(request session) 流程(循环)
+				展示的语言HTML
+				取值+控制流程语言Java
+				两种语法结构不同
+				JSP代码很不好写(两种语言风格不统一 颜色不一致 看起来不舒服)
+	C:	Servlet	负责接收请求参数  负责找寻业务  转发
+	M:	Service+Dao+domain(小容器 存储信息)	负责数据的处理和读写
+	DB:	MySQL
+
+	==========================================================
+
+	EL
+	*1.代替原来Java程序取值的过程	request.getParameter();  request.getAttribute();
+	2.能处理一些简单的计算(算数 逻辑 比较)
+	3.调用方法(通常是有返回值)---->不常见
+
+	JSTL
+	*1.控制流程   if   for   switch   out
+	2.处理字符串   String(方法)
+	3.格式化(日期 时间)
+	
+------------------------------------------------------------------------------------------------------------------
+
+	EL表达式语言
+	${xxxx}
+	获取域对象的值	page(pageContext)   request   session    application
+	${requestScope.xxx}
+	${xxx}	page  request  session  application
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

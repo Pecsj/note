@@ -1,0 +1,289 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 19
+Server version: 5.7.25-log MySQL Community Server (GPL)
+
+Copyright (c) 2000, 2019, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> create database test;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> create table student(
+    ->   sid int(15),
+    ->   sname varchar(20),
+    ->   sage int(4),
+    ->   ssex varchar(4),
+    ->   sday date,
+    ->   sadd varchar(30)
+    -> );
+ERROR 1046 (3D000): No database selected
+mysql> use test;
+Database changed
+mysql> create table student(
+    ->   sid int(15),
+    ->   sname varchar(20),
+    ->   sage int(4),
+    ->   ssex varchar(4),
+    ->   sday date,
+    ->   sadd varchar(30)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> show tables;
++----------------+
+| Tables_in_test |
++----------------+
+| student        |
++----------------+
+1 row in set (0.00 sec)
+
+mysql> insert into student(sid,sname) values(1,'zhangsan');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select sid,sname,sage,ssex,sday,sadd from student;
++------+----------+------+------+------+------+
+| sid  | sname    | sage | ssex | sday | sadd |
++------+----------+------+------+------+------+
+|    1 | zhangsan | NULL | NULL | NULL | NULL |
++------+----------+------+------+------+------+
+1 row in set (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------+------+
+| sid  | sname    | sage | ssex | sday | sadd |
++------+----------+------+------+------+------+
+|    1 | zhangsan | NULL | NULL | NULL | NULL |
++------+----------+------+------+------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into student(sid,sname,sage,ssex,sday,sadd) values(2,'lisi',18,'nan',now(),'beijing');
+Query OK, 1 row affected, 1 warning (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+
+| sid  | sname    | sage | ssex | sday       | sadd    |
++------+----------+------+------+------------+---------+
+|    1 | zhangsan | NULL | NULL | NULL       | NULL    |
+|    2 | lisi     |   18 | nan  | 2019-03-07 | beijing |
++------+----------+------+------+------------+---------+
+2 rows in set (0.00 sec)
+
+mysql> insert into student values(3,'wangwu',19,'nv','2019-03-08','tianjin');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------+----------+------+------+------------+---------+
+| sid  | sname    | sage | ssex | sday       | sadd    |
++------+----------+------+------+------------+---------+
+|    1 | zhangsan | NULL | NULL | NULL       | NULL    |
+|    2 | lisi     |   18 | nan  | 2019-03-07 | beijing |
+|    3 | wangwu   |   19 | nv   | 2019-03-08 | tianjin |
++------+----------+------+------+------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> insert into student values(4,'zhaoliu',17,'nan',now(),'nanjing'),(5,'qianqi',20,'nv','2019-03-10','shenzhen');
+Query OK, 2 rows affected, 1 warning (0.00 sec)
+Records: 2  Duplicates: 0  Warnings: 1
+
+mysql> select * from student;
++------+----------+------+------+------------+----------+
+| sid  | sname    | sage | ssex | sday       | sadd     |
++------+----------+------+------+------------+----------+
+|    1 | zhangsan | NULL | NULL | NULL       | NULL     |
+|    2 | lisi     |   18 | nan  | 2019-03-07 | beijing  |
+|    3 | wangwu   |   19 | nv   | 2019-03-08 | tianjin  |
+|    4 | zhaoliu  |   17 | nan  | 2019-03-07 | nanjing  |
+|    5 | qianqi   |   20 | nv   | 2019-03-10 | shenzhen |
++------+----------+------+------+------------+----------+
+5 rows in set (0.00 sec)
+
+mysql> insert into student(sid,sname) values(6,'郑中拓');
+ERROR 1366 (HY000): Incorrect string value: '\xE9\x83\x91\xE4\xB8\xAD...' for column 'sname' at row 1
+mysql> select schema_name,default_character_set_name from information_schema.schemata where schema_name = 'test';
++-------------+----------------------------+
+| schema_name | default_character_set_name |
++-------------+----------------------------+
+| test        | latin1                     |
++-------------+----------------------------+
+1 row in set (0.00 sec)
+
+mysql> drop database test;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> create database test default character set = 'utf8';
+Query OK, 1 row affected (0.00 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
+| test               |
++--------------------+
+5 rows in set (0.00 sec)
+
+mysql> use test;
+Database changed
+mysql> create table student(
+    ->   sid int(10),
+    ->   sname varchar(10),
+    ->   ssex varchar(4),
+    ->   sage int(4),
+    ->   saddress varchar(10)
+    -> );
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student values(1,'张三','男',18,'北京');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------+--------+------+------+----------+
+| sid  | sname  | ssex | sage | saddress |
++------+--------+------+------+----------+
+|    1 | 张三   | 男   |   18 | 北京     |
++------+--------+------+------+----------+
+1 row in set (0.00 sec)
+
+mysql> drop database test;
+Query OK, 1 row affected (0.02 sec)
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mysql              |
+| performance_schema |
+| sys                |
++--------------------+
+4 rows in set (0.00 sec)
+
+mysql> create database test;
+Query OK, 1 row affected (0.00 sec)
+
+mysql> create table student(
+    ->   sid int(4),
+    ->   sname varchar(10),
+    ->   ssex varchar(4)
+    -> )  character set utf8;
+ERROR 1046 (3D000): No database selected
+mysql> use test;
+Database changed
+mysql> create table student(
+    ->   sid int(4),
+    ->   sname varchar(10),
+    ->   ssex varchar(4)
+    -> ) character set utf8;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> insert into student values(1,'郑中拓','纯爷们儿');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from student;
++------+-----------+--------------+
+| sid  | sname     | ssex         |
++------+-----------+--------------+
+|    1 | 郑中拓    | 纯爷们儿     |
++------+-----------+--------------+
+1 row in set (0.00 sec)
+
+mysql> insert into student values(2,'郑中拓2','男');
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select * from student;
++------+------------+--------------+
+| sid  | sname      | ssex         |
++------+------------+--------------+
+|    1 | 郑中拓     | 纯爷们儿     |
+|    2 | 郑中拓2    | 男           |
++------+------------+--------------+
+2 rows in set (0.00 sec)
+
+mysql> delete from student;
+Query OK, 2 rows affected (0.00 sec)
+
+mysql> select * from student;
+Empty set (0.00 sec)
+
+mysql> insert into student values(1,'张三','男'),(2,'李四','女'),(3,'王五','男');
+Query OK, 3 rows affected (0.01 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> select * from student;
++------+--------+------+
+| sid  | sname  | ssex |
++------+--------+------+
+|    1 | 张三   | 男   |
+|    2 | 李四   | 女   |
+|    3 | 王五   | 男   |
++------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> update student set ssex = '女';
+Query OK, 2 rows affected (0.00 sec)
+Rows matched: 3  Changed: 2  Warnings: 0
+
+mysql> select * from student;
++------+--------+------+
+| sid  | sname  | ssex |
++------+--------+------+
+|    1 | 张三   | 女   |
+|    2 | 李四   | 女   |
+|    3 | 王五   | 女   |
++------+--------+------+
+3 rows in set (0.00 sec)
+
+mysql> update student set sname = '郑中拓',ssex = '男';
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> select * from student;
++------+-----------+------+
+| sid  | sname     | ssex |
++------+-----------+------+
+|    1 | 郑中拓    | 男   |
+|    2 | 郑中拓    | 男   |
+|    3 | 郑中拓    | 男   |
++------+-----------+------+
+3 rows in set (0.00 sec)
+
+mysql> show table status from test like 'student';
++---------+--------+---------+------------+------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+---------------------+------------+-----------------+----------+----------------+---------+
+| Name    | Engine | Version | Row_format | Rows | Avg_row_length | Data_length | Max_data_length | Index_length | Data_free | Auto_increment | Create_time         | Update_time         | Check_time | Collation       | Checksum | Create_options | Comment |
++---------+--------+---------+------------+------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+---------------------+------------+-----------------+----------+----------------+---------+
+| student | InnoDB |      10 | Dynamic    |    3 |           5461 |       16384 |               0 |            0 |         0 |           NULL | 2019-03-07 12:09:52 | 2019-03-07 12:13:00 | NULL       | utf8_general_ci |     NULL |                |         |
++---------+--------+---------+------------+------+----------------+-------------+-----------------+--------------+-----------+----------------+---------------------+---------------------+------------+-----------------+----------+----------------+---------+
+1 row in set (0.00 sec)
+
+mysql>

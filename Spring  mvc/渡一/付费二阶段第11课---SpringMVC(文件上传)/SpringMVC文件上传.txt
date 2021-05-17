@@ -1,0 +1,41 @@
+
+	
+	知识回顾
+	拦截器使用(可以理解为Tomcat提供的原生Filter  更像SpringAOP切面对象管理)
+	1.自定义拦截器类  MyInterceptor
+	2.继承HandlerInterceptorAdapter/实现HandlerInterceptor
+	3.重写方法
+		preHandler	放行方式采用返回值   true放行
+		postHandler
+		afterCompletion
+	4.配置(告知Spring框架有一个拦截器 帮我们进行管理)
+		<mvc:interceptors>
+			<mvc:interceptor>
+				<mvc:mapping path="">
+				<bean class="自定义类">
+			</mvc:interceptor>
+		</mvc:interceptors>
+
+
+	文件上传/下载
+		依赖于Apache提供的两个jar
+		commons-io
+		commons-fileupload
+
+		基于SpringMVC的方式
+		1.配置一个文件解析器	CommonsMultipartResolver
+		2.自己写一个Controller
+			方法内部像之前一样接收参数即可
+			文件参数MultipartFile类型 变量名与前面的key一致
+		3.用MultipartFile对象做文件的传输
+			transferTo(new File("上传路径"))
+
+
+
+
+
+
+
+
+
+

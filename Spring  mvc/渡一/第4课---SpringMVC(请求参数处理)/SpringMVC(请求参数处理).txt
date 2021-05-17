@@ -1,0 +1,70 @@
+
+	
+	知识回顾
+
+	SpringMVC------控制层 请求与响应
+
+	发送一个请求-----控制层类中的某一个方法
+
+	#方式一:	XXXController类   只有一个方法
+		请求:   XXXController.do
+		类上注解@RequestMapping("XXXController.do")
+		唯一的方法上注解@RequestMapping
+	#方式二:XXXController类	  不止一个方法
+		请求:	XXXController.do?method=方法名
+		类上注解@RequestMapping("XXXController.do")
+		方法上面注解@RequestMapping(params={"method=方法名"})
+	方式三:XXXController类   不止一个方法
+		请求：方法名.do
+		类上不用注解
+		方法上注解@RequestMapping("方法名.do")
+
+	@RequestMapping注解中的几个常用"方法"
+		value={"",""}
+		path={"",""}
+		params={"",""}
+		methods={RequestMethod.GET,RequestMethod.POST}
+		headers={"",""}
+
+
+	============================================================================
+
+	研究一下SpringMVC提供的接收参数方式
+	1.方法中直接传入变量
+		变量直接接收  要求变量名字与前面传递的key一致
+		即便是一个变量也需要对应key一致 否则接收不到	
+		如果变量和前面传递的key不一致，可以利用注解@RequestParam("key")
+		参数的类型可以不一定是String ，int可以
+	2.方法中直接传入实体对象
+		如果传递的参数可以组合成一个对象 
+		可以用对象直接接收
+		对象中的属性名和前面传递的key一致
+		如果对象里面还有对象属性(套娃)
+		只需要在请求的时候写 对象的属性.属性名即可
+		比如User中有一个Wallet对象  Wallet中有个money属性
+			wallet.money
+	3.方法中传入Map集合的方式
+		可以使用Map类型来接收请求的参数的
+		前提是  Map参数的前面  必须添加@RequestParam
+		否则Map是无法接收到参数的
+	4.方法中传递原生Request对象
+		直接在方法中传递参数变量即可接收
+		HttpServletRequest
+		HttpServletResponse
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

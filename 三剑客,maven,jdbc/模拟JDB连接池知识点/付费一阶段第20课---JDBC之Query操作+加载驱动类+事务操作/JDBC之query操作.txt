@@ -1,0 +1,96 @@
+
+	知识回顾
+	1.了解JDBC是什么
+		Java  DataBase  Connectivity
+		是Java平台提供的一套统一执行标准/规范
+		本质上是一个桥梁   连接Java和数据库
+	2.想要实现JDBC的连接操作
+		需要找到具体数据库的驱动类(类型 ODBC Native Net 纯Java)
+		官网下载  mysql-connector-java.jar
+	3.JDBC六部曲
+		导包
+		加载驱动类	     类全名 com.mysql.jdbc.Driver
+		获取连接	     url    jdbc:mysql://ip:port/database名      user  password
+		创建状态参数
+		执行操作	update(增 删 改)   query(查)
+		关闭
+	================================================
+
+	执行query查询
+		导包
+		加载驱动
+		获取连接
+		创建状态参数
+		执行ResultSet rs = executeQuery(String sql);	Set<Map<String,Object>>
+			if(rs.next()){
+				rs.getXXX(列的序号int--从开始)
+				rs.getXXX("列名字");
+			}
+			rs.getString();可以接收任何一个列的值  什么类型都可以
+			rs.getInt();不能接受其他类型 比如String
+
+	=======================================================
+	实现了所有JDBC的流程   增删改查 单 多
+	基础上细致说明几个问题
+	1.导包
+	2.加载驱动类的时候
+		8.x   5.x版本不一致  有问题
+		如果5.x版本    com.mysql.jdbc.Driver
+		如果8.x版本    com.mysql.cj.jdbc.Driver
+	3.获取连接时候
+		8.x   5.x版本不一致  有问题
+		如果5.x版本    url---->  jdbc:mysql://ip:port/database名
+		如果8.x版本    url---->  jdbc:mysql://ip:port/database名?serverTimezone=CST
+	-----------------------------------------------------------
+	加载驱动的问题
+	1.通过反射机制
+		Class.forName("类全名");----->类中的静态成员
+		static特征修饰符   属性 方法 块 内部类
+	2.通过DriverManager静态方法注册驱动
+		DriverManager.registerDriver(new Driver());	
+	3.通过直接创建驱动对象
+		new Driver();
+	4.通过System类中设置属性值来加载
+		System.setProperty("jdbc.driver","com.mysql.cj.jdbc.Driver");
+	------------------------------------------------------------
+	操作事务
+	1.JDBC默认的开启事务  默认的自动提交事务
+	2.可以自己设置手动提交事务
+		conn.setAutoCommit(false);	false表示手动提交   true默认 表示自动提交
+	3.可以设置事务的隔离级别
+		conn.setTransactionIsolation(Connection.TRANSACTION_REPEATABLE_READ);
+	4.事务最终的处理操作
+		conn.commit();
+		conn.rollback();
+
+		Savepoint s = conn.setSavepoint("x");
+            		conn.rollback(s);
+	===========================================
+	小任务
+	1.下载jar包
+	2.复习query流程   查询单条   查询多条
+	3.尝试不同的加载驱动类的方式
+
+	4.实现一个之前银行系统ATM	MVC
+		登录  查询  存款  取款  转账  开户  销户
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			

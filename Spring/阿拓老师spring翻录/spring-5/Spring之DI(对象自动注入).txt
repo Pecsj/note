@@ -1,0 +1,73 @@
+
+	知识回顾
+	
+	正常对象属性的注入DI
+		<bean name="" class="">
+			<property name="" value="">
+				<value></value>
+			</property>
+			<contructor-arg name="" value="" type="">
+				<value></value>
+			</constructor-arg>
+		</bean>
+	产生一些特殊的值
+		赋值的过程中是一个null对象	null对象  "null"
+		value="null"------>"null" String类型 其他类型不可以
+		<null></null>----->null对象
+		String类型带有特殊符号	<zzt~>
+		使用<value><![CDATA[内容]]></value>标签 标签内部<![CDATA[内容]]>
+
+	对象中的属性可能是另一个对象	聚合关系
+		<bean name="x" ref=""></bean>
+		<bean>
+			<property name="" >
+				<bean>
+			<>
+		</bean>
+		如果想要让属性不被别人访问
+		可以采用内部bean的写法
+			Room
+			Computer   brand属性
+			room.computer.brand
+
+	========================================================================
+
+	对象的自动装配	DI
+		装配的方式---对象中的那个属性对象赋值
+		1.构造方法
+			<bean name="controller" class="controller.StudentController" autowire="constructor"></bean>
+		2.set方法
+			<bean name="controller" class="controller.StudentController" autowire="byName/byType"></bean>
+			byName的方式  bean对象中的属性名与另一个bean对象的name或id一致即可
+			byType的方式  bean对象中的属性类型与另一个bean对象的class类型一致
+
+			以前默认的bean管理机制
+			默认情况下bean是单例的 通过scope="prototype"
+			多个对象之间对应的问题 采用内部bean方式 手动指定
+
+		3.如果对象中的属性是抽象类、接口类型
+			属性是没有办法直接创建对象赋值
+			属性赋值一定是子类(不止一个可以啦)
+			
+			a.利用是构造方法方式自动装配
+				先按照类型匹配  刚好就一个 直接赋值
+				如果类型发现不止一个对应   再按照属性名与bean的name或id匹配 成功匹配 就赋值
+			b.利用无参数构造方法+set方法进行自动装配
+				byName形式  按照名字进行找寻 找不到就没有 找到就装配
+				byType形式  如果有两个以上对应的类型 标签配置时直接报错 采用内部形式 ref自己指定的形式
+			
+		4.属性是集合
+			Room
+				Computer[]
+				List<Computer>
+				Set<>
+				Map
+
+
+
+
+
+
+
+
+
